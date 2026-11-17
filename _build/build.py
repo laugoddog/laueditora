@@ -270,7 +270,6 @@ def page_autor(k, a):
   <h1>{esc(a['nome'])}</h1>
   <div class="txt lit" style="margin-top:14px">{''.join(f'<p>{p}</p>' for p in a['bio'])}</div>
   <section class="block"><h2>livros</h2><div class="grid2">{grid}</div></section>
-  <a class="wide" href="{a['amazon']}" target="_blank" rel="noopener">Amazon</a>
   {contacts("laueditora.pt/", "/")}
 </main>
 """
