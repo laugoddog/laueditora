@@ -35,15 +35,15 @@ body.menu-open .drawer{transform:none} body.menu-open .scrim{opacity:1;pointer-e
 .drawer a.sub{font-family:var(--fb);font-size:17px;padding:6px 0 6px 14px;border:0;color:var(--dim)}
 
 /* ---- topo ---- */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 18px 40px;overflow:hidden;isolation:isolate}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:60px 18px 5svh;overflow:hidden;isolation:isolate}
 .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:-1}
-.hero .logo{width:min(220px,58vw)}
-.hero .tagline{font-size:18px;font-style:italic;margin-top:20px;white-space:nowrap}
+.hero .logo{width:min(130px,34vw)}
+.hero .tagline{font-size:16px;font-style:italic;margin-top:4.5svh;white-space:nowrap}
 .socials{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 .socials a{display:inline-flex;color:#fff}
 .socials svg{width:28px;height:28px}
-.down{margin-top:24px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px}
+.down{margin-top:3.5svh;width:32px;height:32px;animation:bob 1.8s ease-in-out infinite;border-radius:50%;background:rgba(255,255,255,.15);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px}
 
 /* topo da página pessoal: fotografia em cima, como no Hopp */
 .phero{position:relative;text-align:center}
@@ -223,3 +223,9 @@ b.k{font-weight:900}
 .hero .tagline,.phero .sub{max-width:none}
 .block h3{margin-bottom:14px}
 .wide{white-space:nowrap;font-size:15px}
+.hero .socials{gap:22px;margin-top:3svh}
+.hero .socials svg{width:28px;height:28px}
+.down svg{width:18px;height:18px}
+.down{font-size:16px}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.down{animation:none}}

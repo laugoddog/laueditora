@@ -174,7 +174,7 @@ def page_lau():
   <img class="logo" src="/img/logo-lau-branco.png" alt="LAU Edições">
   <p class="tagline">os nossos livros são resumos dos nossos silêncios.</p>
   {socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn",LI)])}
-  <a class="down" href="#conteudo" aria-label="descer">↓</a>
+  <a class="down" href="#conteudo" aria-label="descer"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
 </header>
 <main class="wrap" id="conteudo">
   {feat("destaque","em <b class='k'>destaque</b>","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
