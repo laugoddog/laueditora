@@ -41,7 +41,7 @@ function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub,.person span'
   const ps=$$('.person span');if(ps.length){const m=Math.min(...ps.map(s=>parseFloat(getComputedStyle(s).fontSize)));ps.forEach(s=>s.style.fontSize=m+'px');}}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);addEventListener('resize',fit);
 // carrinho (guardado neste browser)
-const EMAIL='geral@laueditora.pt';
+const EMAIL='geral@laueditora.pt',CHECKOUT='';// endereço do Worker da Cloudflare (…workers.dev); vazio = encomenda por email
 let cart=[];try{cart=JSON.parse(localStorage.getItem('lau-cart')||'[]')}catch(e){}
 const eur=c=>(c/100).toFixed(2).replace('.',',').replace(',00','')+'€';
 function saveCart(){try{localStorage.setItem('lau-cart',JSON.stringify(cart))}catch(e){}renderCart();}
@@ -59,5 +59,9 @@ $$('[data-add-cart]').forEach(b=>b.onclick=()=>{const d=b.dataset,i=cart.find(x=
   if(i)i.q++;else cart.push({slug:d.slug,title:d.title,price:+d.price,cover:d.cover,q:1});saveCart();
   $$('.cartbtn').forEach(c=>{c.classList.remove('added');void c.offsetWidth;c.classList.add('added');});
   b.classList.remove('added');void b.offsetWidth;b.classList.add('added');});
+$$('.cgo').forEach(a=>a.addEventListener('click',async e=>{if(!CHECKOUT||!cart.length)return;e.preventDefault();a.textContent='a abrir o pagamento…';
+  try{const r=await fetch(CHECKOUT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:cart.map(i=>({slug:i.slug,q:i.q}))})});const d=await r.json();
+    if(d.url){location.href=d.url;return;}throw new Error(d.error);}catch(err){a.textContent='finalizar encomenda';alert('Não foi possível abrir o pagamento. Tenta de novo ou escreve para '+EMAIL+'.');}}));
+if(new URLSearchParams(location.search).has('carrinho'))setCart(true);
 renderCart();
 })();

@@ -312,6 +312,24 @@ def page_autor(k, a):
     desc = re.sub("<[^>]+>", "", a["bio"][0])[:155]
     write(f"autores/{k}/index.html", head(f"{a['nome']} | LAU Edições", desc, f"/autores/{k}/", a["foto"]) + body + FOOT)
 
+
+def worker():
+    import json
+    cat = {l["slug"]: {"name": l["titulo"], "cents": cents(l), "img": "/img/" + l["capa"]} for l in LIVROS if can_cart(l)}
+    t = open(os.path.join(ROOT, "_build/worker_template.js")).read().replace("__CATALOGO__", json.dumps(cat, ensure_ascii=False, indent=2))
+    write("_worker/worker.js", t)
+
+def page_obrigado():
+    body = f"""{menu()}
+<main class="wrap page" style="text-align:center">
+  <h1>obrigado</h1>
+  <div class="txt lit" style="text-align:center"><p>A tua encomenda foi recebida e o pagamento confirmado. Vais receber um email da Stripe com o recibo, e nós entramos em contacto quando os livros seguirem.</p></div>
+  <a class="wide" href="/">voltar à LAU Edições</a>
+</main>
+<script>try{{localStorage.removeItem('lau-cart')}}catch(e){{}}</script>
+"""
+    write("obrigado/index.html", head("Obrigado | LAU Edições", "Encomenda recebida.", "/obrigado/", "og-lau.jpg") + body + FOOT)
+
 def extras():
     urls = ["/", "/rafaelaugusto/"] + [f"/autores/{k}/" for k in AUTORES] + [f"/livros/{l['slug']}/" for l in LIVROS]
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -326,5 +344,5 @@ if __name__ == "__main__":
     page_lau(); page_rafael()
     for l in LIVROS: page_livro(l)
     for k, a in AUTORES.items(): page_autor(k, a)
-    extras()
+    extras(); worker(); page_obrigado()
     print("ok")
