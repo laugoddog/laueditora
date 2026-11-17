@@ -154,7 +154,7 @@ def page_lau():
 <div class="detail" id="pre-1"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>Ao Deus da Brincadeira</div><img src="/img/wip-ao-deus-da-brincadeira.webp" alt=""><h3>Ao Deus da Brincadeira</h3><div class="who">Rafael Augusto · livro, ficção</div>
 <a class="buy" href="{PATREON}" target="_blank" rel="noopener">aceder (patronos LAUWiP)</a></div>
 <div class="lit" style="font-size:17px;margin-top:6px"><p>Aqui estão os trabalhos em desenvolvimento, alguns quase prontos a lançar, outros em processo de escrita. Podes pré-reservar aqueles que têm um lançamento planeado e, quanto aos outros, tornando-te patrono, podes aceder antecipadamente aos conteúdos e comentá-los, participando no processo editorial.</p></div>"""
-    patrono = f"""<div class="lit" style="font-size:17px"><div id="pat-txt" class="clamp"><p>{PATRONO_TXT}</p></div></div><button class="more" data-more="pat-txt">Mostrar mais ⌄</button>
+    patrono = f"""<div class="lit" style="font-size:17px"><div id="pat-txt" class="clamp"><p>{PATRONO_TXT}</p></div></div><button class="more" data-more="pat-txt">Mostrar mais</button>
 <ul class="checks">{"".join(f"<li>{x}</li>" for x in PATRONO_LI)}</ul>
 <div class="pr" style="font-family:var(--fd);font-size:18px;margin-top:10px">15€/mês</div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">torna-te patrono</a>"""
     rail = "".join(f'<button class="person" data-author="a-{k}"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></button>' for k, a in AUTORES.items())
@@ -165,7 +165,7 @@ def page_lau():
         extra = f'<a class="wide" href="{a["pagina"]}">ver página</a>' if a.get("pagina") else ""
         dets += f"""<div class="adet" id="a-{k}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(a['nome'])}</div>
 <img class="ph" src="/img/{a['foto']}" alt=""><h3>{esc(a['nome'])}</h3>
-<div class="lit" style="font-size:18px"><div id="bio-{k}" class="clamp">{"".join(f"<p>{p}</p>" for p in a["bio"])}</div></div><button class="more" data-more="bio-{k}">Mostrar mais ⌄</button>
+<div class="lit" style="font-size:18px"><div id="bio-{k}" class="clamp">{"".join(f"<p>{p}</p>" for p in a["bio"])}</div></div><button class="more" data-more="bio-{k}">Mostrar mais</button>
 <div class="books">{covers}</div><a class="wide" href="/autores/{k}/">livros de {esc(a['nome'])}</a>{extra}</div>"""
 
     body = f"""{menu()}
@@ -191,10 +191,10 @@ def page_lau():
   <section class="block" id="sobre">
     <h3><b class='k'>sobre</b> nós</h3>
     <div class="lit" style="font-size:18px"><div id="sobre-txt" class="clamp"><p>A LAU edições é uma editora independente focada em títulos que, através da ficção, do ensaio, da poesia ou do humor, exploram a mente e a natureza humanas. Achando que, na arte, a forma é tão importante como o conteúdo, damos a cada texto a casa que merece, aliando à qualidade dos textos a identidade visual que nos distingue.</p><p>Se gostavas de participar ativamente no processo editorial, receber em casa livros surpresa, ter acesso a conteúdos de livros em desenvolvimento (sobre os quais poderás dar a tua opinião), e ver teu nome nos agradecimentos de edições futuras em que participes, considera tornar-te patrono (topo da página).</p></div></div>
-    <button class="more" data-more="sobre-txt">Mostrar mais ⌄</button>
+    <button class="more" data-more="sobre-txt">Mostrar mais</button>
     <div style="margin-top:18px">
-      <details class="line"><summary>produtos e <b class='k'>serviços</b></summary><div class="in lit"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
-      <details class="line" id="publica"><summary><b class='k'>publica</b> connosco</summary><div class="in"><div class="lit"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p></div><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
+      <details class="line"><summary><span>produtos e <b class='k'>serviços</b></span></summary><div class="in lit"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
+      <details class="line" id="publica"><summary><span><b class='k'>publica</b> connosco</span></summary><div class="in"><div class="lit"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p></div><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
     </div>
   </section>
   {contacts("laueditora.pt/", "/")}

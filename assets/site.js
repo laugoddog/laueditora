@@ -16,7 +16,7 @@ $$('[data-author]').forEach(b=>b.onclick=()=>{const w=b.closest('.authors');$$('
   document.getElementById(b.dataset.author).classList.add('on');w.classList.add('showing');w.scrollIntoView({behavior:'smooth'});});
 $$('.adet .back').forEach(b=>b.onclick=()=>{const w=b.closest('.authors');w.classList.remove('showing');$$('.adet',w).forEach(x=>x.classList.remove('on'));});
 // mostrar mais
-$$('[data-more]').forEach(b=>b.onclick=()=>{const t=document.getElementById(b.dataset.more),c=t.classList.toggle('clamp');b.textContent=c?'Mostrar mais ⌄':'Mostrar menos ⌃';});
+$$('[data-more]').forEach(b=>b.onclick=()=>{const t=document.getElementById(b.dataset.more),c=t.classList.toggle('clamp');b.textContent=c?'Mostrar mais':'Mostrar menos';b.classList.toggle('on',!c);});
 // cartão em destaque que abre uma secção
 function showDetail(d){const p=d.closest('.panel');$$('.detail',p).forEach(x=>x.classList.remove('on'));d.classList.add('on');p.classList.add('showing');p.style.setProperty('--dh',(d.scrollHeight+10)+'px');d.scrollTop=0;}
 $$('[data-acc]').forEach(a=>a.addEventListener('click',e=>{const acc=document.getElementById(a.dataset.acc);if(!acc)return;e.preventDefault();
@@ -35,8 +35,8 @@ $$('.car').forEach(car=>{const s=$('.slides',car),n=s.children.length,d=$('.dots
 $$('.yt').forEach(b=>b.onclick=()=>{if($('iframe',b))return;const f=document.createElement('iframe');
   f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;b.appendChild(f);$('.play',b).remove();});
 // títulos sempre numa linha: reduz a letra até caber
-function fit(){$$('.acc-h .tt,.phero h1').forEach(el=>{if(!el.parentElement.clientWidth)return;el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize),box=el.parentElement;
-  const avail=()=>el.matches('h1')?box.clientWidth-20:box.clientWidth-parseFloat(getComputedStyle(box).paddingLeft)-parseFloat(getComputedStyle(box).paddingRight);
+function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub').forEach(el=>{if(!el.parentElement.clientWidth)return;el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize),box=el.parentElement;
+  const avail=()=>!el.matches('.tt')?box.clientWidth-(el.matches('h1')?50:16):box.clientWidth-parseFloat(getComputedStyle(box).paddingLeft)-parseFloat(getComputedStyle(box).paddingRight);
   while(el.scrollWidth>avail()&&fs>10){fs-=.5;el.style.fontSize=fs+'px';}});}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);addEventListener('resize',fit);
 })();
