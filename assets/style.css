@@ -233,3 +233,10 @@ b.k{font-weight:900}
 .person{display:flex;flex-direction:column;justify-content:flex-start;align-self:flex-start}
 .person{min-width:0}
 .person span{white-space:nowrap;width:100%;overflow:hidden}
+/* menu lateral: ocupa sempre o ecrã todo e a página não rola por baixo */
+.scrim,.drawer{height:100vh;height:100lvh;bottom:auto}
+.drawer{overscroll-behavior:contain}
+html.menu-open,body.menu-open{overflow:hidden;touch-action:none}
+body.menu-open .drawer{touch-action:pan-y}
+.drawer a{white-space:nowrap;font-size:15px}
+.drawer a.sub{text-transform:none;letter-spacing:0;font-size:17px;white-space:normal}

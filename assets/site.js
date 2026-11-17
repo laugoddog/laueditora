@@ -1,8 +1,8 @@
 (function(){
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 // menu
-$$('.burger').forEach(b=>b.onclick=()=>document.body.classList.add('menu-open'));
-$$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>document.body.classList.remove('menu-open')));
+$$('.burger').forEach(b=>b.onclick=()=>{document.body.classList.add('menu-open');document.documentElement.classList.add('menu-open');});
+$$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>{document.body.classList.remove('menu-open');document.documentElement.classList.remove('menu-open');}));
 // secções que abrem
 function setOpen(acc,on){if(acc.classList.contains('fp')&&!on){acc.classList.remove('open');setTimeout(()=>{acc.classList.remove('shown');const f=$('[data-feat="'+acc.id+'"]');if(f)f.classList.remove('hide');},450);$('.acc-h',acc).setAttribute('aria-expanded',false);return;}acc.classList.toggle('open',on);$('.acc-h',acc).setAttribute('aria-expanded',on);
   if(!on){const p=$('.panel',acc);p.classList.remove('showing');$$('.detail',p).forEach(d=>d.classList.remove('on'));}}
