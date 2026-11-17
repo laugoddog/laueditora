@@ -40,4 +40,24 @@ function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub,.person span'
   while(el.scrollWidth>avail()&&fs>10){fs-=.5;el.style.fontSize=fs+'px';}});
   const ps=$$('.person span');if(ps.length){const m=Math.min(...ps.map(s=>parseFloat(getComputedStyle(s).fontSize)));ps.forEach(s=>s.style.fontSize=m+'px');}}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);addEventListener('resize',fit);
+// carrinho (guardado neste browser)
+const EMAIL='geral@laueditora.pt';
+let cart=[];try{cart=JSON.parse(localStorage.getItem('lau-cart')||'[]')}catch(e){}
+const eur=c=>(c/100).toFixed(2).replace('.',',').replace(',00','')+'€';
+function saveCart(){try{localStorage.setItem('lau-cart',JSON.stringify(cart))}catch(e){}renderCart();}
+function renderCart(){const n=cart.reduce((s,i)=>s+i.q,0);$$('.cartbtn .cnt').forEach(c=>{c.hidden=!n;c.textContent=n;});
+  $$('.cart').forEach(box=>{const l=$('.clist',box);
+    l.innerHTML=cart.length?cart.map((i,k)=>`<div class="ci"><img src="${i.cover}" alt=""><div class="t">${i.title}<span>${eur(i.price)}</span></div><div class="q"><button data-q="${k}" data-d="-1" aria-label="menos">−</button>${i.q}<button data-q="${k}" data-d="1" aria-label="mais">+</button></div></div>`).join(''):'<p class="cempty">O carrinho está vazio.</p>';
+    $('.ctot b',box).textContent=eur(cart.reduce((s,i)=>s+i.price*i.q,0));$('.cfoot',box).style.display=cart.length?'':'none';
+    $$('[data-q]',l).forEach(b=>b.onclick=()=>{const i=cart[+b.dataset.q];i.q+=+b.dataset.d;if(i.q<1)cart.splice(+b.dataset.q,1);saveCart();});
+    const body='Olá,\n\nGostaria de encomendar:\n'+cart.map(i=>`- ${i.q} × ${i.title} (${eur(i.price)})`).join('\n')+`\n\nTotal: ${eur(cart.reduce((s,i)=>s+i.price*i.q,0))} + portes\n\nNome:\nMorada de envio:\nNIF (opcional):\n\nObrigado.`;
+    $('.cgo',box).href='mailto:'+EMAIL+'?subject='+encodeURIComponent('Encomenda — LAU Edições')+'&body='+encodeURIComponent(body);});}
+function setCart(on){document.body.classList.toggle('cart-open',on);document.documentElement.classList.toggle('cart-open',on);}
+$$('[data-cart-open]').forEach(b=>b.onclick=()=>setCart(true));
+$$('[data-cart-close],.scrim').forEach(b=>b.addEventListener('click',()=>setCart(false)));
+$$('[data-add-cart]').forEach(b=>b.onclick=()=>{const d=b.dataset,i=cart.find(x=>x.slug===d.slug);
+  if(i)i.q++;else cart.push({slug:d.slug,title:d.title,price:+d.price,cover:d.cover,q:1});saveCart();
+  $$('.cartbtn').forEach(c=>{c.classList.remove('added');void c.offsetWidth;c.classList.add('added');});
+  b.classList.remove('added');void b.offsetWidth;b.classList.add('added');});
+renderCart();
 })();

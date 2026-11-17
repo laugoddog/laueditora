@@ -68,6 +68,14 @@ def head(title, desc, url, img, lang="pt", cls="lau"):
 def menu():
     return f"""<button class="burger" aria-label="Abrir menu" data-menu-open><span></span><span></span><span></span></button>
 <div class="scrim" data-menu-close></div>
+<button class="cartbtn" aria-label="Abrir carrinho" data-cart-open>{CART_SVG}<span class="cnt" hidden>0</span></button>
+<aside class="cart" aria-label="Carrinho">
+  <div class="ch"><b>carrinho</b><button class="close" aria-label="Fechar carrinho" data-cart-close>&times;</button></div>
+  <div class="clist"></div>
+  <div class="cfoot"><div class="ctot"><span>total</span><b></b></div>
+  <p class="cnote">Os portes são combinados contigo antes do pagamento.</p>
+  <a class="btn cgo" href="#">finalizar encomenda</a></div>
+</aside>
 <aside class="drawer" aria-label="Menu">
   <button class="close" aria-label="Fechar menu" data-menu-close>&times;</button>
   <img src="/img/logo-lau-branco.png" alt="LAU Edições">
@@ -118,19 +126,47 @@ def texto(l):
 def buy(l, cls="buy"):
     return "" if l.get("esgotado") else f'<a class="{cls}" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
 
+CART_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.1"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg>'
+
+def cents(l):
+    return round(float(l["preco"].replace("€","").replace(",",".").strip())*100)
+
+def can_cart(l):
+    return not l.get("esgotado") and "buy.stripe.com" in l.get("compra","")
+
+def cart_btn(l, round_=False):
+    if not can_cart(l): return ""
+    d = f'data-add-cart data-slug="{l["slug"]}" data-title="{esc(l["titulo"])}" data-price="{cents(l)}" data-cover="/img/{l["capa"]}"'
+    if round_:
+        return f'<button class="cart-round" {d} aria-label="Adicionar ao carrinho">{CART_SVG}</button>'
+    return f'<button class="btn alt cart-full" {d}>{CART_SVG}<span>adicionar ao carrinho</span></button>'
+
+def buttons(l, round_=False):
+    """comprar + carrinho; em espaço curto o carrinho é só um círculo"""
+    if l.get("esgotado"): return ""
+    label = l.get("botao","comprar")
+    if label == "comprar": label = "comprar já" if not round_ else "comprar"
+    main = f'<a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">{label}</a>'
+    if round_:
+        return f'<div class="buyrow">{main}{cart_btn(l, True)}</div>'
+    return f'<div class="buycol">{main}{cart_btn(l)}</div>'
+
+def clamped(l, uid):
+    return f'<div class="txt lit"><div id="{uid}" class="clamp">{texto(l)}</div></div><button class="more" data-more="{uid}">Mostrar mais</button>'
+
 def feat(fid, label, video, poster, l):
     a = AUTORES[l["autor"]]
     inner = f"""<video autoplay muted loop playsinline poster="/img/{poster}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px"><source src="/media/{video}" type="video/mp4"></video>
-<div class="detail-static"><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}<div class="txt lit">{texto(l)}</div>{buy(l)}</div>"""
+<div class="detail-static"><div class="dtop"><div><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}</div><img class="dcover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}"></div>{buttons(l)}{clamped(l, "fx-"+fid)}</div>"""
     return f"""<button class="feature" data-feat="{fid}" aria-label="{re.sub('<[^>]+>','',label)}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
 {acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
 
 def books_row(livros, pid):
     row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
-<h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buy(l)}</div>""" for i, l in enumerate(livros))
+<h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buttons(l, True)}</div>""" for i, l in enumerate(livros))
     det = "".join(f"""<div class="detail" id="{pid}-{l['slug']}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
 <img src="/img/{l['capa']}" alt=""><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
-<div class="txt lit">{texto(l)}</div>{buy(l, "buy")}</div>""" for i, l in enumerate(livros))
+{buttons(l)}{clamped(l, "dx-"+pid+"-"+l["slug"])}</div>""" for i, l in enumerate(livros))
     return f'<div class="row">{row}</div>{det}'
 
 PATRONO_TXT = "Enquanto patrono LAU Edições, terás uma participação ativa no processo editorial: com acesso a trabalhos em desenvolvimento, poderás comentar os textos e o teu nome será mencionado nos livros em cuja edição tenhas participado. Para além disso, terás acesso a exemplares autografados de todas as edições normais futuras e a 20% de desconto nos restantes produtos e serviços, entre outros."
@@ -253,7 +289,7 @@ def page_livro(l):
   <h1>{esc(l['titulo'])}</h1>
   <div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>
   {preco(l, "price")}
-  {buy(l, "wide")}
+  {buttons(l)}
   <div class="txt lit">{texto(l)}</div>
   {contacts("laueditora.pt/", "/")}
 </main>

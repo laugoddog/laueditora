@@ -16,13 +16,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Oswald:wght@500&display=swap">
 <link rel="stylesheet" href="https://use.typekit.net/kww1ryt.css">
-<link rel="stylesheet" href="/assets/style.css?v=2f5b8bd5">
+<link rel="stylesheet" href="/assets/style.css?v=614ce82a">
 <link rel="icon" href="/img/favicon.png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
 <body class="lau">
 <button class="burger" aria-label="Abrir menu" data-menu-open><span></span><span></span><span></span></button>
 <div class="scrim" data-menu-close></div>
+<button class="cartbtn" aria-label="Abrir carrinho" data-cart-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.1"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg><span class="cnt" hidden>0</span></button>
+<aside class="cart" aria-label="Carrinho">
+  <div class="ch"><b>carrinho</b><button class="close" aria-label="Fechar carrinho" data-cart-close>&times;</button></div>
+  <div class="clist"></div>
+  <div class="cfoot"><div class="ctot"><span>total</span><b></b></div>
+  <p class="cnote">Os portes são combinados contigo antes do pagamento.</p>
+  <a class="btn cgo" href="#">finalizar encomenda</a></div>
+</aside>
 <aside class="drawer" aria-label="Menu">
   <button class="close" aria-label="Fechar menu" data-menu-close>&times;</button>
   <img src="/img/logo-lau-branco.png" alt="LAU Edições">
@@ -44,7 +52,7 @@
   <h1>Leonel Coelho, Meu Avô</h1>
   <div class="who"><a href="/autores/rafael-augusto/">Rafael Augusto</a></div>
   <div class="price">10€</div>
-  <a class="wide" href="https://buy.stripe.com/eVq00jbCH9FJbFY9AI4gg01" target="_blank" rel="noopener">comprar</a>
+  <div class="buycol"><a class="buy" href="https://buy.stripe.com/eVq00jbCH9FJbFY9AI4gg01" target="_blank" rel="noopener">comprar já</a><button class="btn alt cart-full" data-add-cart data-slug="leonel-coelho-meu-avo" data-title="Leonel Coelho, Meu Avô" data-price="1000" data-cover="/img/livro-leonel-coelho-meu-avo.webp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.1"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg><span>adicionar ao carrinho</span></button></div>
   <div class="txt lit"><p>«Um ano antes, no seu último aniversário, tinha-lhe escrito: A maior parte das pessoas tem o azar de ser constantemente vítima de simpatia. Toda a gente as elogia, surgindo as críticas na sua ausência. Tu alcançaste algo muito mais grandioso: as críticas pela frente são tão constantes quanto os elogios por trás. Isso é talvez o mais que um Homem pode querer: ser constantemente confrontado com a sua sombra, deixar sempre a sua luz”».</p></div>
   <ul class="contacts">
   <li><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 6l8.5 7 8.5-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Email</b><a href="mailto:geral@laueditora.pt">geral@laueditora.pt</a></div></li>
@@ -52,5 +60,5 @@
   <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b>Website</b><a href="/">laueditora.pt/</a></div></li>
 </ul>
 </main>
-<script src="/assets/site.js?v=2f5b8bd5"></script>
+<script src="/assets/site.js?v=614ce82a"></script>
 </body></html>
