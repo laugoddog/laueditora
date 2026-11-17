@@ -36,6 +36,9 @@ def write(path, content):
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, "w", encoding="utf-8").write(content)
 
+import hashlib
+VER = hashlib.md5((open(os.path.join(ROOT,"assets/style.css"),"rb").read()+open(os.path.join(ROOT,"assets/site.js"),"rb").read())).hexdigest()[:8]
+
 def head(title, desc, url, img, lang="pt", cls="lau"):
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
@@ -55,7 +58,7 @@ def head(title, desc, url, img, lang="pt", cls="lau"):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Oswald:wght@500&display=swap">
 <link rel="stylesheet" href="https://use.typekit.net/kww1ryt.css">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css?v={VER}">
 <link rel="icon" href="/img/favicon.png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
@@ -92,7 +95,7 @@ def contacts(site_label, site_url):
   <li>{ICON['web']}<div><b>Website</b><a href="{site_url}">{site_label}</a></div></li>
 </ul>"""
 
-FOOT = '<script src="/assets/site.js"></script>\n</body></html>\n'
+FOOT = f'<script src="/assets/site.js?v={VER}"></script>\n</body></html>\n'
 
 def acc(aid, title, inner, sub=None, icon=None, caps=False, keep=False):
     ic = f'<img class="ic{" keep" if keep else ""}" src="/img/{icon}" alt="">' if icon else ""
