@@ -49,6 +49,7 @@ def head(title, desc, url, img, lang="pt"):
 <link rel="stylesheet" href="https://use.typekit.net/kww1ryt.css">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="icon" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
 <body>
 """
