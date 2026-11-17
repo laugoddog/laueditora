@@ -5,12 +5,23 @@ from data import AUTORES, LIVROS, REVIEWS, VIDEOS, PUBLICACOES, PRATICA_PT, PRAT
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://laueditora.pt"
-EMAIL_LAU = "lau.editora@rafaelaugusto.com"
-EMAIL_RA = "ra.cn@rafaelaugusto.com"
+EMAIL_LAU = "geral@laueditora.pt"
+EMAIL_RA = "geral@laueditora.pt"
 TEL = "+351967257681"
 WA = "https://api.whatsapp.com/send?phone=351967257681"
 PATREON = "https://www.patreon.com/laueditora"
 esc = html.escape
+
+ICON = {
+ "instagram": '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>',
+ "email": '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 6l8.5 7 8.5-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+ "whatsapp": '<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 8.2c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.6l-.6.7c-.1.1-.2.3 0 .5.6 1 1.5 1.9 2.6 2.5.2.1.4.1.5 0l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.4 0 .5-.2 1.3-.9 1.7-.6.4-1.5.6-3.3-.1-2.2-.9-3.9-3-4.4-3.8-.5-.8-.9-2-.3-3.2z" fill="currentColor"/></svg>',
+ "linkedin": '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 10v6.5M7.5 7.2v.1M11 16.5V10m0 3c0-1.8 1-3 2.6-3S16.5 11 16.5 13v3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ "youtube": '<svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>',
+ "spotify": '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 9.6c3-.9 6.4-.6 9 .9M8 12.6c2.4-.7 5-.5 7.2.8M8.6 15.4c1.9-.5 3.8-.3 5.5.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+}
+def social(items):
+    return '<div class="socials">' + "".join(f'<a href="{u}" aria-label="{n}" title="{n}" target="_blank" rel="noopener">{ICON[k]}</a>' for k, n, u in items) + '</div>'
 
 def write(path, content):
     full = os.path.join(ROOT, path)
@@ -68,6 +79,7 @@ MENU = f"""<header class="topbar">
 def footer(email, site_label="laueditora.pt", site_url="/"):
     return f"""<footer id="contactos">
   <a class="logo" href="/"><b>LAU</b> <span>EDIÇÕES</span></a>
+  {social([("instagram","Instagram","https://www.instagram.com/laugoddog/"),("email","Email","mailto:"+email),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn","https://www.linkedin.com/in/rafaelaugustocn")])}
   <div class="contacts">
     <a href="mailto:{email}">{email}</a><br>
     <a href="{WA}">{TEL}</a><br>
@@ -118,12 +130,7 @@ def page_lau():
 <section class="hero">
   <h1><b>LAU</b> <span>EDIÇÕES</span></h1>
   <p class="lema">os nossos livros são resumos dos nossos silêncios.</p>
-  <div class="socials">
-    <a href="https://www.instagram.com/laugoddog/">Instagram</a>
-    <a href="mailto:{EMAIL_LAU}">Email</a>
-    <a href="{WA}">WhatsApp</a>
-    <a href="https://www.linkedin.com/in/rafaelaugustocn">LinkedIn</a>
-  </div>
+  {social([("instagram","Instagram","https://www.instagram.com/laugoddog/"),("email","Email","mailto:"+EMAIL_LAU),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn","https://www.linkedin.com/in/rafaelaugustocn")])}
 </section>
 
 <section id="destaque">
@@ -273,14 +280,7 @@ def page_rafael():
 <section class="hero">
   <h1 style="font-family:var(--fd);font-weight:400;font-size:clamp(40px,9vw,80px)">Rafael Augusto</h1>
   <p class="lema">Unravelling The Mind | Philosophy, Books &amp; Music</p>
-  <div class="socials">
-    <a href="https://www.instagram.com/laugoddog/">Instagram</a>
-    <a href="https://youtube.com/@laugoddog">YouTube</a>
-    <a href="https://open.spotify.com/artist/01Ae3zliOOHD3d9futectI">Spotify</a>
-    <a href="https://www.linkedin.com/in/rafaelaugustocn">LinkedIn</a>
-    <a href="mailto:{EMAIL_RA}">Email</a>
-    <a href="{WA}">WhatsApp</a>
-  </div>
+  {social([("instagram","Instagram","https://www.instagram.com/laugoddog/"),("youtube","YouTube","https://youtube.com/@laugoddog"),("spotify","Spotify","https://open.spotify.com/artist/01Ae3zliOOHD3d9futectI"),("linkedin","LinkedIn","https://www.linkedin.com/in/rafaelaugustocn"),("email","Email","mailto:"+EMAIL_RA),("whatsapp","WhatsApp",WA)])}
 </section>
 
 <section>
