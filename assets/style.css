@@ -304,3 +304,4 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .buycol .buy{display:block;text-align:center;background:#fff;color:#111;text-decoration:none;font:300 15px var(--fd);text-transform:uppercase;letter-spacing:.06em;padding:12px;border-radius:3px}
 .panel .buycol .buy,.detail .buycol .buy,.detail-static .buycol .buy{background:#111;color:#fff}
 .drawer .dsoc a{border:0;padding:0;white-space:normal}
+#conteudo,main [id],.acc{scroll-margin-top:72px}
