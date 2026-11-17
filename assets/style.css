@@ -43,7 +43,7 @@ body.menu-open .drawer{transform:none} body.menu-open .scrim{opacity:1;pointer-e
 .socials{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 .socials a{display:inline-flex;color:#fff}
 .socials svg{width:28px;height:28px}
-.down{margin-top:3.5svh;width:32px;height:32px;animation:bob 1.8s ease-in-out infinite;border-radius:50%;background:rgba(255,255,255,.15);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px}
+.down{margin-top:calc(3.5svh + 14px);width:32px;height:32px;animation:bob 1.8s ease-in-out infinite;border-radius:50%;background:rgba(255,255,255,.15);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px}
 
 /* topo da página pessoal: fotografia em cima, como no Hopp */
 .phero{position:relative;text-align:center}
