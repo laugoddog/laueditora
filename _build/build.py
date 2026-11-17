@@ -193,7 +193,7 @@ def page_lau():
     patrono = f"""<div class="lit" style="font-size:17px"><div id="pat-txt" class="clamp"><p>{PATRONO_TXT}</p></div></div><button class="more" data-more="pat-txt">Mostrar mais</button>
 <ul class="checks">{"".join(f"<li>{x}</li>" for x in PATRONO_LI)}</ul>
 <div class="pr" style="font-family:var(--fd);font-size:18px;margin-top:10px">15€/mês</div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">torna-te patrono</a>"""
-    rail = "".join(f'<button class="person" data-author="a-{k}"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></button>' for k, a in AUTORES.items())
+    rail = "".join(f'<a class="person" href="/autores/{k}/"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></a>' for k, a in AUTORES.items())
     dets = ""
     for k, a in AUTORES.items():
         ls = [l for l in LIVROS if l["autor"] == k and not l.get("esgotado")]
@@ -221,7 +221,7 @@ def page_lau():
 
   <section class="block authors" id="autores">
     <h2>os nossos <b class='k'>autores</b></h2><div class="h2s">clica na imagem para saber mais</div>
-    <div class="arail">{rail}</div>{dets}
+    <div class="arail">{rail}</div>
   </section>
 
   <section class="block" id="sobre">
