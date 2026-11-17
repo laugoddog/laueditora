@@ -116,9 +116,9 @@ def buy(l, cls="buy"):
     return "" if l.get("esgotado") else f'<a class="{cls}" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
 
 def books_row(livros, pid):
-    row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{i}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
+    row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
 <h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buy(l)}</div>""" for i, l in enumerate(livros))
-    det = "".join(f"""<div class="detail" id="{pid}-{i}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
+    det = "".join(f"""<div class="detail" id="{pid}-{l['slug']}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
 <img src="/img/{l['capa']}" alt=""><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
 <div class="txt lit">{texto(l)}</div>{buy(l, "buy")}</div>""" for i, l in enumerate(livros))
     return f'<div class="row">{row}</div>{det}'
@@ -167,7 +167,7 @@ def page_lau():
   <a class="down" href="#conteudo" aria-label="descer">↓</a>
 </header>
 <main class="wrap" id="conteudo">
-  <a class="feature" href="/livros/{LIVROS[0]['slug']}/" aria-label="Em destaque: {esc(LIVROS[0]['titulo'])}">
+  <a class="feature" href="/livros/{LIVROS[0]['slug']}/" data-acc="livros" data-show="lv-{LIVROS[0]['slug']}" aria-label="Em destaque: {esc(LIVROS[0]['titulo'])}">
     <video autoplay muted loop playsinline poster="/img/poster-destaque.jpg"><source src="/media/destaque.mp4" type="video/mp4"></video>
   </a>
   {acc("livros","compra os nossos livros",books_row(lau,"lv"),icon="icone-l.png")}
@@ -199,8 +199,8 @@ def page_lau():
 # ---------- página pessoal ----------
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = '<div class="row wide">' + "".join(f'<div class="vd"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Watch now</a></div>' for t, u, img in VIDEOS) + '</div>'
-    pubs = '<div class="row wide">' + "".join(f'<div class="vd" lang="en"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><p>{esc(ab)}</p></div><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Continue</a></div>' for t, au, u, img, ab in PUBLICACOES) + '</div>'
+    vids = '<div class="row w">' + "".join(f'<div class="vd"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Watch now</a></div>' for t, u, img in VIDEOS) + '</div>'
+    pubs = '<div class="row w">' + "".join(f'<div class="vd" lang="en"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><p>{esc(ab)}</p></div><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Continue</a></div>' for t, au, u, img, ab in PUBLICACOES) + '</div>'
     wip = f"""<div class="row">
 <div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>
 <div class="bk"><img src="/img/wip-ao-deus-da-brincadeira.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Ao Deus da Brincadeira</h4><div class="who">ficção narrativa</div><a class="buy" style="margin-top:8px" href="{PATREON}" target="_blank" rel="noopener">Continue</a></div></div>"""
@@ -215,7 +215,7 @@ def page_rafael():
   </div>
 </header>
 <main class="wrap">
-  <a class="feature" href="#books" data-acc="books" aria-label="Now available">
+  <a class="feature" href="/livros/thinking-animal/" data-acc="books" data-show="bk-thinking-animal" aria-label="Now available: Thinking Animal">
     <video autoplay muted loop playsinline poster="/img/poster-now-available.jpg"><source src="/media/now-available.mp4" type="video/mp4"></video>
   </a>
   {acc("books","Books",books_row(livros,"bk"),"livros",caps=True)}
@@ -231,11 +231,6 @@ def page_rafael():
     <a class="wide" href="{WA}">book a free session | enquire</a>
   </section>
 
-  <section class="block" id="wip">
-    <h2>Works in Progress</h2><div class="h2s">LAUWiP</div>
-    {acc("wip-acc","Works in Progress",wip,"trabalhos em desenvolvimento",caps=True)}
-    <a class="wide" href="{PATREON}" target="_blank" rel="noopener">access LAUWiP (patreon)</a>
-  </section>
   {contacts("rafaelaugusto.com", WEB)}
 </main>
 """

@@ -8,10 +8,8 @@ function setOpen(acc,on){acc.classList.toggle('open',on);$('.acc-h',acc).setAttr
   if(!on){const p=$('.panel',acc);p.classList.remove('showing');$$('.detail',p).forEach(d=>d.classList.remove('on'));}}
 $$('.acc').forEach(acc=>{$('.acc-h',acc).onclick=()=>setOpen(acc,!acc.classList.contains('open'));
   const x=acc.nextElementSibling;if(x&&x.classList.contains('xbtn'))x.onclick=()=>{setOpen(acc,false);acc.scrollIntoView({behavior:'smooth',block:'center'});};});
-// detalhe do livro dentro da secção
-$$('[data-detail]').forEach(b=>b.onclick=()=>{const d=document.getElementById(b.dataset.detail),p=d.closest('.panel');
-  $$('.detail',p).forEach(x=>x.classList.remove('on'));d.classList.add('on');p.classList.add('showing');
-  p.style.setProperty('--dh',(d.scrollHeight+10)+'px');d.scrollTop=0;});
+// detalhe do livro dentro da secção (showDetail definida abaixo, hoisted)
+$$('[data-detail]').forEach(b=>b.onclick=()=>showDetail(document.getElementById(b.dataset.detail)));
 $$('.detail .back').forEach(b=>b.onclick=()=>{const p=b.closest('.panel');p.classList.remove('showing');$$('.detail',p).forEach(x=>x.classList.remove('on'));});
 // autores
 $$('[data-author]').forEach(b=>b.onclick=()=>{const w=b.closest('.authors');$$('.adet',w).forEach(x=>x.classList.remove('on'));
@@ -20,7 +18,10 @@ $$('.adet .back').forEach(b=>b.onclick=()=>{const w=b.closest('.authors');w.clas
 // mostrar mais
 $$('[data-more]').forEach(b=>b.onclick=()=>{const t=document.getElementById(b.dataset.more),c=t.classList.toggle('clamp');b.textContent=c?'Mostrar mais ⌄':'Mostrar menos ⌃';});
 // cartão em destaque que abre uma secção
-$$('[data-acc]').forEach(a=>a.addEventListener('click',e=>{const acc=document.getElementById(a.dataset.acc);if(acc){e.preventDefault();setOpen(acc,true);acc.scrollIntoView({behavior:'smooth',block:'start'});}}));
+function showDetail(d){const p=d.closest('.panel');$$('.detail',p).forEach(x=>x.classList.remove('on'));d.classList.add('on');p.classList.add('showing');p.style.setProperty('--dh',(d.scrollHeight+10)+'px');d.scrollTop=0;}
+$$('[data-acc]').forEach(a=>a.addEventListener('click',e=>{const acc=document.getElementById(a.dataset.acc);if(!acc)return;e.preventDefault();
+  const d=a.dataset.show&&document.getElementById(a.dataset.show);setOpen(acc,true);if(d)showDetail(d);
+  setTimeout(()=>acc.scrollIntoView({behavior:'smooth',block:'start'}),60);}));
 // abrir pela âncora (#livros, #patrono…)
 const h=location.hash.slice(1),t=h&&document.getElementById(h);if(t&&t.classList.contains('acc'))setOpen(t,true);
 })();
