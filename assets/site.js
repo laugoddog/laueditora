@@ -4,7 +4,7 @@ const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelecto
 $$('.burger').forEach(b=>b.onclick=()=>document.body.classList.add('menu-open'));
 $$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>document.body.classList.remove('menu-open')));
 // secções que abrem
-function setOpen(acc,on){acc.classList.toggle('open',on);$('.acc-h',acc).setAttribute('aria-expanded',on);
+function setOpen(acc,on){if(acc.classList.contains('fp')&&!on){acc.classList.remove('open');setTimeout(()=>{acc.classList.remove('shown');const f=$('[data-feat="'+acc.id+'"]');if(f)f.classList.remove('hide');},450);$('.acc-h',acc).setAttribute('aria-expanded',false);return;}acc.classList.toggle('open',on);$('.acc-h',acc).setAttribute('aria-expanded',on);
   if(!on){const p=$('.panel',acc);p.classList.remove('showing');$$('.detail',p).forEach(d=>d.classList.remove('on'));}}
 $$('.acc').forEach(acc=>{$('.acc-h',acc).onclick=()=>setOpen(acc,!acc.classList.contains('open'));
   const x=acc.nextElementSibling;if(x&&x.classList.contains('xbtn'))x.onclick=()=>{setOpen(acc,false);acc.scrollIntoView({behavior:'smooth',block:'center'});};});
@@ -24,6 +24,8 @@ $$('[data-acc]').forEach(a=>a.addEventListener('click',e=>{const acc=document.ge
   setTimeout(()=>acc.scrollIntoView({behavior:'smooth',block:'start'}),60);}));
 // abrir pela âncora (#livros, #patrono…)
 const h=location.hash.slice(1),t=h&&document.getElementById(h);if(t&&t.classList.contains('acc'))setOpen(t,true);
+$$('[data-feat]').forEach(f=>f.onclick=()=>{const acc=document.getElementById(f.dataset.feat);f.classList.add('hide');acc.classList.add('shown');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>setOpen(acc,true)));});
 // carrossel de vídeos
 $$('.car').forEach(car=>{const s=$('.slides',car),n=s.children.length,d=$('.dots',car);d.innerHTML='<i></i>'.repeat(n);
   let cur=0,t;const dots=()=>$$('i',d).forEach((x,k)=>x.classList.toggle('on',k===cur));

@@ -199,3 +199,15 @@ details.line h4{font-family:var(--fd);font-weight:600;font-size:17px;margin:16px
 .dots{display:flex;justify-content:center;gap:7px;margin-top:14px}
 .dots i{width:7px;height:7px;border-radius:50%;background:#ccc}
 .dots i.on{background:#666}
+
+/* destaque: o cartão é um botão que abre o seu próprio painel */
+.acc.fp{display:none}
+.acc.fp.shown{display:block}
+.acc.fp:not(.shown)+.xbtn{display:none}
+.feature.hide{display:none}
+.detail-static{color:var(--ink);margin-top:14px}
+.detail-static h3{font-family:var(--fd);font-weight:600;font-size:20px;margin:0}
+.detail-static .who{color:var(--ink2);font-size:16px}
+.detail-static .pr{font-family:var(--fd);font-size:18px;margin:6px 0 12px}
+.detail-static .txt{font-size:17px;margin-bottom:14px}
+.detail-static .buy{display:block;text-align:center;background:#111;color:#fff;text-decoration:none;font:600 16px var(--fd);padding:12px;border-radius:3px}

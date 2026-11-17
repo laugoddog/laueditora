@@ -115,6 +115,13 @@ def texto(l):
 def buy(l, cls="buy"):
     return "" if l.get("esgotado") else f'<a class="{cls}" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
 
+def feat(fid, label, video, poster, l):
+    a = AUTORES[l["autor"]]
+    inner = f"""<video autoplay muted loop playsinline poster="/img/{poster}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px"><source src="/media/{video}" type="video/mp4"></video>
+<div class="detail-static"><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}<div class="txt lit">{texto(l)}</div>{buy(l)}</div>"""
+    return f"""<button class="feature" data-feat="{fid}" aria-label="{label}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
+{acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
+
 def books_row(livros, pid):
     row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
 <h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buy(l)}</div>""" for i, l in enumerate(livros))
@@ -167,9 +174,7 @@ def page_lau():
   <a class="down" href="#conteudo" aria-label="descer">↓</a>
 </header>
 <main class="wrap" id="conteudo">
-  <a class="feature" href="/livros/{LIVROS[0]['slug']}/" data-acc="livros" data-show="lv-{LIVROS[0]['slug']}" aria-label="Em destaque: {esc(LIVROS[0]['titulo'])}">
-    <video autoplay muted loop playsinline poster="/img/poster-destaque.jpg"><source src="/media/destaque.mp4" type="video/mp4"></video>
-  </a>
+  {feat("destaque","em destaque","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
   {acc("livros","compra os nossos livros",books_row(lau,"lv"),icon="icone-l.png")}
   {acc("reviews","deixa uma review",rv,icon="icone-a.png")}
   {acc("pre-lancamentos","pré-lançamentos",pre,icon="icone-u.png")}
@@ -215,9 +220,7 @@ def page_rafael():
   </div>
 </header>
 <main class="wrap">
-  <a class="feature" href="/livros/thinking-animal/" data-acc="books" data-show="bk-thinking-animal" aria-label="Now available: Thinking Animal">
-    <video autoplay muted loop playsinline poster="/img/poster-now-available.jpg"><source src="/media/now-available.mp4" type="video/mp4"></video>
-  </a>
+  {feat("now","Now Available","now-available.mp4","poster-now-available.jpg",next(x for x in LIVROS if x["slug"]=="thinking-animal"))}
   {acc("books","Books",books_row(livros,"bk"),"livros",caps=True)}
   {acc("music","Music Videos",vids,"videoclips",caps=True)}
   {acc("academic","Academic Publications",pubs,"publicações académicas",caps=True)}
