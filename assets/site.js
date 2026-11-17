@@ -35,8 +35,9 @@ $$('.car').forEach(car=>{const s=$('.slides',car),n=s.children.length,d=$('.dots
 $$('.yt').forEach(b=>b.onclick=()=>{if($('iframe',b))return;const f=document.createElement('iframe');
   f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;b.appendChild(f);$('.play',b).remove();});
 // títulos sempre numa linha: reduz a letra até caber
-function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub').forEach(el=>{if(!el.parentElement.clientWidth)return;el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize),box=el.parentElement;
-  const avail=()=>!el.matches('.tt')?box.clientWidth-(el.matches('h1')?50:16):box.clientWidth-parseFloat(getComputedStyle(box).paddingLeft)-parseFloat(getComputedStyle(box).paddingRight);
-  while(el.scrollWidth>avail()&&fs>10){fs-=.5;el.style.fontSize=fs+'px';}});}
+function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub,.person span').forEach(el=>{if(!el.parentElement.clientWidth)return;el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize),box=el.parentElement;
+  const avail=()=>el.matches('.person span')?box.clientWidth:!el.matches('.tt')?box.clientWidth-(el.matches('h1')?50:16):box.clientWidth-parseFloat(getComputedStyle(box).paddingLeft)-parseFloat(getComputedStyle(box).paddingRight);
+  while(el.scrollWidth>avail()&&fs>10){fs-=.5;el.style.fontSize=fs+'px';}});
+  const ps=$$('.person span');if(ps.length){const m=Math.min(...ps.map(s=>parseFloat(getComputedStyle(s).fontSize)));ps.forEach(s=>s.style.fontSize=m+'px');}}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);addEventListener('resize',fit);
 })();

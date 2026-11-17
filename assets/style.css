@@ -229,3 +229,7 @@ b.k{font-weight:900}
 .down{font-size:16px}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 @media (prefers-reduced-motion:reduce){.down{animation:none}}
+.arail{align-items:flex-start}
+.person{display:flex;flex-direction:column;justify-content:flex-start;align-self:flex-start}
+.person{min-width:0}
+.person span{white-space:nowrap;width:100%;overflow:hidden}
