@@ -119,7 +119,7 @@ def feat(fid, label, video, poster, l):
     a = AUTORES[l["autor"]]
     inner = f"""<video autoplay muted loop playsinline poster="/img/{poster}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px"><source src="/media/{video}" type="video/mp4"></video>
 <div class="detail-static"><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}<div class="txt lit">{texto(l)}</div>{buy(l)}</div>"""
-    return f"""<button class="feature" data-feat="{fid}" aria-label="{label}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
+    return f"""<button class="feature" data-feat="{fid}" aria-label="{re.sub('<[^>]+>','',label)}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
 {acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
 
 def books_row(livros, pid):
@@ -174,24 +174,24 @@ def page_lau():
   <a class="down" href="#conteudo" aria-label="descer">↓</a>
 </header>
 <main class="wrap" id="conteudo">
-  {feat("destaque","em destaque","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
-  {acc("livros","compra os nossos livros",books_row(lau,"lv"),icon="icone-l.png")}
-  {acc("reviews","deixa uma review",rv,icon="icone-a.png")}
-  {acc("pre-lancamentos","pré-lançamentos",pre,icon="icone-u.png")}
-  {acc("patrono","torna-te patrono e editor",patrono,icon="icone-aparo.png")}
+  {feat("destaque","em <b class='k'>destaque</b>","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
+  {acc("livros","compra os nossos <b class='k'>livros</b>",books_row(lau,"lv"),icon="icone-l.png")}
+  {acc("reviews","deixa uma <b class='k'>review</b>",rv,icon="icone-a.png")}
+  {acc("pre-lancamentos","<b class='k'>pré-lançamentos</b>",pre,icon="icone-u.png")}
+  {acc("patrono","torna-te <b class='k'>patrono</b> e editor",patrono,icon="icone-aparo.png")}
 
   <section class="block authors" id="autores">
-    <h2>os nossos autores</h2><div class="h2s">clica na imagem para saber mais</div>
+    <h2>os nossos <b class='k'>autores</b></h2><div class="h2s">clica na imagem para saber mais</div>
     <div class="arail">{rail}</div>{dets}
   </section>
 
   <section class="block" id="sobre">
-    <h3>sobre nós</h3>
+    <h3><b class='k'>sobre</b> nós</h3>
     <div class="lit" style="font-size:18px"><div id="sobre-txt" class="clamp"><p>A LAU edições é uma editora independente focada em títulos que, através da ficção, do ensaio, da poesia ou do humor, exploram a mente e a natureza humanas. Achando que, na arte, a forma é tão importante como o conteúdo, damos a cada texto a casa que merece, aliando à qualidade dos textos a identidade visual que nos distingue.</p><p>Se gostavas de participar ativamente no processo editorial, receber em casa livros surpresa, ter acesso a conteúdos de livros em desenvolvimento (sobre os quais poderás dar a tua opinião), e ver teu nome nos agradecimentos de edições futuras em que participes, considera tornar-te patrono (topo da página).</p></div></div>
     <button class="more" data-more="sobre-txt">Mostrar mais ⌄</button>
     <div style="margin-top:18px">
-      <details class="line"><summary>produtos e serviços</summary><div class="in lit"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
-      <details class="line" id="publica"><summary>publica connosco</summary><div class="in"><div class="lit"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p></div><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
+      <details class="line"><summary>produtos e <b class='k'>serviços</b></summary><div class="in lit"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
+      <details class="line" id="publica"><summary><b class='k'>publica</b> connosco</summary><div class="in"><div class="lit"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p></div><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
     </div>
   </section>
   {contacts("laueditora.pt/", "/")}
@@ -214,19 +214,19 @@ def page_rafael():
   <img class="photo" src="/img/fundo-rafael.jpg" alt="Rafael Augusto">
   <div class="info">
     <img class="sig" src="/img/assinatura-branca.png" alt="">
-    <h1>Rafael Augusto{TICK}</h1>
+    <h1>Rafael <b class='k'>Augusto</b>{TICK}</h1>
     <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
     {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("web","Website",WEB),("email","Email","mailto:"+EMAIL),("linkedin","LinkedIn",LI),("whatsapp","WhatsApp",WA)])}
   </div>
 </header>
 <main class="wrap">
-  {feat("now","Now Available","now-available.mp4","poster-now-available.jpg",next(x for x in LIVROS if x["slug"]=="thinking-animal"))}
-  {acc("books","Books",books_row(livros,"bk"),"livros",caps=True)}
-  {acc("music","Music Videos",vids,"videoclips",caps=True)}
-  {acc("academic","Academic Publications",pubs,"publicações académicas",caps=True)}
+  {feat("now","Now <b class='k'>Available</b>","now-available.mp4","poster-now-available.jpg",next(x for x in LIVROS if x["slug"]=="thinking-animal"))}
+  {acc("books","<b class='k'>Books</b>",books_row(livros,"bk"),"livros",caps=True)}
+  {acc("music","Music <b class='k'>Videos</b>",vids,"videoclips",caps=True)}
+  {acc("academic","Academic <b class='k'>Publications</b>",pubs,"publicações académicas",caps=True)}
 
   <section class="block" id="practice" lang="en">
-    <h2>Philosophical Practice</h2><div class="h2s">Acompanhamento Filosófico</div>
+    <h2>Philosophical <b class='k'>Practice</b></h2><div class="h2s">Acompanhamento Filosófico</div>
     <h3>Philosophical Practice: An Alternative to therapy, coaches and religions</h3>
     <div class="lit" style="font-size:18px"><p>Besides my PhD in Philosophy and my MsC in Cognitive Science, I was trained by Lydia Amir as a philosophical practitioner. I work with individuals and couples, in Portuguese and English. The first session is for free.</p><p>If you want to know more, read below or click the button to send me a message.</p></div>
     <details class="line" lang="pt"><summary>PT</summary><div class="in lit">{PRATICA_PT}</div></details>
@@ -245,7 +245,7 @@ def page_rafael():
 def page_livro(l):
     a = AUTORES[l["autor"]]
     body = f"""{menu()}
-<main class="wrap page">
+<main class="wrap page livro">
   <img class="cover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}">
   <h1>{esc(l['titulo'])}</h1>
   <div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>
