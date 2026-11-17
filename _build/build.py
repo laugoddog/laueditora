@@ -78,7 +78,7 @@ def menu():
 </aside>
 <aside class="drawer" aria-label="Menu">
   <button class="close" aria-label="Fechar menu" data-menu-close>&times;</button>
-  <img src="/img/logo-lau-branco.png" alt="LAU Edições">
+  <a class="dlogo" href="/"><img src="/img/logo-lau-longo.png" alt="LAU Edições"></a>
   <nav>
     <a href="/">LAU Edições</a>
     <a href="/#livros">compra os nossos livros</a>
@@ -90,7 +90,9 @@ def menu():
     <a href="/#sobre">sobre nós</a>
     <a href="/rafaelaugusto/">Rafael Augusto</a>
   </nav>
+  <div class="dsoc">{socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn",LI)])}</div>
 </aside>
+<header class="topbar"><a href="/" aria-label="LAU Edições — página inicial"><img src="/img/logo-lau-longo.png" alt="LAU Edições"></a></header>
 """
 
 def socials(items):

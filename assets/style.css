@@ -287,3 +287,20 @@ html.cart-open,body.cart-open{overflow:hidden}
 .buyrow{min-width:0}
 .buyrow .buy{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:9px 4px;font-size:13px}
 a.person{text-decoration:none}
+/* cabeçalho com o logótipo comprido */
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;z-index:55;display:flex;align-items:center;justify-content:center;background:rgba(18,18,18,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);transition:opacity .15s linear}
+.topbar img{height:40px;width:auto}
+body.rafael .topbar{display:none}
+body.has-hero .topbar{opacity:0;pointer-events:none}
+.page{padding-top:96px}
+/* menu: logótipo comprido em cima, redes sociais em baixo */
+.drawer{display:flex;flex-direction:column}
+.drawer .close{align-self:flex-end;float:none}
+.dlogo img{width:auto;height:44px;margin:0 0 18px}
+.drawer nav{flex:1}
+.dsoc{padding-top:22px}
+.dsoc .socials{justify-content:flex-start;gap:22px;margin:0}
+.dsoc svg{width:26px;height:26px}
+.buycol .buy{display:block;text-align:center;background:#fff;color:#111;text-decoration:none;font:300 15px var(--fd);text-transform:uppercase;letter-spacing:.06em;padding:12px;border-radius:3px}
+.panel .buycol .buy,.detail .buycol .buy,.detail-static .buycol .buy{background:#111;color:#fff}
+.drawer .dsoc a{border:0;padding:0;white-space:normal}
