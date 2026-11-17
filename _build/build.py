@@ -94,64 +94,69 @@ def contacts(site_label, site_url):
 
 FOOT = '<script src="/assets/site.js"></script>\n</body></html>\n'
 
-def sec(target, title, sub=None, icon=None, caps=False):
-    ic = f'<img class="ic" src="/img/{icon}" alt="">' if icon else ""
+def acc(aid, title, inner, sub=None, icon=None, caps=False, keep=False):
+    ic = f'<img class="ic{" keep" if keep else ""}" src="/img/{icon}" alt="">' if icon else ""
     st = f'<span class="st">{sub}</span>' if sub else ""
-    return f'<button class="sec{" caps" if caps else ""}" data-open="{target}">{ic}<span class="tt">{title}</span>{st}</button>'
+    return f"""<section class="acc{" caps" if caps else ""}" id="{aid}">
+  <button class="acc-h" aria-expanded="false">{ic}<span class="tt">{title}</span>{st}</button>
+  <div class="acc-b"><div class="acc-in"><div class="panel">{inner}</div></div></div>
+</section><button class="xbtn" aria-label="Fechar">&times;</button>"""
 
-def modal(mid, title, sub, inner, carousel=True):
-    sub_html = f"<span>{sub}</span>" if sub else ""
-    arrows = '<button class="arrow l" aria-label="anterior">‹</button><button class="arrow r" aria-label="seguinte">›</button><div class="nav"></div>' if carousel else ""
-    body = f'<div class="items">{inner}</div>{arrows}' if carousel else inner
-    return f"""<div class="modal" id="{mid}" role="dialog" aria-modal="true" aria-label="{esc(title)}">
-  <div class="sheet"><div class="mh"><b>{title}</b>{sub_html}</div>{body}</div>
-  <button class="xclose" data-close aria-label="Fechar">&times;</button>
-</div>"""
-
-def preco(l):
+def preco(l, cls="pr"):
     if l.get("esgotado"):
         return '<div class="out">esgotado</div>'
     s = f'<s>{l["preco_antigo"]}</s>' if l.get("preco_antigo") else ""
-    return f'<div class="price">{s}{l["preco"]}</div>'
+    return f'<div class="{cls}">{s}{l["preco"]}</div>'
 
 def texto(l):
     lang = f' lang="{l["lang"]}"' if l.get("lang") else ""
-    return "".join(f"<p{lang}>{p}</p>" for p in l["texto"])
+    return "".join(f'<h4{lang}>{re.sub("</?b>","",p)}</h4>' if re.fullmatch(r"<b>[^<]*</b>", p) else f"<p{lang}>{p}</p>" for p in l["texto"])
 
-def book_item(l):
-    buy = "" if l.get("esgotado") else f'<a class="btn" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
-    return f"""<article class="item">
-  <img class="cover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy">
-  <h3>{esc(l['titulo'])}</h3>
-  <div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>
-  {preco(l)}
-  {buy}
-  <div class="txt">{texto(l)}</div>
-</article>"""
+def buy(l, cls="buy"):
+    return "" if l.get("esgotado") else f'<a class="{cls}" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
+
+def books_row(livros, pid):
+    row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{i}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
+<h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buy(l)}</div>""" for i, l in enumerate(livros))
+    det = "".join(f"""<div class="detail" id="{pid}-{i}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
+<img src="/img/{l['capa']}" alt=""><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
+<div class="txt lit">{texto(l)}</div>{buy(l, "buy")}</div>""" for i, l in enumerate(livros))
+    return f'<div class="row">{row}</div>{det}'
+
+PATRONO_TXT = "Enquanto patrono LAU Edições, terás uma participação ativa no processo editorial: com acesso a trabalhos em desenvolvimento, poderás comentar os textos e o teu nome será mencionado nos livros em cuja edição tenhas participado. Para além disso, terás acesso a exemplares autografados de todas as edições normais futuras e a 20% de desconto nos restantes produtos e serviços, entre outros."
+PATRONO_LI = ["Acesso antecipado a WIPs (Works in Progress) selecionados.",
+  "Direito a deixar comentários escritos em rascunhos de trabalhos em desenvolvimento, acessíveis aos autores (requer acesso ao Notion)",
+  "Exemplares autografados de todos os livros futuros LAU EDIÇÕES (máximo de 1 livro/mês; exclui edições especiais)",
+  "Nome destacado na página de agradecimentos das obras para as quais tenha contribuído",
+  "20% de desconto nos restantes produtos e serviços"]
 
 # ---------- página da editora ----------
 def page_lau():
     lau = [l for l in LIVROS if l.get("lau")]
-    dest = LIVROS[0]
-    rv = "".join(f'<article class="item"><img class="cover" src="/img/{next(l["capa"] for l in LIVROS if l["titulo"].startswith(t.split(":")[0]))}" alt="" loading="lazy"><h3>{esc(t)}</h3><a class="btn" href="{g}" target="_blank" rel="noopener">goodreads</a><a class="btn alt" href="{a}" target="_blank" rel="noopener">amazon</a></article>' for t, g, a in REVIEWS)
-    wip = f"""<article class="item"><img class="cover" src="/img/wip-luz-do-luto.webp" alt="" loading="lazy"><h3>Mourning Light: Luz do Luto</h3><div class="price">30€</div>
-<a class="btn" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reservar</a><a class="btn alt" href="{PATREON}" target="_blank" rel="noopener">aceder (patronos LAUWiP)</a>
-<div class="txt"><p>O projeto Luz do Luto inclui um livro e um álbum musical. A edição — edição especial do livro, vinil e livro de letras — terá um numero limitado de cópias, que podem ser reservadas através do link.</p><p>Também é possível aceder aos conteúdos antecipadamente através do LAUWiP.</p></div></article>
-<article class="item"><img class="cover" src="/img/wip-ao-deus-da-brincadeira.webp" alt="" loading="lazy"><h3>Ao Deus da Brincadeira (livro, ficção)</h3>
-<a class="btn alt" href="{PATREON}" target="_blank" rel="noopener">aceder (patronos LAUWiP)</a></article>"""
-    pre_intro = '<p style="font-size:17px">Aqui estão os trabalhos em desenvolvimento, alguns quase prontos a lançar, outros em processo de escrita. Podes pré-reservar aqueles que têm um lançamento planeado e, quanto aos outros, tornando-te patrono, podes aceder antecipadamente aos conteúdos e comentá-los, participando no processo editorial.</p>'
-    patrono = f"""<div class="item" style="flex:none"><div class="price">15€/mês</div><div class="txt"><p>Enquanto patrono LAU Edições, terás uma participação ativa no processo editorial: com acesso a trabalhos em desenvolvimento, poderás comentar os textos e o teu nome será mencionado nos livros em cuja edição tenhas participado. Para além disso, terás acesso a exemplares autografados de todas as edições normais futuras e a 20% de desconto nos restantes produtos e serviços, entre outros.</p></div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">ir para o Patreon</a></div>"""
-    autores_rail = "".join(f'<button class="person" data-open="m-autor-{k}"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></button>' for k, a in AUTORES.items())
-    autores_modais = ""
+    rv = "".join(f'<div class="rv"><img src="/img/{next(l["capa"] for l in LIVROS if l["titulo"].startswith(t.split(":")[0]))}" alt="" loading="lazy"><div class="t">{esc(t)}</div><div class="l"><a href="{g}" target="_blank" rel="noopener">goodreads</a><a href="{am}" target="_blank" rel="noopener">amazon</a></div></div>' for t, g, am in REVIEWS)
+    pre = f"""<div class="row">
+<div class="bk"><button class="cv" data-detail="pre-0"><img src="/img/wip-luz-do-luto.webp" alt="Luz do Luto" loading="lazy"></button><h4>Mourning Light: Luz do Luto</h4><div class="who">Rafael Augusto</div><div class="pr">30€</div><a class="buy" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reservar</a></div>
+<div class="bk"><button class="cv" data-detail="pre-1"><img src="/img/wip-ao-deus-da-brincadeira.webp" alt="Ao Deus da Brincadeira" loading="lazy"></button><h4>Ao Deus da Brincadeira</h4><div class="who">Rafael Augusto</div><div class="pr">ficção</div><a class="buy" href="{PATREON}" target="_blank" rel="noopener">aceder (LAUWiP)</a></div>
+</div>
+<div class="detail" id="pre-0"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>Luz do Luto</div><img src="/img/wip-luz-do-luto.webp" alt=""><h3>Mourning Light: Luz do Luto</h3><div class="who">Rafael Augusto</div><div class="pr">30€</div>
+<div class="txt lit"><p>O projeto Luz do Luto inclui um livro e um álbum musical. A edição — edição especial do livro, vinil e livro de letras — terá um numero limitado de cópias, que podem ser reservadas através do link.</p><p>Também é possível aceder aos conteúdos antecipadamente através do LAUWiP.</p></div>
+<a class="buy" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reservar</a><a class="btn alt" href="{PATREON}" target="_blank" rel="noopener">aceder (patronos LAUWiP)</a></div>
+<div class="detail" id="pre-1"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>Ao Deus da Brincadeira</div><img src="/img/wip-ao-deus-da-brincadeira.webp" alt=""><h3>Ao Deus da Brincadeira</h3><div class="who">Rafael Augusto · livro, ficção</div>
+<a class="buy" href="{PATREON}" target="_blank" rel="noopener">aceder (patronos LAUWiP)</a></div>
+<div class="lit" style="font-size:17px;margin-top:6px"><p>Aqui estão os trabalhos em desenvolvimento, alguns quase prontos a lançar, outros em processo de escrita. Podes pré-reservar aqueles que têm um lançamento planeado e, quanto aos outros, tornando-te patrono, podes aceder antecipadamente aos conteúdos e comentá-los, participando no processo editorial.</p></div>"""
+    patrono = f"""<div class="lit" style="font-size:17px"><div id="pat-txt" class="clamp"><p>{PATRONO_TXT}</p></div></div><button class="more" data-more="pat-txt">Mostrar mais ⌄</button>
+<ul class="checks">{"".join(f"<li>{x}</li>" for x in PATRONO_LI)}</ul>
+<div class="pr" style="font-family:var(--fd);font-size:18px;margin-top:10px">15€/mês</div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">torna-te patrono</a>"""
+    rail = "".join(f'<button class="person" data-author="a-{k}"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></button>' for k, a in AUTORES.items())
+    dets = ""
     for k, a in AUTORES.items():
-        livros = [l for l in LIVROS if l["autor"] == k and not l.get("esgotado")]
-        covers = "".join(f'<a href="/livros/{l["slug"]}/"><img src="/img/{l["capa"]}" alt="{esc(l["titulo"])}" style="width:90px;aspect-ratio:2/3;object-fit:cover"></a>' for l in livros)
-        extra = f'<a class="btn alt" href="{a["pagina"]}">ver página</a>' if a.get("pagina") else ""
-        autores_modais += modal(f"m-autor-{k}", esc(a["nome"]), None,
-            f'<div class="item bio" style="flex:none"><img class="thumb" src="/img/{a["foto"]}" alt="" style="aspect-ratio:4/5;filter:grayscale(1)">'
-            + "".join(f"<p>{p}</p>" for p in a["bio"])
-            + f'<p style="margin-top:14px"><b>{"autora" if k.startswith("maria") else "autor"} de:</b></p><div style="display:flex;gap:10px;flex-wrap:wrap">{covers}</div>'
-            + f'<a class="btn" href="/autores/{k}/">livros de {esc(a["nome"])}</a><a class="btn alt" href="{a["amazon"]}" target="_blank" rel="noopener">Amazon</a>{extra}</div>', carousel=False)
+        ls = [l for l in LIVROS if l["autor"] == k and not l.get("esgotado")]
+        covers = "".join(f'<a href="/livros/{l["slug"]}/"><img src="/img/{l["capa"]}" alt="{esc(l["titulo"])}"></a>' for l in ls)
+        extra = f'<a class="wide" href="{a["pagina"]}">ver página</a>' if a.get("pagina") else ""
+        dets += f"""<div class="adet" id="a-{k}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(a['nome'])}</div>
+<img class="ph" src="/img/{a['foto']}" alt=""><h3>{esc(a['nome'])}</h3>
+<div class="lit" style="font-size:18px"><div id="bio-{k}" class="clamp">{"".join(f"<p>{p}</p>" for p in a["bio"])}</div></div><button class="more" data-more="bio-{k}">Mostrar mais ⌄</button>
+<div class="books">{covers}</div><a class="wide" href="/autores/{k}/">livros de {esc(a['nome'])}</a>{extra}</div>"""
 
     body = f"""{menu()}
 <header class="hero">
@@ -162,36 +167,30 @@ def page_lau():
   <a class="down" href="#conteudo" aria-label="descer">↓</a>
 </header>
 <main class="wrap" id="conteudo">
-  <button class="feature" data-open="m-livros" data-index="0">
+  <a class="feature" href="/livros/{LIVROS[0]['slug']}/" aria-label="Em destaque: {esc(LIVROS[0]['titulo'])}">
     <video autoplay muted loop playsinline poster="/img/poster-destaque.jpg"><source src="/media/destaque.mp4" type="video/mp4"></video>
-    <span class="t"><span class="big">em destaque</span><span class="it">O Meu Corpo de Barro e Ferro</span><span class="sm">poesia inédita de Leonel Coelho</span></span>
-  </button>
-  <div id="livros"></div>{sec("m-livros","compra os nossos livros",icon="icone-l.png")}
-  <div id="reviews"></div>{sec("m-reviews","deixa uma review",icon="icone-a.png")}
-  <div id="pre-lancamentos"></div>{sec("m-pre-lancamentos","pré-lançamentos",icon="icone-u.png")}
-  <div id="patrono"></div>{sec("m-patrono","torna-te patrono e editor",icon="icone-aparo.png")}
+  </a>
+  {acc("livros","compra os nossos livros",books_row(lau,"lv"),icon="icone-l.png")}
+  {acc("reviews","deixa uma review",rv,icon="icone-a.png")}
+  {acc("pre-lancamentos","pré-lançamentos",pre,icon="icone-u.png")}
+  {acc("patrono","torna-te patrono e editor",patrono,icon="icone-aparo.png")}
 
-  <section class="block" id="autores">
+  <section class="block authors" id="autores">
     <h2>os nossos autores</h2><div class="h2s">clica na imagem para saber mais</div>
-    <div class="rail">{autores_rail}</div>
+    <div class="arail">{rail}</div>{dets}
   </section>
 
   <section class="block" id="sobre">
     <h3>sobre nós</h3>
-    <div id="sobre-txt" class="clamp" style="font-size:18px"><p>A LAU edições é uma editora independente focada em títulos que, através da ficção, do ensaio, da poesia ou do humor, exploram a mente e a natureza humanas. Achando que, na arte, a forma é tão importante como o conteúdo, damos a cada texto a casa que merece, aliando à qualidade dos textos a identidade visual que nos distingue.</p><p>Se gostavas de participar ativamente no processo editorial, receber em casa livros surpresa, ter acesso a conteúdos de livros em desenvolvimento (sobre os quais poderás dar a tua opinião), e ver teu nome nos agradecimentos de edições futuras em que participes, considera tornar-te patrono (topo da página).</p></div>
+    <div class="lit" style="font-size:18px"><div id="sobre-txt" class="clamp"><p>A LAU edições é uma editora independente focada em títulos que, através da ficção, do ensaio, da poesia ou do humor, exploram a mente e a natureza humanas. Achando que, na arte, a forma é tão importante como o conteúdo, damos a cada texto a casa que merece, aliando à qualidade dos textos a identidade visual que nos distingue.</p><p>Se gostavas de participar ativamente no processo editorial, receber em casa livros surpresa, ter acesso a conteúdos de livros em desenvolvimento (sobre os quais poderás dar a tua opinião), e ver teu nome nos agradecimentos de edições futuras em que participes, considera tornar-te patrono (topo da página).</p></div></div>
     <button class="more" data-more="sobre-txt">Mostrar mais ⌄</button>
     <div style="margin-top:18px">
-      <details class="line"><summary>produtos e serviços</summary><div class="in"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
-      <details class="line" id="publica"><summary>publica connosco</summary><div class="in"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
+      <details class="line"><summary>produtos e serviços</summary><div class="in lit"><p>Para além de publicarmos livros, fornecemos vários serviços, editoriais e não só, que poderás explorar abaixo. Se gostarias de trabalhar connosco, não hesites em contactar.</p></div></details>
+      <details class="line" id="publica"><summary>publica connosco</summary><div class="in"><div class="lit"><p>Se escreveste ou estás a escrever um livro e gostarias de o publicar, envia uma proposta de edição para <a href="mailto:{EMAIL}">{EMAIL}</a>. Depois da análise, decidiremos se se alinha com o nosso projeto editorial.</p></div><a class="wide" href="mailto:{EMAIL}">fala connosco</a></div></details>
     </div>
   </section>
   {contacts("laueditora.pt/", "/")}
 </main>
-{modal("m-livros","compra os nossos livros",None,"".join(book_item(l) for l in lau))}
-{modal("m-reviews","deixa uma review",None,rv)}
-{modal("m-pre-lancamentos","pré-lançamentos",None,pre_intro + '<div class="items">' + wip + '</div><button class="arrow l">‹</button><button class="arrow r">›</button><div class="nav"></div>', carousel=False)}
-{modal("m-patrono","torna-te patrono e editor",None,patrono,carousel=False)}
-{autores_modais}
 """
     write("index.html", head("LAU EDIÇÕES, a nova editora portuguesa independente",
         "Edição de livros — uma estética que se alinha com a qualidade dos conteúdos. Livros, subscrições, serviços, workshops e cursos.",
@@ -200,48 +199,45 @@ def page_lau():
 # ---------- página pessoal ----------
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = "".join(f'<article class="item"><a href="{u}" target="_blank" rel="noopener"><img class="thumb" src="/img/{img}" alt="" loading="lazy"></a><h3>{esc(t)}</h3><a class="btn" href="{u}" target="_blank" rel="noopener">Watch now</a></article>' for t, u, img in VIDEOS)
-    pubs = "".join(f'<article class="item" lang="en"><a href="{u}" target="_blank" rel="noopener"><img class="thumb" src="/img/{img}" alt="" loading="lazy"></a><h3>{esc(t)}</h3><div class="who">{esc(au)}</div><div class="txt"><p>{esc(ab)}</p></div><a class="btn" href="{u}" target="_blank" rel="noopener">Continue</a></article>' for t, au, u, img, ab in PUBLICACOES)
-    wip = f"""<article class="item"><img class="cover" src="/img/wip-luz-do-luto.webp" alt="" loading="lazy"><h3>Luz do Luto</h3><div class="txt"><p>Álbum + livro.</p></div>
-<a class="btn" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a><a class="btn alt" href="{PATREON}" target="_blank" rel="noopener">Continue</a></article>
-<article class="item"><img class="cover" src="/img/wip-ao-deus-da-brincadeira.webp" alt="" loading="lazy"><h3>Ao Deus da Brincadeira</h3><div class="txt"><p>Ficção narrativa.</p></div><a class="btn alt" href="{PATREON}" target="_blank" rel="noopener">Continue</a></article>"""
-    ta = LIVROS[1]
+    vids = '<div class="row wide">' + "".join(f'<div class="vd"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Watch now</a></div>' for t, u, img in VIDEOS) + '</div>'
+    pubs = '<div class="row wide">' + "".join(f'<div class="vd" lang="en"><a href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><p>{esc(ab)}</p></div><a class="buy" style="margin-top:10px" href="{u}" target="_blank" rel="noopener">Continue</a></div>' for t, au, u, img, ab in PUBLICACOES) + '</div>'
+    wip = f"""<div class="row">
+<div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>
+<div class="bk"><img src="/img/wip-ao-deus-da-brincadeira.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Ao Deus da Brincadeira</h4><div class="who">ficção narrativa</div><a class="buy" style="margin-top:8px" href="{PATREON}" target="_blank" rel="noopener">Continue</a></div></div>"""
     body = f"""{menu()}
-<header class="hero clear" style="min-height:92svh">
-  <img class="sig" src="/img/assinatura-branca.png" alt="">
-  <h1>Rafael Augusto{TICK}</h1>
-  <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
-  {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("web","Website",WEB),("email","Email","mailto:"+EMAIL),("linkedin","LinkedIn",LI),("whatsapp","WhatsApp",WA)])}
+<header class="phero">
+  <img class="photo" src="/img/fundo-rafael.jpg" alt="Rafael Augusto">
+  <div class="info">
+    <img class="sig" src="/img/assinatura-branca.png" alt="">
+    <h1>Rafael Augusto{TICK}</h1>
+    <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
+    {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("web","Website",WEB),("email","Email","mailto:"+EMAIL),("linkedin","LinkedIn",LI),("whatsapp","WhatsApp",WA)])}
+  </div>
 </header>
 <main class="wrap">
-  <button class="feature" data-open="m-books" data-index="0">
+  <a class="feature" href="#books" data-acc="books" aria-label="Now available">
     <video autoplay muted loop playsinline poster="/img/poster-now-available.jpg"><source src="/media/now-available.mp4" type="video/mp4"></video>
-    <span class="t"><span class="big">now available</span><span class="it">em destaque</span></span>
-  </button>
-  {sec("m-books","Books","livros",caps=True)}
-  {sec("m-music","Music Videos","videoclips",caps=True)}
-  {sec("m-academic","Academic Publications","publicações académicas",caps=True)}
+  </a>
+  {acc("books","Books",books_row(livros,"bk"),"livros",caps=True)}
+  {acc("music","Music Videos",vids,"videoclips",caps=True)}
+  {acc("academic","Academic Publications",pubs,"publicações académicas",caps=True)}
 
   <section class="block" id="practice" lang="en">
     <h2>Philosophical Practice</h2><div class="h2s">Acompanhamento Filosófico</div>
     <h3>Philosophical Practice: An Alternative to therapy, coaches and religions</h3>
-    <p style="font-size:18px">Besides my PhD in Philosophy and my MsC in Cognitive Science, I was trained by Lydia Amir as a philosophical practitioner. I work with individuals and couples, in Portuguese and English. The first session is for free.<br>If you want to know more, read below or click the button to send me a message.</p>
-    <details class="line" lang="pt"><summary>PT</summary><div class="in">{PRATICA_PT}</div></details>
-    <details class="line"><summary>EN</summary><div class="in">{PRATICA_EN}</div></details>
-    <a class="wide" href="{WA}&amp;text=">book a free session | enquire</a>
+    <div class="lit" style="font-size:18px"><p>Besides my PhD in Philosophy and my MsC in Cognitive Science, I was trained by Lydia Amir as a philosophical practitioner. I work with individuals and couples, in Portuguese and English. The first session is for free.</p><p>If you want to know more, read below or click the button to send me a message.</p></div>
+    <details class="line" lang="pt"><summary>PT</summary><div class="in lit">{PRATICA_PT}</div></details>
+    <details class="line"><summary>EN</summary><div class="in lit">{PRATICA_EN}</div></details>
+    <a class="wide" href="{WA}">book a free session | enquire</a>
   </section>
 
   <section class="block" id="wip">
     <h2>Works in Progress</h2><div class="h2s">LAUWiP</div>
-    {sec("m-wip","Works in Progress","trabalhos em desenvolvimento",caps=True)}
+    {acc("wip-acc","Works in Progress",wip,"trabalhos em desenvolvimento",caps=True)}
     <a class="wide" href="{PATREON}" target="_blank" rel="noopener">access LAUWiP (patreon)</a>
   </section>
   {contacts("rafaelaugusto.com", WEB)}
 </main>
-{modal("m-books","Books","livros","".join(book_item(l) for l in livros))}
-{modal("m-music","Music Videos","videoclips",vids)}
-{modal("m-academic","Academic Publications","publicações académicas",pubs)}
-{modal("m-wip","Works in Progress","trabalhos em desenvolvimento",wip)}
 """
     write("rafaelaugusto/index.html", head("Rafael Augusto | Philosophy, Books & Music",
         "Here you can find my books, my articles, my music, podcasts and other contents.",
@@ -250,15 +246,14 @@ def page_rafael():
 # ---------- subpáginas (livro e autor) ----------
 def page_livro(l):
     a = AUTORES[l["autor"]]
-    buy = "" if l.get("esgotado") else f'<a class="wide" href="{l["compra"]}" target="_blank" rel="noopener">{l.get("botao","comprar")}</a>'
     body = f"""{menu()}
 <main class="wrap page">
   <img class="cover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}">
   <h1>{esc(l['titulo'])}</h1>
   <div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>
-  {preco(l)}
-  {buy}
-  <div style="font-size:18px">{texto(l)}</div>
+  {preco(l, "price")}
+  {buy(l, "wide")}
+  <div class="txt lit">{texto(l)}</div>
   {contacts("laueditora.pt/", "/")}
 </main>
 """
@@ -267,13 +262,13 @@ def page_livro(l):
 
 def page_autor(k, a):
     livros = [l for l in LIVROS if l["autor"] == k]
-    grid = "".join(f'<a href="/livros/{l["slug"]}/" style="text-decoration:none"><img src="/img/{l["capa"]}" alt="" style="aspect-ratio:2/3;object-fit:cover;width:100%"><div style="font-family:var(--fd);font-size:16px;margin-top:6px">{esc(l["titulo"])}</div></a>' for l in livros)
+    grid = "".join(f'<a href="/livros/{l["slug"]}/" style="text-decoration:none"><img src="/img/{l["capa"]}" alt=""><div>{esc(l["titulo"])}</div></a>' for l in livros)
     body = f"""{menu()}
 <main class="wrap page">
   <img class="cover" src="/img/{a['foto']}" alt="{esc(a['nome'])}" style="filter:grayscale(1)">
   <h1>{esc(a['nome'])}</h1>
-  <div style="font-size:18px;margin-top:14px">{''.join(f'<p>{p}</p>' for p in a['bio'])}</div>
-  <section class="block"><h2>livros</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px">{grid}</div></section>
+  <div class="txt lit" style="margin-top:14px">{''.join(f'<p>{p}</p>' for p in a['bio'])}</div>
+  <section class="block"><h2>livros</h2><div class="grid2">{grid}</div></section>
   <a class="wide" href="{a['amazon']}" target="_blank" rel="noopener">Amazon</a>
   {contacts("laueditora.pt/", "/")}
 </main>
