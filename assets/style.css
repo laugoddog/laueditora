@@ -202,7 +202,7 @@ details.line h4{font-family:var(--fd);font-weight:600;font-size:17px;margin:16px
 
 /* destaque: o cartão é um botão que abre o seu próprio painel */
 .acc.fp{display:none}
-.acc.fp.shown{display:block}
+.acc.fp.shown{display:block;margin:30px 0 22px}
 .acc.fp:not(.shown)+.xbtn{display:none}
 .feature.hide{display:none}
 .detail-static{color:var(--ink);margin-top:14px}
