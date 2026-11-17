@@ -29,7 +29,7 @@ ICON = {
  "phone": f'<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" {S}/></svg>',
  "mail-line": f'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5" {S}/><path d="M3.5 6l8.5 7 8.5-7" {S}/></svg>',
 }
-TICK = '<svg class="tick" viewBox="0 0 24 24"><path fill="#3897f0" d="M12 1.5l2.6 1.9 3.2-.2 1 3 2.7 1.8-1 3 1 3-2.7 1.8-1 3-3.2-.2L12 22.5l-2.6-1.9-3.2.2-1-3-2.7-1.8 1-3-1-3 2.7-1.8 1-3 3.2.2z"/><path d="M8 12.3l2.6 2.6L16.2 9" fill="none" stroke="#fff" stroke-width="2"/></svg>'
+TICK = '<svg class="tick" viewBox="0 0 24 24" aria-label="verificado"><path fill="#3897f0" stroke="#3897f0" stroke-width="1.6" stroke-linejoin="round" d="M12.00 0.80 L13.87 2.58 L16.29 1.65 L17.33 4.02 L19.92 4.08 L19.98 6.67 L22.35 7.71 L21.42 10.13 L23.20 12.00 L21.42 13.87 L22.35 16.29 L19.98 17.33 L19.92 19.92 L17.33 19.98 L16.29 22.35 L13.87 21.42 L12.00 23.20 L10.13 21.42 L7.71 22.35 L6.67 19.98 L4.08 19.92 L4.02 17.33 L1.65 16.29 L2.58 13.87 L0.80 12.00 L2.58 10.13 L1.65 7.71 L4.02 6.67 L4.08 4.08 L6.67 4.02 L7.71 1.65 L10.13 2.58Z"/><path d="M7.6 12.2l3 3 5.8-6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 
 def write(path, content):
     full = os.path.join(ROOT, path)
@@ -180,7 +180,7 @@ def page_lau():
   {feat("destaque","em <b class='k'>destaque</b>","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
   {acc("livros","compra os nossos <b class='k'>livros</b>",books_row(lau,"lv"),icon="icone-l.png")}
   {acc("reviews","deixa uma <b class='k'>review</b>",rv,icon="icone-a.png")}
-  {acc("pre-lancamentos","<b class='k'>pré-lançamentos</b>",pre,icon="icone-u.png")}
+  {acc("pre-lancamentos","pré-<b class='k'>lançamentos</b>",pre,icon="icone-u.png")}
   {acc("patrono","torna-te <b class='k'>patrono</b> e editor",patrono,icon="icone-aparo.png")}
 
   <section class="block authors" id="autores">
@@ -217,7 +217,7 @@ def page_rafael():
   <img class="photo" src="/img/fundo-rafael.jpg" alt="Rafael Augusto">
   <div class="info">
     <img class="sig" src="/img/assinatura-branca.png" alt="">
-    <h1>Rafael <b class='k'>Augusto</b>{TICK}</h1>
+    <h1><span class='fit'>Rafael <b class='k'>Augusto</b></span>{TICK}</h1>
     <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
     {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("web","Website",WEB),("email","Email","mailto:"+EMAIL),("linkedin","LinkedIn",LI),("whatsapp","WhatsApp",WA)])}
   </div>
