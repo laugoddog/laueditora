@@ -89,7 +89,6 @@ def menu():
     <a href="/#patrono">torna-te patrono e editor</a>
     <a href="/#reviews">deixa uma review</a>
     <a href="/#sobre">sobre nós</a>
-    <a href="/rafaelaugusto/">Rafael Augusto</a>
   </nav>
   <div class="dsoc">{socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA)])}</div>
 </aside>
@@ -100,11 +99,11 @@ def socials(items):
     return '<div class="socials">' + "".join(f'<a href="{u}" aria-label="{n}" title="{n}" target="_blank" rel="noopener">{ICON[k]}</a>' for k, n, u in items) + '</div>'
 
 def contacts(site_label, site_url, email=EMAIL):
+    web = f"""  <li>{ICON['web']}<div><b>Website</b><a href="{site_url}">{site_label}</a></div></li>\n""" if site_label else ""
     return f"""<ul class="contacts">
   <li>{ICON['mail-line']}<div><b>Email</b><a href="mailto:{email}">{email}</a></div></li>
   <li>{ICON['phone']}<div><b>Phone</b><a href="{WA}">{TEL}</a></div></li>
-  <li>{ICON['web']}<div><b>Website</b><a href="{site_url}">{site_label}</a></div></li>
-</ul>"""
+{web}</ul>"""
 
 FOOT = f'<script src="/assets/site.js?v={VER}"></script>\n</body></html>\n'
 
@@ -316,7 +315,7 @@ def page_rafael():
     <a class="wide" href="{WA}">book a free session | enquire</a>
   </section>
 
-  {contacts("rafaelaugusto.com", WEB, "rafael.augusto@laueditora.pt")}
+  {contacts("", "", "rafael.augusto@laueditora.pt")}
 </main>
 """
     write("rafaelaugusto/index.html", head("Rafael Augusto | Philosophy, Books & Music",
