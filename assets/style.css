@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;color:#fff;font-family:var(--fb);font-size:19px;line-height:1.45;-webkit-font-smoothing:antialiased;background:#262626}
-body.lau{background:#262626 url(/img/fundo-pedra.jpg) center/cover fixed}
+body.lau{background:#262626;isolation:isolate}
 body.rafael{background:#363c33}
 img,video{max-width:100%;display:block}
 a{color:inherit}
@@ -349,10 +349,9 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 /* computador: coluna larga ao centro, cantos de cima arredondados, até ao fundo do ecrã (como no Hopp) */
 @media (min-width:760px){
   :root{--col:660px;--gap:40px}
-  html{background:#eee url(/img/fundo-marmore.jpg) center/cover fixed}
+  html{background:#eee}
   body{max-width:var(--col);margin:var(--gap) auto 0;min-height:calc(100vh - var(--gap));border-radius:20px 20px 0 0;box-shadow:0 0 50px rgba(0,0,0,.28);position:relative;display:flow-root}
-  .hero,.phero .photo{border-radius:20px 20px 0 0}
-  body.rafael::before{border-radius:20px 20px 0 0}
+  .hero,.phero .photo{border-radius:20px 20px 0 0;clip-path:inset(0 round 20px 20px 0 0)}
   .wrap{max-width:none;padding:0 34px}
   .hero{min-height:calc(100vh - var(--gap))}
   .topbar{top:var(--off,0px);left:50%;right:auto;width:var(--col);transform:translateX(-50%)}
@@ -371,5 +370,11 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 }
 /* página pessoal: a fotografia escurecida como fundo (como no Hopp) */
 body.rafael{background:#2f342c;isolation:isolate}
-body.rafael::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(34,39,32,.8),rgba(34,39,32,.8)),url(/img/fundo-rafael-bg.jpg) center/cover}
-@media (min-width:760px){ body.rafael{isolation:isolate} body.rafael::before{left:50%;right:auto;width:var(--col);transform:translateX(-50%);top:var(--off,0px)} }
+/* fundos fixos em camadas próprias: não mexem nem mudam de tamanho ao fazer scroll */
+body.lau::before,body.rafael::before{content:"";position:fixed;left:0;right:0;top:0;height:100vh;height:100lvh;z-index:-1;pointer-events:none}
+body.lau::before{background:url(/img/fundo-pedra.jpg) center/cover}
+body.rafael::before{background:linear-gradient(rgba(34,39,32,.8),rgba(34,39,32,.8)),url(/img/fundo-rafael-bg.jpg) center/cover}
+@media (min-width:760px){
+  html::before{content:"";position:fixed;inset:0;z-index:-1;background:url(/img/fundo-marmore.jpg) center/cover;pointer-events:none}
+  body.lau::before,body.rafael::before{left:50%;right:auto;width:var(--col);transform:translateX(-50%);height:100vh;clip-path:inset(var(--off,0px) 0 0 0 round 20px 20px 0 0)}
+}
