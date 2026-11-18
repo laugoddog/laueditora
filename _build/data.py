@@ -185,9 +185,9 @@ PRATICA_EN = """<h4>What is Philosophical Practice?</h4>
 
 # onde ouvir cada música (links das plataformas; vídeo no YouTube vem de VIDEOS)
 PLATAFORMAS = {
-    "5fww9y11w_s": {"spotify": "https://open.spotify.com/track/0IvgF40Tx8qyT0j4VfGX4R", "amazon": "https://music.amazon.com/albums/B07VJJTLS5?trackAsin=B07VJJYM77", "tidal": "https://listen.tidal.com/track/113790478"},
-    "0EjCzOBsfco": {"spotify": "https://open.spotify.com/track/2x8MrLufYoVLZJxNmGRjY7", "amazon": "https://music.amazon.com/albums/B089SFH8GK?trackAsin=B089SF173C", "tidal": "https://listen.tidal.com/track/142125440"},
-    "ToFFGT4hk5g": {"spotify": "https://open.spotify.com/track/4EfAcMzhpUQtKD0slKJrOY", "tidal": "https://listen.tidal.com/track/168589872"},
-    "w8x3c3pRW7I": {"spotify": "https://open.spotify.com/track/6ygtVH2yLfW5lJAn5TuQLU", "amazon": "https://music.amazon.com/albums/B0BG9DTNQ9?trackAsin=B0BG9F81NH", "tidal": "https://listen.tidal.com/track/250201430"},
-    "L3mGj0VE8Uk": {"spotify": "https://open.spotify.com/track/1yqQIjVDqUvRjR4FwNm4Wf", "amazon": "https://music.amazon.com/albums/B07M6LZM7H?trackAsin=B07MRZF9K5", "tidal": "https://listen.tidal.com/track/101806648"},
+    "5fww9y11w_s": {"apple": "https://music.apple.com/pt/album/entre-o-preto-e-o-branco/1473845473?i=1473845474", "spotify": "https://open.spotify.com/track/0IvgF40Tx8qyT0j4VfGX4R", "amazon": "https://music.amazon.com/albums/B07VJJTLS5?trackAsin=B07VJJYM77", "tidal": "https://listen.tidal.com/track/113790478"},
+    "0EjCzOBsfco": {"apple": "https://music.apple.com/pt/album/o-meu-c%C3%A3o-single/1513995234", "spotify": "https://open.spotify.com/track/2x8MrLufYoVLZJxNmGRjY7", "amazon": "https://music.amazon.com/albums/B089SFH8GK?trackAsin=B089SF173C", "tidal": "https://listen.tidal.com/track/142125440"},
+    "ToFFGT4hk5g": {"apple": "https://music.apple.com/pt/album/por-mim-single/1547848419", "spotify": "https://open.spotify.com/track/4EfAcMzhpUQtKD0slKJrOY", "tidal": "https://listen.tidal.com/track/168589872"},
+    "w8x3c3pRW7I": {"apple": "https://music.apple.com/pt/album/nha-m%C3%A3e/1647224534?i=1647224535", "spotify": "https://open.spotify.com/track/6ygtVH2yLfW5lJAn5TuQLU", "amazon": "https://music.amazon.com/albums/B0BG9DTNQ9?trackAsin=B0BG9F81NH", "tidal": "https://listen.tidal.com/track/250201430"},
+    "L3mGj0VE8Uk": {"apple": "https://music.apple.com/pt/album/assim-fala-zaratustra/1448304664?i=1448304665", "spotify": "https://open.spotify.com/track/1yqQIjVDqUvRjR4FwNm4Wf", "amazon": "https://music.amazon.com/albums/B07M6LZM7H?trackAsin=B07MRZF9K5", "tidal": "https://listen.tidal.com/track/101806648"},
 }
