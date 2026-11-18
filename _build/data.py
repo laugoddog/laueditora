@@ -58,7 +58,7 @@ LIVROS = [
     },
     {
         "slug": "thinking-animal", "titulo": "Thinking Animal: From Automatic-Nonconscious Processes to Controlled-Conscious Thought",
-        "autor": "rafael-augusto", "preco": "18,55€", "compra": "", "botao": "comprar", "categoria": ["ensaio", "académico"],
+        "autor": "rafael-augusto", "preco": "18,55€", "compra": "", "botao": "comprar", "categoria": ["ensaio", "académico", "inglês"],
         "variantes": [["capa mole", "18,55€"], ["capa rija", "31,78€"]],
         "capa": "livro-thinking-animal.webp", "lau": True, "pessoal": True, "lang": "en",
         "texto": [
