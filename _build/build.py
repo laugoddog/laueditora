@@ -139,7 +139,7 @@ def cents(l):
     return pcents(l["preco"])
 
 def cat(l):
-    return f'<div class="cat">{l["categoria"]}</div>' if l.get("categoria") else ""
+    return f'<div class="cat">{" · ".join(l["categoria"])}</div>' if l.get("categoria") else ""
 
 def can_cart(l):
     """vendido pela LAU (passa pelo carrinho); livros vendidos fora (ex.: Amazon) têm só o link"""

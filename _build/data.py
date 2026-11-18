@@ -44,7 +44,7 @@ FRAGMENTOS_TXT = "\"Acredito, sinceramente, que o leitor oitocentista de Nietzsc
 
 LIVROS = [
     {
-        "slug": "o-meu-corpo-de-barro-e-ferro", "categoria": "poesia", "titulo": "O Meu Corpo de Barro e Ferro", "autor": "leonel-coelho",
+        "slug": "o-meu-corpo-de-barro-e-ferro", "categoria": ["poesia"], "titulo": "O Meu Corpo de Barro e Ferro", "autor": "leonel-coelho",
         "preco": "18€", "compra": "https://buy.stripe.com/14A6oH7mr6tx6lE7sA4gg09", "botao": "comprar",
         "capa": "livro-corpo-de-barro-e-ferro.webp", "lau": True, "destaque": "poesia inédita de Leonel Coelho",
         "texto": [
@@ -58,7 +58,7 @@ LIVROS = [
     },
     {
         "slug": "thinking-animal", "titulo": "Thinking Animal: From Automatic-Nonconscious Processes to Controlled-Conscious Thought",
-        "autor": "rafael-augusto", "preco": "18,55€", "compra": "", "botao": "comprar", "categoria": "ensaio / académico",
+        "autor": "rafael-augusto", "preco": "18,55€", "compra": "", "botao": "comprar", "categoria": ["ensaio", "académico"],
         "variantes": [["capa mole", "18,55€"], ["capa rija", "31,78€"]],
         "capa": "livro-thinking-animal.webp", "lau": True, "pessoal": True, "lang": "en",
         "texto": [
@@ -67,7 +67,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "travessa-do-cinema", "categoria": "memórias", "titulo": "Travessa do Cinema", "autor": "maria-das-dores-nascimento",
+        "slug": "travessa-do-cinema", "categoria": ["memórias"], "titulo": "Travessa do Cinema", "autor": "maria-das-dores-nascimento",
         "preco": "12€", "compra": "https://buy.stripe.com/bJe5kD2272dhh0ifZ64gg00", "botao": "comprar",
         "capa": "livro-travessa-do-cinema.webp", "lau": True,
         "texto": [
@@ -75,7 +75,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "leonel-coelho-meu-avo", "categoria": "memórias", "titulo": "Leonel Coelho, Meu Avô", "autor": "rafael-augusto",
+        "slug": "leonel-coelho-meu-avo", "categoria": ["memórias"], "titulo": "Leonel Coelho, Meu Avô", "autor": "rafael-augusto",
         "preco": "10€", "compra": "https://buy.stripe.com/eVq00jbCH9FJbFY9AI4gg01", "botao": "comprar",
         "capa": "livro-leonel-coelho-meu-avo.webp", "lau": True, "pessoal": True,
         "texto": [
@@ -83,7 +83,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "cartas-da-prisao", "categoria": "cartas", "titulo": "Cartas da Prisão: 1970", "autor": "leonel-coelho",
+        "slug": "cartas-da-prisao", "categoria": ["cartas"], "titulo": "Cartas da Prisão: 1970", "autor": "leonel-coelho",
         "preco": "12€", "compra": "https://buy.stripe.com/dRm6oHayD19dh0i0084gg02", "botao": "comprar",
         "capa": "livro-cartas-da-prisao.webp", "lau": True,
         "texto": [
@@ -92,7 +92,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "maria-celina", "categoria": "memórias", "titulo": "Maria Celina", "autor": "maria-das-dores-nascimento",
+        "slug": "maria-celina", "categoria": ["memórias"], "titulo": "Maria Celina", "autor": "maria-das-dores-nascimento",
         "preco": "12€", "compra": "https://buy.stripe.com/cNi5kD6in6tx7pI8wE4gg04", "botao": "comprar",
         "capa": "livro-maria-celina.webp", "lau": True,
         "texto": [
@@ -100,7 +100,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "o-homem-que-tinha-medo", "categoria": "ficção", "titulo": "O homem que tinha medo de que ninguém fosse ao seu funeral",
+        "slug": "o-homem-que-tinha-medo", "categoria": ["ficção"], "titulo": "O homem que tinha medo de que ninguém fosse ao seu funeral",
         "autor": "maria-das-dores-nascimento", "preco": "14€", "compra": "https://buy.stripe.com/6oU14n6in8BFh0i5ks4gg03",
         "botao": "encomendar", "capa": "livro-o-homem-que-tinha-medo.webp", "lau": True,
         "texto": [
@@ -108,18 +108,18 @@ LIVROS = [
         ],
     },
     {
-        "slug": "fragmentos-de-verdade", "titulo": "Fragmentos de Verdade", "autor": "rafael-augusto",
+        "slug": "fragmentos-de-verdade", "categoria": ["ensaio", "aforismos"], "titulo": "Fragmentos de Verdade", "autor": "rafael-augusto",
         "preco": "9€", "preco_antigo": "12€", "compra": "https://buy.stripe.com/8x24gz4af19d25o3ck4gg05",
         "botao": "encomendar", "capa": "livro-fragmentos-de-verdade.webp", "lau": True, "pessoal": True,
         "texto": [FRAGMENTOS_TXT],
     },
     {
-        "slug": "o-livro-da-intranquilidade", "titulo": "O Livro da Intranquilidade", "autor": "rafael-augusto",
+        "slug": "o-livro-da-intranquilidade", "categoria": ["ficção"], "titulo": "O Livro da Intranquilidade", "autor": "rafael-augusto",
         "esgotado": True, "capa": "livro-o-livro-da-intranquilidade.webp", "pessoal": True,
         "texto": ["Primeiro romance de Rafael Augusto, publicado aos 21 anos."],
     },
     {
-        "slug": "se-a-lua-viesse-de-manha", "titulo": "Se a Lua Viesse de Manhã", "autor": "rafael-augusto",
+        "slug": "se-a-lua-viesse-de-manha", "categoria": ["poesia", "contos"], "titulo": "Se a Lua Viesse de Manhã", "autor": "rafael-augusto",
         "esgotado": True, "capa": "livro-se-a-lua-viesse-de-manha.webp", "pessoal": True,
         "texto": ["Primeiro livro de Rafael Augusto, publicado aos 19 anos. Uma coletânea de contos e poemas."],
     },
