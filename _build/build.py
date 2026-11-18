@@ -298,7 +298,7 @@ def page_rafael():
     <img class="sig" src="/img/assinatura-branca.png" alt="">
     <h1><span class='fit'>Rafael <b class='k'>Augusto</b></span>{TICK}</h1>
     <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
-    {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA)])}
+    {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("email","Email","mailto:rafael.augusto@laueditora.pt"),("whatsapp","WhatsApp",WA)])}
   </div>
 </header>
 <main class="wrap">
