@@ -391,3 +391,7 @@ body.rafael::before{background:linear-gradient(rgba(34,39,32,.8),rgba(34,39,32,.
 .bk .cv{display:flex;justify-content:center}
 .bk .pr{white-space:nowrap;font-size:14px}
 .cempty-btn{display:block;width:100%;margin-top:10px;background:none;border:0;color:var(--ink2);font:300 13px var(--fd);text-transform:uppercase;letter-spacing:.06em;text-decoration:underline;cursor:pointer;padding:6px}
+.dhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.dhead .dlogo img{margin:0}
+.dhead .close{align-self:center;padding:0}
+.drawer .dhead a{border:0;padding:0}

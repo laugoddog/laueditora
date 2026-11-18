@@ -80,8 +80,7 @@ def menu():
   <button class="cempty-btn" data-cart-empty>esvaziar carrinho</button></div>
 </aside>
 <aside class="drawer" aria-label="Menu">
-  <button class="close" aria-label="Fechar menu" data-menu-close>&times;</button>
-  <a class="dlogo" href="/"><img src="/img/logo-lau-longo.png" alt="LAU Edições"></a>
+  <div class="dhead"><a class="dlogo" href="/"><img src="/img/logo-lau-longo.png" alt="LAU Edições"></a><button class="close" aria-label="Fechar menu" data-menu-close>&times;</button></div>
   <nav>
     <a href="/">LAU Edições</a>
     <a href="/#livros">compra os nossos livros</a>
