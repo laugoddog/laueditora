@@ -367,6 +367,7 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
   .phero .photo{max-width:none}
   .phero .info{margin-top:calc(var(--col) * -.42)}
   .row>.bk{flex:0 0 auto}
+  .person{flex:0 0 38%}
 }
 /* página pessoal: a fotografia escurecida como fundo (como no Hopp) */
 body.rafael{background:#2f342c;isolation:isolate}
