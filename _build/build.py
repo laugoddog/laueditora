@@ -297,7 +297,7 @@ def page_rafael():
 <main class="wrap">
   {feat("now","Now <b class='k'>Available</b>","now-available.mp4","poster-now-available.jpg",next(x for x in LIVROS if x["slug"]=="thinking-animal"))}
   {acc("books","<b class='k'>Books</b>",books_row(livros,"bk"),"livros",caps=True)}
-  {acc("music","Music &amp; <b class='k'>Videos</b>",vids,"videoclips",caps=True)}
+  {acc("music","<b class='k'>Music</b> &amp; Videos",vids,"música e vídeos",caps=True)}
   {acc("academic","Academic <b class='k'>Publications</b>",pubs,"publicações académicas",caps=True)}
 
   <section class="block" id="practice" lang="en">
