@@ -15,6 +15,16 @@ const CATALOGO = {
     "cents": 1800,
     "img": "/img/livro-corpo-de-barro-e-ferro.webp"
   },
+  "thinking-animal-mole": {
+    "name": "Thinking Animal: From Automatic-Nonconscious Processes to Controlled-Conscious Thought (capa mole)",
+    "cents": 1855,
+    "img": "/img/livro-thinking-animal.webp"
+  },
+  "thinking-animal-rija": {
+    "name": "Thinking Animal: From Automatic-Nonconscious Processes to Controlled-Conscious Thought (capa rija)",
+    "cents": 3178,
+    "img": "/img/livro-thinking-animal.webp"
+  },
   "travessa-do-cinema": {
     "name": "Travessa do Cinema",
     "cents": 1200,

@@ -311,3 +311,19 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .addc svg{width:17px;height:17px;flex:0 0 auto}
 .buyrow .addc{font-size:13px;padding:9px 4px}
 .addc.ok{background:#3c3c3c!important}
+/* capas com a proporção real, todas com a mesma altura */
+.bk .cv img{aspect-ratio:auto;height:220px;width:auto;max-width:100%;object-fit:contain;margin:0 auto}
+.bk .cv{display:flex;align-items:flex-end;justify-content:center;height:220px}
+.grid2 img{aspect-ratio:auto;height:240px;width:auto;max-width:100%;object-fit:contain;margin:0 auto}
+.grid2 a{display:flex;flex-direction:column;align-items:center;text-align:center}
+.rv img{aspect-ratio:auto;height:78px;width:auto}
+.ci img{aspect-ratio:auto;height:70px;width:auto}
+.dcover{aspect-ratio:auto;object-fit:contain;height:auto}
+/* títulos na fila: no máximo três linhas */
+.bk h4{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* categorias */
+.cat{font:300 12px var(--fd);text-transform:uppercase;letter-spacing:.12em;color:var(--ink2);margin-bottom:4px}
+.page .cat{text-align:center;color:var(--dim)}
+.fb{font-family:var(--fb);text-transform:none;letter-spacing:0}
+.buycol.multi,.buyrow.multi{flex-direction:column;gap:6px}
+.buyrow.multi .addc{font-size:12px}

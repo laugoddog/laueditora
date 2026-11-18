@@ -44,7 +44,7 @@ FRAGMENTOS_TXT = "\"Acredito, sinceramente, que o leitor oitocentista de Nietzsc
 
 LIVROS = [
     {
-        "slug": "o-meu-corpo-de-barro-e-ferro", "titulo": "O Meu Corpo de Barro e Ferro", "autor": "leonel-coelho",
+        "slug": "o-meu-corpo-de-barro-e-ferro", "categoria": "poesia", "titulo": "O Meu Corpo de Barro e Ferro", "autor": "leonel-coelho",
         "preco": "18€", "compra": "https://buy.stripe.com/14A6oH7mr6tx6lE7sA4gg09", "botao": "comprar",
         "capa": "livro-corpo-de-barro-e-ferro.webp", "lau": True, "destaque": "poesia inédita de Leonel Coelho",
         "texto": [
@@ -58,7 +58,8 @@ LIVROS = [
     },
     {
         "slug": "thinking-animal", "titulo": "Thinking Animal: From Automatic-Nonconscious Processes to Controlled-Conscious Thought",
-        "autor": "rafael-augusto", "preco": "18,55€", "compra": "https://mybook.to/thinking_animal_ra", "botao": "comprar",
+        "autor": "rafael-augusto", "preco": "18,55€", "compra": "", "botao": "comprar", "categoria": "ensaio / académico",
+        "variantes": [["capa mole", "18,55€"], ["capa rija", "31,78€"]],
         "capa": "livro-thinking-animal.webp", "lau": True, "pessoal": True, "lang": "en",
         "texto": [
             "How does our conscious thought work? How did it evolve? How does it relate to feelings, instincts, intuition and older structures in the brain-mind? How can we explain the control this type of high-order ability seems to enable? These are some of the questions Rafael Augusto tried to answer in this book, through a potentially unifying theory of cognition.",
@@ -66,7 +67,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "travessa-do-cinema", "titulo": "Travessa do Cinema", "autor": "maria-das-dores-nascimento",
+        "slug": "travessa-do-cinema", "categoria": "memórias", "titulo": "Travessa do Cinema", "autor": "maria-das-dores-nascimento",
         "preco": "12€", "compra": "https://buy.stripe.com/bJe5kD2272dhh0ifZ64gg00", "botao": "comprar",
         "capa": "livro-travessa-do-cinema.webp", "lau": True,
         "texto": [
@@ -74,7 +75,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "leonel-coelho-meu-avo", "titulo": "Leonel Coelho, Meu Avô", "autor": "rafael-augusto",
+        "slug": "leonel-coelho-meu-avo", "categoria": "memórias", "titulo": "Leonel Coelho, Meu Avô", "autor": "rafael-augusto",
         "preco": "10€", "compra": "https://buy.stripe.com/eVq00jbCH9FJbFY9AI4gg01", "botao": "comprar",
         "capa": "livro-leonel-coelho-meu-avo.webp", "lau": True, "pessoal": True,
         "texto": [
@@ -82,7 +83,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "cartas-da-prisao", "titulo": "Cartas da Prisão: 1970", "autor": "leonel-coelho",
+        "slug": "cartas-da-prisao", "categoria": "cartas", "titulo": "Cartas da Prisão: 1970", "autor": "leonel-coelho",
         "preco": "12€", "compra": "https://buy.stripe.com/dRm6oHayD19dh0i0084gg02", "botao": "comprar",
         "capa": "livro-cartas-da-prisao.webp", "lau": True,
         "texto": [
@@ -91,7 +92,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "maria-celina", "titulo": "Maria Celina", "autor": "maria-das-dores-nascimento",
+        "slug": "maria-celina", "categoria": "memórias", "titulo": "Maria Celina", "autor": "maria-das-dores-nascimento",
         "preco": "12€", "compra": "https://buy.stripe.com/cNi5kD6in6tx7pI8wE4gg04", "botao": "comprar",
         "capa": "livro-maria-celina.webp", "lau": True,
         "texto": [
@@ -99,7 +100,7 @@ LIVROS = [
         ],
     },
     {
-        "slug": "o-homem-que-tinha-medo", "titulo": "O homem que tinha medo de que ninguém fosse ao seu funeral",
+        "slug": "o-homem-que-tinha-medo", "categoria": "ficção", "titulo": "O homem que tinha medo de que ninguém fosse ao seu funeral",
         "autor": "maria-das-dores-nascimento", "preco": "14€", "compra": "https://buy.stripe.com/6oU14n6in8BFh0i5ks4gg03",
         "botao": "encomendar", "capa": "livro-o-homem-que-tinha-medo.webp", "lau": True,
         "texto": [

@@ -116,6 +116,8 @@ def acc(aid, title, inner, sub=None, icon=None, caps=False, keep=False):
 </section><button class="xbtn" aria-label="Fechar">&times;</button>"""
 
 def preco(l, cls="pr"):
+    if l.get("variantes"):
+        return f'<div class="{cls}">' + " – ".join(v[1] for v in l["variantes"]) + "</div>"
     if l.get("esgotado"):
         return '<div class="out">esgotado</div>'
     s = f'<s>{l["preco_antigo"]}</s>' if l.get("preco_antigo") else ""
@@ -130,22 +132,38 @@ def buy(l, cls="buy"):
 
 CART_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.1"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg>'
 
+def pcents(p):
+    return round(float(p.replace("€","").replace(",",".").strip())*100)
+
 def cents(l):
-    return round(float(l["preco"].replace("€","").replace(",",".").strip())*100)
+    return pcents(l["preco"])
+
+def cat(l):
+    return f'<div class="cat">{l["categoria"]}</div>' if l.get("categoria") else ""
 
 def can_cart(l):
     """vendido pela LAU (passa pelo carrinho); livros vendidos fora (ex.: Amazon) têm só o link"""
     c = l.get("compra", "")
     return not l.get("esgotado") and "mybook.to" not in c and "amazon." not in c and "amzn." not in c
 
+def variants(l):
+    """[(slug do carrinho, nome, preço)] — livros com capa mole/rija têm várias"""
+    if l.get("variantes"):
+        return [(f'{l["slug"]}-{v[0].split()[-1]}', f'{l["titulo"]} ({v[0]})', v[0], v[1]) for v in l["variantes"]]
+    return [(l["slug"], l["titulo"], "", l["preco"])]
+
 def buttons(l, round_=False):
     """tudo passa pelo carrinho; livros vendidos fora levam ao sítio onde se compram"""
     if l.get("esgotado"): return ""
+    cls = "buyrow" if round_ else "buycol"
     if not can_cart(l):
-        return f'<div class="{"buyrow" if round_ else "buycol"}"><a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">comprar</a></div>'
-    d = f'data-add-cart data-slug="{l["slug"]}" data-title="{esc(l["titulo"])}" data-price="{cents(l)}" data-cover="/img/{l["capa"]}"'
-    txt = "adicionar" if round_ else "adicionar ao carrinho"
-    return f'<div class="{"buyrow" if round_ else "buycol"}"><button class="buy addc" {d}>{CART_SVG}<span>{txt}</span></button></div>'
+        return f'<div class="{cls}"><a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">comprar</a></div>'
+    out = []
+    for slug, nome, var, p in variants(l):
+        d = f'data-add-cart data-slug="{slug}" data-title="{esc(nome)}" data-price="{pcents(p)}" data-cover="/img/{l["capa"]}"'
+        txt = ((f"{var.split()[-1]} · {p}" if round_ else f"{var} · {p}") if var else ("adicionar" if round_ else "adicionar ao carrinho"))
+        out.append(f'<button class="buy addc" {d}>{CART_SVG}<span>{txt}</span></button>')
+    return f'<div class="{cls}{" multi" if len(out) > 1 else ""}">{"".join(out)}</div>'
 
 def clamped(l, uid):
     return f'<div class="txt lit"><div id="{uid}" class="clamp">{texto(l)}</div></div><button class="more" data-more="{uid}">Mostrar mais</button>'
@@ -153,7 +171,7 @@ def clamped(l, uid):
 def feat(fid, label, video, poster, l):
     a = AUTORES[l["autor"]]
     inner = f"""<video autoplay muted loop playsinline poster="/img/{poster}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px"><source src="/media/{video}" type="video/mp4"></video>
-<div class="detail-static"><div class="dtop"><div><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}</div><img class="dcover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}"></div>{buttons(l)}{clamped(l, "fx-"+fid)}</div>"""
+<div class="detail-static"><div class="dtop"><div>{cat(l)}<h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}</div><img class="dcover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}"></div>{buttons(l)}{clamped(l, "fx-"+fid)}</div>"""
     return f"""<button class="feature" data-feat="{fid}" aria-label="{re.sub('<[^>]+>','',label)}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
 {acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
 
@@ -161,7 +179,7 @@ def books_row(livros, pid):
     row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
 <h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buttons(l, True)}</div>""" for i, l in enumerate(livros))
     det = "".join(f"""<div class="detail" id="{pid}-{l['slug']}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
-<img src="/img/{l['capa']}" alt=""><h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
+<img src="/img/{l['capa']}" alt="">{cat(l)}<h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
 {buttons(l)}{clamped(l, "dx-"+pid+"-"+l["slug"])}</div>""" for i, l in enumerate(livros))
     return f'<div class="row">{row}</div>{det}'
 
@@ -188,7 +206,7 @@ def page_lau():
 <div class="lit" style="font-size:17px;margin-top:6px"><p>Aqui estão os trabalhos em desenvolvimento, alguns quase prontos a lançar, outros em processo de escrita. Podes pré-reservar aqueles que têm um lançamento planeado e, quanto aos outros, tornando-te patrono, podes aceder antecipadamente aos conteúdos e comentá-los, participando no processo editorial.</p></div>"""
     patrono = f"""<div class="lit" style="font-size:17px"><div id="pat-txt" class="clamp"><p>{PATRONO_TXT}</p></div></div><button class="more" data-more="pat-txt">Mostrar mais</button>
 <ul class="checks">{"".join(f"<li>{x}</li>" for x in PATRONO_LI)}</ul>
-<div class="pr" style="font-family:var(--fd);font-size:18px;margin-top:10px">15€/mês</div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">torna-te patrono</a>"""
+<div class="pr" style="font-family:var(--fd);font-size:18px;margin-top:10px">15€<span class="fb">/mês</span></div><a class="btn" href="{PATREON}" target="_blank" rel="noopener">torna-te patrono</a>"""
     rail = "".join(f'<a class="person" href="/autores/{k}/"><img src="/img/{a["foto"]}" alt="{esc(a["nome"])}" loading="lazy"><span>{esc(a["nome"])}</span></a>' for k, a in AUTORES.items())
     dets = ""
     for k, a in AUTORES.items():
@@ -281,7 +299,7 @@ def page_livro(l):
     body = f"""{menu()}
 <main class="wrap page livro">
   <img class="cover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}">
-  <h1>{esc(l['titulo'])}</h1>
+  {cat(l)}<h1>{esc(l['titulo'])}</h1>
   <div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>
   {preco(l, "price")}
   {buttons(l)}
@@ -310,7 +328,7 @@ def page_autor(k, a):
 
 def worker():
     import json
-    cat = {l["slug"]: {"name": l["titulo"], "cents": cents(l), "img": "/img/" + l["capa"]} for l in LIVROS if can_cart(l)}
+    cat = {s: {"name": n, "cents": pcents(p), "img": "/img/" + l["capa"]} for l in LIVROS if can_cart(l) for s, n, v, p in variants(l)}
     t = open(os.path.join(ROOT, "_build/worker_template.js")).read().replace("__CATALOGO__", json.dumps(cat, ensure_ascii=False, indent=2))
     write("_worker/worker.js", t)
 
