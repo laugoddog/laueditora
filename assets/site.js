@@ -65,6 +65,8 @@ $$('.cgo').forEach(a=>a.addEventListener('click',async e=>{if(!CHECKOUT||!cart.l
     if(d.url){location.href=d.url;return;}throw new Error(d.error);}catch(err){a.textContent='finalizar encomenda';alert('Não foi possível abrir o pagamento. Tenta de novo ou escreve para '+EMAIL+'.');}}));
 if(new URLSearchParams(location.search).has('carrinho'))setCart(true);
 renderCart();
+// computador: os botões fixos acompanham o espaço acima da coluna
+const offUpd=()=>document.documentElement.style.setProperty('--off',Math.max(0,40-scrollY)+'px');addEventListener('scroll',offUpd,{passive:true});offUpd();
 // cabeçalho: na página inicial aparece aos poucos no fim do vídeo
 const hero=$('header.hero'),bar=$('.topbar');
 if(hero&&bar){document.body.classList.add('has-hero');const upd=()=>{const end=hero.offsetHeight,y=scrollY,o=Math.max(0,Math.min(1,(y-(end-220))/180));
