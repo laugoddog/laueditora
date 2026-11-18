@@ -350,7 +350,9 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 @media (min-width:760px){
   :root{--col:660px;--gap:40px}
   html{background:#eee url(/img/fundo-marmore.jpg) center/cover fixed}
-  body{max-width:var(--col);margin:var(--gap) auto 0;min-height:calc(100vh - var(--gap));border-radius:20px 20px 0 0;box-shadow:0 0 50px rgba(0,0,0,.28);position:relative;overflow:clip;display:flow-root}
+  body{max-width:var(--col);margin:var(--gap) auto 0;min-height:calc(100vh - var(--gap));border-radius:20px 20px 0 0;box-shadow:0 0 50px rgba(0,0,0,.28);position:relative;display:flow-root}
+  .hero,.phero .photo{border-radius:20px 20px 0 0}
+  body.rafael::before{border-radius:20px 20px 0 0}
   .wrap{max-width:none;padding:0 34px}
   .hero{min-height:calc(100vh - var(--gap))}
   .topbar{top:var(--off,0px);left:50%;right:auto;width:var(--col);transform:translateX(-50%)}
