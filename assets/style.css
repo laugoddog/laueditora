@@ -327,3 +327,10 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .fb{font-family:var(--fb);text-transform:none;letter-spacing:0}
 .buycol.multi,.buyrow.multi{flex-direction:column;gap:6px}
 .buyrow.multi .addc{font-size:12px}
+/* a largura de cada livro segue a da capa: sem caixas vazias à volta */
+.row>.bk{flex:0 0 auto;width:min-content}
+.bk .cv{height:auto;display:block}
+.bk .cv img{height:220px;width:auto;max-width:none;object-fit:fill}
+.bk h4,.bk .who,.bk .pr{min-width:0}
+.grid2 img{max-width:none;object-fit:fill}
+.grid2 a{width:min-content;margin:0 auto}
