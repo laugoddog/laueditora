@@ -383,3 +383,6 @@ body.rafael::before{background:linear-gradient(rgba(34,39,32,.8),rgba(34,39,32,.
 .plats svg{width:24px;height:24px}
 .sl.album .yt{aspect-ratio:auto;background:none;width:56.25%;margin:0 auto}
 .sl.album .yt img{aspect-ratio:1;height:auto;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.tl{color:inherit;text-decoration:none}
+.tl:hover{text-decoration:underline}
+.addc.off{opacity:.35;cursor:not-allowed}

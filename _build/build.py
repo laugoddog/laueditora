@@ -120,7 +120,7 @@ def preco(l, cls="pr"):
     if l.get("variantes"):
         return f'<div class="{cls}">' + " – ".join(v[1] for v in l["variantes"]) + "</div>"
     if l.get("esgotado"):
-        return '<div class="out">esgotado</div>'
+        return ""  # o botão do carrinho esbatido já diz "esgotado"
     s = f'<s>{l["preco_antigo"]}</s>' if l.get("preco_antigo") else ""
     return f'<div class="{cls}">{s}{l["preco"]}</div>'
 
@@ -155,8 +155,9 @@ def variants(l):
 
 def buttons(l, round_=False):
     """tudo passa pelo carrinho; livros vendidos fora levam ao sítio onde se compram"""
-    if l.get("esgotado"): return ""
     cls = "buyrow" if round_ else "buycol"
+    if l.get("esgotado"):
+        return f'<div class="{cls}"><button class="buy addc off" disabled aria-disabled="true">{CART_SVG}<span>esgotado</span></button></div>'
     if not can_cart(l):
         return f'<div class="{cls}"><a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">comprar</a></div>'
     out = []
@@ -172,15 +173,15 @@ def clamped(l, uid):
 def feat(fid, label, video, poster, l):
     a = AUTORES[l["autor"]]
     inner = f"""<video autoplay muted loop playsinline poster="/img/{poster}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px"><source src="/media/{video}" type="video/mp4"></video>
-<div class="detail-static"><div class="dtop"><div>{cat(l)}<h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}</div><img class="dcover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}"></div>{buttons(l)}{clamped(l, "fx-"+fid)}</div>"""
+<div class="detail-static"><div class="dtop"><div>{cat(l)}<h3><a class="tl" href="/livros/{l['slug']}/">{esc(l['titulo'])}</a></h3><div class="who"><a class="tl" href="/autores/{l['autor']}/">{esc(a['nome'])}</a></div>{preco(l)}</div><img class="dcover" src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}"></div>{buttons(l)}{clamped(l, "fx-"+fid)}</div>"""
     return f"""<button class="feature" data-feat="{fid}" aria-label="{re.sub('<[^>]+>','',label)}"><video autoplay muted loop playsinline poster="/img/{poster}"><source src="/media/{video}" type="video/mp4"></video></button>
 {acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
 
 def books_row(livros, pid):
     row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
-<h4>{esc(l['titulo'])}</h4><div class="who">{esc(AUTORES[l['autor']]['nome'])}</div>{preco(l)}{buttons(l, True)}</div>""" for i, l in enumerate(livros))
+<h4><a class="tl" href="/livros/{l['slug']}/">{esc(l['titulo'])}</a></h4><div class="who"><a class="tl" href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}{buttons(l, True)}</div>""" for i, l in enumerate(livros))
     det = "".join(f"""<div class="detail" id="{pid}-{l['slug']}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
-<img src="/img/{l['capa']}" alt="">{cat(l)}<h3>{esc(l['titulo'])}</h3><div class="who"><a href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
+<img src="/img/{l['capa']}" alt="">{cat(l)}<h3><a class="tl" href="/livros/{l['slug']}/">{esc(l['titulo'])}</a></h3><div class="who"><a class="tl" href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
 {buttons(l)}{clamped(l, "dx-"+pid+"-"+l["slug"])}</div>""" for i, l in enumerate(livros))
     return f'<div class="row">{row}</div>{det}'
 
@@ -194,7 +195,12 @@ PATRONO_LI = ["Acesso antecipado a WIPs (Works in Progress) selecionados.",
 # ---------- página da editora ----------
 def page_lau():
     lau = [l for l in LIVROS if l.get("lau")]
-    rv = "".join(f'<div class="rv"><img src="/img/{next(l["capa"] for l in LIVROS if l["titulo"].startswith(t.split(":")[0]))}" alt="" loading="lazy"><div class="t">{esc(t)}</div><div class="l"><a href="{g}" target="_blank" rel="noopener">goodreads</a><a href="{am}" target="_blank" rel="noopener">amazon</a></div></div>' for t, g, am in REVIEWS)
+    def rvrow(t, g, am):
+        l = next(x for x in LIVROS if x["titulo"].startswith(t.split(":")[0]))
+        return (f'<div class="rv"><a href="/livros/{l["slug"]}/"><img src="/img/{l["capa"]}" alt="" loading="lazy"></a>'
+                f'<div class="t"><a class="tl" href="/livros/{l["slug"]}/">{esc(t)}</a><span><a class="tl" href="/autores/{l["autor"]}/">{esc(AUTORES[l["autor"]]["nome"])}</a></span></div>'
+                f'<div class="l"><a href="{g}" target="_blank" rel="noopener">goodreads</a><a href="{am}" target="_blank" rel="noopener">amazon</a></div></div>')
+    rv = "".join(rvrow(t, g, am) for t, g, am in REVIEWS)
     pre = f"""<div class="row">
 <div class="bk"><button class="cv" data-detail="pre-0"><img src="/img/wip-luz-do-luto.webp" alt="Luz do Luto" loading="lazy"></button><h4>Mourning Light: Luz do Luto</h4><div class="who">Rafael Augusto</div><div class="pr">30€</div><a class="buy" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reservar</a></div>
 <div class="bk"><button class="cv" data-detail="pre-1"><img src="/img/wip-ao-deus-da-brincadeira.webp" alt="Ao Deus da Brincadeira" loading="lazy"></button><h4>Ao Deus da Brincadeira</h4><div class="who">Rafael Augusto</div><div class="pr">ficção</div><a class="buy" href="{PATREON}" target="_blank" rel="noopener">aceder (LAUWiP)</a></div>
