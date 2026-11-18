@@ -7,10 +7,10 @@ $$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>
 function setOpen(acc,on,instant){const h=$('.acc-h',acc);h.setAttribute('aria-expanded',on);
   if(instant)acc.classList.add('noanim');
   if(acc.classList.contains('fp')&&!on){const f=$('[data-feat="'+acc.id+'"]');
-    const done=()=>{const o=$('.fov',acc);if(o)o.remove();acc.classList.remove('open','shown');acc.style.height=acc.style.overflow=acc.style.transition='';if(f){const pv=$('.panel video',acc),fv=$('video',f);try{fv.currentTime=pv.currentTime}catch(e){}f.classList.remove('hide');}};
+    const done=()=>{const o=$('.fov',acc);if(o)o.remove();acc.classList.remove('open','shown','closing');acc.style.height=acc.style.overflow=acc.style.transition='';if(f){const pv=$('.panel video',acc),fv=$('video',f);try{fv.currentTime=pv.currentTime}catch(e){}f.classList.remove('hide');}};
     if(instant||!f){done();}
     else{// encolhe até ao tamanho do cartão e só então troca, sem passar pela versão pequena
-      const target=acc.offsetWidth*9/16;acc.style.height=acc.offsetHeight+'px';acc.style.overflow='hidden';
+      acc.classList.add('closing');const target=acc.offsetWidth*9/16;acc.style.height=acc.offsetHeight+'px';acc.style.overflow='hidden';
       // o vídeo do cartão vai aparecendo por cima enquanto o painel encolhe
       const ov=document.createElement('div');ov.className='fov';const sv=$('video',f),pv=$('.panel video',acc),v=sv.cloneNode(true);
       v.muted=true;v.autoplay=true;v.playsInline=true;try{v.currentTime=(pv||sv).currentTime}catch(e){}ov.appendChild(v);acc.appendChild(ov);v.play().catch(()=>{});
