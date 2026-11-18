@@ -6,7 +6,13 @@ $$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>
 // secções que abrem
 function setOpen(acc,on,instant){const h=$('.acc-h',acc);h.setAttribute('aria-expanded',on);
   if(instant)acc.classList.add('noanim');
-  if(acc.classList.contains('fp')&&!on){acc.classList.remove('open','shown');const f=$('[data-feat="'+acc.id+'"]');if(f)f.classList.remove('hide');}
+  if(acc.classList.contains('fp')&&!on){const f=$('[data-feat="'+acc.id+'"]');
+    const done=()=>{acc.classList.remove('open','shown');acc.style.height=acc.style.overflow=acc.style.transition='';if(f){f.classList.remove('hide');f.classList.add('fadein');setTimeout(()=>f.classList.remove('fadein'),300);}};
+    if(instant||!f){done();}
+    else{// encolhe até ao tamanho do cartão e só então troca, sem passar pela versão pequena
+      const target=acc.offsetWidth*9/16;acc.style.height=acc.offsetHeight+'px';acc.style.overflow='hidden';void acc.offsetHeight;
+      acc.style.transition='height .45s cubic-bezier(.2,.7,.2,1)';acc.style.height=target+'px';
+      let ok=false;const fin=()=>{if(ok)return;ok=true;done();};acc.addEventListener('transitionend',e=>{if(e.target===acc)fin();},{once:true});setTimeout(fin,520);}}
   else acc.classList.toggle('open',on);
   if(!on){const p=$('.panel',acc);p.classList.remove('showing');$$('.detail',p).forEach(d=>d.classList.remove('on'));}
   if(instant){void acc.offsetHeight;requestAnimationFrame(()=>acc.classList.remove('noanim'));}}
