@@ -73,7 +73,8 @@ def menu():
   <div class="ch"><b>carrinho</b><button class="close" aria-label="Fechar carrinho" data-cart-close>&times;</button></div>
   <div class="clist"></div>
   <div class="cfoot"><div class="ctot"><span>total</span><b></b></div>
-  <p class="cnote">Os portes são combinados contigo antes do pagamento.</p>
+  <label class="czona">envio para <select><option value="pt">Portugal</option><option value="eu">Europa</option><option value="int">resto do mundo</option></select></label>
+  <p class="cnote">Portes grátis acima de 30€ em Portugal e de 50€ no estrangeiro. O valor dos portes aparece no pagamento.</p>
   <a class="btn cgo" href="#">finalizar encomenda</a></div>
 </aside>
 <aside class="drawer" aria-label="Menu">

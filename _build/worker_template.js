@@ -2,12 +2,18 @@
 // Recebe o carrinho do site e cria uma página de pagamento da Stripe com todos os livros.
 // Variáveis no painel da Cloudflare (Settings → Variables and Secrets):
 //   STRIPE_SECRET_KEY  (Secret)  chave secreta da Stripe, sk_live_... ou sk_test_...
-//   PORTES_PT          (Text)    portes para Portugal em cêntimos, ex.: 350 = 3,50€ (opcional)
-//   PORTES_INT         (Text)    portes para o estrangeiro em cêntimos (opcional)
-//   PORTES_GRATIS      (Text)    portes grátis a partir deste total em cêntimos (opcional)
+//   PORTES_PT   portes para Portugal, em cêntimos (ex.: 350 = 3,50€)
+//   PORTES_EU   portes para o resto da Europa, em cêntimos
+//   PORTES_INT  portes para fora da Europa, em cêntimos
+//   GRATIS_PT   portes grátis em Portugal a partir deste total, em cêntimos (ex.: 3000 = 30€)
+//   GRATIS_OUTROS  portes grátis fora de Portugal a partir deste total, em cêntimos (ex.: 5000 = 50€)
 
 const SITE = "https://laueditora.pt";
 const CATALOGO = __CATALOGO__; // gerado a partir do site: preços confirmados aqui, nunca no browser
+
+const EUROPA = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","RO","SK","SI","ES","SE","GB","CH","NO","IS","LI","AD","MC","SM","VA","AL","BA","ME","MK","RS","MD","UA"];
+const RESTO = ["US","CA","BR","AR","CL","CO","MX","PE","UY","AO","MZ","CV","GW","ST","TL","ZA","MA","AU","NZ","JP","KR","CN","HK","SG","IN","IL","AE","TR"];
+const ZONAS = { pt: ["PT"], eu: EUROPA, int: RESTO };
 
 const cors = (origin) => ({
   "Access-Control-Allow-Origin": origin && origin.endsWith("laueditora.pt") ? origin : SITE,
@@ -21,8 +27,8 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     if (req.method !== "POST") return new Response("LAU checkout", { headers: h });
 
-    let items;
-    try { items = (await req.json()).items; } catch { return json({ error: "pedido inválido" }, 400, h); }
+    let items, zona;
+    try { const d = await req.json(); items = d.items; zona = d.zona; } catch { return json({ error: "pedido inválido" }, 400, h); }
     if (!Array.isArray(items) || !items.length) return json({ error: "carrinho vazio" }, 400, h);
 
     const p = new URLSearchParams();
@@ -33,8 +39,8 @@ export default {
     p.append("billing_address_collection", "auto");
     p.append("phone_number_collection[enabled]", "true");
     p.append("tax_id_collection[enabled]", "true");
-    ["PT","ES","FR","DE","IT","GB","IE","NL","BE","LU","CH","AT","US","CA","BR"].forEach((c, i) =>
-      p.append(`shipping_address_collection[allowed_countries][${i}]`, c));
+    if (!["pt", "eu", "int"].includes(zona)) zona = "pt";
+    ZONAS[zona].forEach((c, i) => p.append(`shipping_address_collection[allowed_countries][${i}]`, c));
 
     let total = 0, n = 0;
     for (const it of items.slice(0, 30)) {
@@ -50,16 +56,14 @@ export default {
     }
     if (!n) return json({ error: "livros desconhecidos" }, 400, h);
 
-    const gratis = env.PORTES_GRATIS && total >= parseInt(env.PORTES_GRATIS);
-    const opcoes = [];
-    if (env.PORTES_PT) opcoes.push(["Envio para Portugal", gratis ? 0 : parseInt(env.PORTES_PT)]);
-    if (env.PORTES_INT) opcoes.push(["Envio internacional", gratis ? 0 : parseInt(env.PORTES_INT)]);
-    opcoes.forEach(([nome, valor], i) => {
-      p.append(`shipping_options[${i}][shipping_rate_data][type]`, "fixed_amount");
-      p.append(`shipping_options[${i}][shipping_rate_data][display_name]`, nome);
-      p.append(`shipping_options[${i}][shipping_rate_data][fixed_amount][amount]`, String(valor));
-      p.append(`shipping_options[${i}][shipping_rate_data][fixed_amount][currency]`, "eur");
-    });
+    const custo = parseInt({ pt: env.PORTES_PT, eu: env.PORTES_EU, int: env.PORTES_INT }[zona]) || 0;
+    const limite = parseInt(zona === "pt" ? env.GRATIS_PT : env.GRATIS_OUTROS) || 0;
+    const valor = limite && total >= limite ? 0 : custo;
+    const nome = { pt: "Envio para Portugal", eu: "Envio para a Europa", int: "Envio internacional" }[zona];
+    p.append("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
+    p.append("shipping_options[0][shipping_rate_data][display_name]", valor ? nome : nome + " (grátis)");
+    p.append("shipping_options[0][shipping_rate_data][fixed_amount][amount]", String(valor));
+    p.append("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "eur");
 
     const r = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",

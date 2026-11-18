@@ -305,3 +305,5 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .panel .buycol .buy,.detail .buycol .buy,.detail-static .buycol .buy{background:#111;color:#fff}
 .drawer .dsoc a{border:0;padding:0;white-space:normal}
 #conteudo,main [id],.acc{scroll-margin-top:72px}
+.czona{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:15px}
+.czona select{font:inherit;padding:4px 6px;border:1px solid #111;border-radius:3px;background:#fff}
