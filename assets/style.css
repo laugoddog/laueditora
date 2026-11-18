@@ -338,3 +338,11 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .row{gap:12px}
 .buyrow .addc{font-size:11px;letter-spacing:.03em;gap:5px}
 .buyrow .addc svg{width:14px;height:14px}
+/* publicações: um cartão de cada vez, como os vídeos */
+.car{container-type:inline-size}
+.cb{top:calc(28.125cqw - 18px)}
+.slides{align-items:flex-start}
+.pubimg img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px}
+.sl.vd .lit{color:var(--ink);font-size:16px;margin-top:8px}
+.sl.vd .more{color:var(--ink)}
+.sl .pubgo{display:block;text-align:center;background:#111;color:#fff;text-decoration:none;font:300 14px var(--fd);text-transform:uppercase;letter-spacing:.06em;padding:10px;border-radius:3px;margin-top:10px}
