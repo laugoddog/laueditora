@@ -178,12 +178,12 @@ def feat(fid, label, video, poster, l):
 {acc(fid, label, inner).replace('class="acc"', 'class="acc fp"')}"""
 
 def books_row(livros, pid):
-    row = "".join(f"""<div class="bk"><button class="cv" data-detail="{pid}-{l['slug']}"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></button>
+    row = "".join(f"""<div class="bk"><a class="cv" href="/livros/{l['slug']}/"><img src="/img/{l['capa']}" alt="Capa de {esc(l['titulo'])}" loading="lazy"></a>
 <h4><a class="tl" href="/livros/{l['slug']}/">{esc(l['titulo'])}</a></h4><div class="who"><a class="tl" href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}{buttons(l, True)}</div>""" for i, l in enumerate(livros))
     det = "".join(f"""<div class="detail" id="{pid}-{l['slug']}"><div class="dh"><button class="back" aria-label="voltar">&larr;</button>{esc(l['titulo'])}</div>
 <img src="/img/{l['capa']}" alt="">{cat(l)}<h3><a class="tl" href="/livros/{l['slug']}/">{esc(l['titulo'])}</a></h3><div class="who"><a class="tl" href="/autores/{l['autor']}/">{esc(AUTORES[l['autor']]['nome'])}</a></div>{preco(l)}
 {buttons(l)}{clamped(l, "dx-"+pid+"-"+l["slug"])}</div>""" for i, l in enumerate(livros))
-    return f'<div class="row">{row}</div>{det}'
+    return f'<div class="row">{row}</div>'
 
 PATRONO_TXT = "Enquanto patrono LAU Edições, terás uma participação ativa no processo editorial: com acesso a trabalhos em desenvolvimento, poderás comentar os textos e o teu nome será mencionado nos livros em cuja edição tenhas participado. Para além disso, terás acesso a exemplares autografados de todas as edições normais futuras e a 20% de desconto nos restantes produtos e serviços, entre outros."
 PATRONO_LI = ["Acesso antecipado a WIPs (Works in Progress) selecionados.",
