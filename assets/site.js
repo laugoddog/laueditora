@@ -54,6 +54,7 @@ function renderCart(){markAdded();const n=cart.reduce((s,i)=>s+i.q,0);$$('.cartb
     const body='Olá,\n\nGostaria de encomendar:\n'+cart.map(i=>`- ${i.q} × ${i.title} (${eur(i.price)})`).join('\n')+`\n\nTotal: ${eur(cart.reduce((s,i)=>s+i.price*i.q,0))} + portes\n\nNome:\nMorada de envio:\nNIF (opcional):\n\nObrigado.`;
     $('.cgo',box).href='mailto:'+EMAIL+'?subject='+encodeURIComponent('Encomenda — LAU Edições')+'&body='+encodeURIComponent(body);});}
 function setCart(on){document.body.classList.toggle('cart-open',on);document.documentElement.classList.toggle('cart-open',on);}
+$$('[data-cart-empty]').forEach(b=>b.onclick=()=>{cart=[];saveCart();});
 $$('[data-cart-open]').forEach(b=>b.onclick=()=>setCart(true));
 $$('[data-cart-close],.scrim').forEach(b=>b.addEventListener('click',()=>setCart(false)));
 $$('[data-add-cart]').forEach(b=>b.onclick=()=>{const d=b.dataset,i=cart.find(x=>x.slug===d.slug);

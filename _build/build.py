@@ -76,7 +76,8 @@ def menu():
   <div class="cfoot"><div class="ctot"><span>total</span><b></b></div>
   <label class="czona">envio para <select><option value="pt">Portugal</option><option value="eu">Europa</option><option value="int">resto do mundo</option></select></label>
   <p class="cnote">Portes grátis acima de 30€ em Portugal e de 50€ no estrangeiro. O valor dos portes aparece no pagamento.</p>
-  <a class="btn cgo" href="#">finalizar encomenda</a></div>
+  <a class="btn cgo" href="#">finalizar encomenda</a>
+  <button class="cempty-btn" data-cart-empty>esvaziar carrinho</button></div>
 </aside>
 <aside class="drawer" aria-label="Menu">
   <button class="close" aria-label="Fechar menu" data-menu-close>&times;</button>
