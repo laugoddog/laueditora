@@ -267,6 +267,7 @@ def plats(u):
     ordem = [("youtube","YouTube"),("spotify","Spotify"),("apple","Apple Music"),("amazon","Amazon Music"),("tidal","TIDAL")]
     return '<div class="plats">' + "".join(f'<a href="{p[k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in p) + '</div>'
 
+LIVE = {"https://youtu.be/w6__6pdnqOQ"}  # Synchronicity
 ALBUM_DEPOIS = "https://youtu.be/L3mGj0VE8Uk"  # o álbum aparece a seguir a Assim Fala Zaratustra
 
 def album_slide():
@@ -279,7 +280,7 @@ def album_slide():
 
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = '<div class="car"><div class="slides">' + "".join((f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>') + (album_slide() if u == ALBUM_DEPOIS else '') for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
+    vids = '<div class="car"><div class="slides">' + "".join((f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><div class="cat" style="text-align:center;margin-top:12px">{"live performance" if u in LIVE else "single"}</div><h4 style="margin-top:2px">{esc(t)}</h4>{plats(u)}</div>') + (album_slide() if u == ALBUM_DEPOIS else '') for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     pubs = '<div class="car"><div class="slides">' + "".join(f'<div class="sl vd" lang="en"><a class="pubimg" href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><div id="pub-{k}" class="clamp"><p>{esc(ab)}</p></div></div><button class="more" data-more="pub-{k}">Mostrar mais</button><a class="buy pubgo" href="{u}" target="_blank" rel="noopener">Read</a></div>' for k, (t, au, u, img, ab) in enumerate(PUBLICACOES)) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     wip = f"""<div class="row">
 <div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>
