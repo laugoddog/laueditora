@@ -45,7 +45,8 @@ const EMAIL='geral@laueditora.pt',CHECKOUT='https://lau-checkout.rafael-coelho-n
 let cart=[];try{cart=JSON.parse(localStorage.getItem('lau-cart')||'[]')}catch(e){}
 const eur=c=>(c/100).toFixed(2).replace('.',',').replace(',00','')+'€';
 function saveCart(){try{localStorage.setItem('lau-cart',JSON.stringify(cart))}catch(e){}renderCart();}
-function renderCart(){const n=cart.reduce((s,i)=>s+i.q,0);$$('.cartbtn .cnt').forEach(c=>{c.hidden=!n;c.textContent=n;});
+function markAdded(){$$('[data-add-cart]').forEach(b=>{const sp=$('span',b);if(!sp)return;if(!b.dataset.txt)b.dataset.txt=sp.textContent;const on=cart.some(i=>i.slug===b.dataset.slug);b.classList.toggle('ok',on);sp.textContent=on?'adicionado ✓':b.dataset.txt;});}
+function renderCart(){markAdded();const n=cart.reduce((s,i)=>s+i.q,0);$$('.cartbtn .cnt').forEach(c=>{c.hidden=!n;c.textContent=n;});
   $$('.cart').forEach(box=>{const l=$('.clist',box);
     l.innerHTML=cart.length?cart.map((i,k)=>`<div class="ci"><img src="${i.cover}" alt=""><div class="t">${i.title}<span>${eur(i.price)}</span></div><div class="q"><button data-q="${k}" data-d="-1" aria-label="menos">−</button>${i.q}<button data-q="${k}" data-d="1" aria-label="mais">+</button></div></div>`).join(''):'<p class="cempty">O carrinho está vazio.</p>';
     $('.ctot b',box).textContent=eur(cart.reduce((s,i)=>s+i.price*i.q,0));$('.cfoot',box).style.display=cart.length?'':'none';
@@ -58,8 +59,7 @@ $$('[data-cart-close],.scrim').forEach(b=>b.addEventListener('click',()=>setCart
 $$('[data-add-cart]').forEach(b=>b.onclick=()=>{const d=b.dataset,i=cart.find(x=>x.slug===d.slug);
   if(i)i.q++;else cart.push({slug:d.slug,title:d.title,price:+d.price,cover:d.cover,q:1});saveCart();
   $$('.cartbtn').forEach(c=>{c.classList.remove('added');void c.offsetWidth;c.classList.add('added');});
-  b.classList.remove('added');void b.offsetWidth;b.classList.add('added');
-  const sp=$('span',b);if(sp){const t=sp.textContent;b.classList.add('ok');sp.textContent='adicionado ✓';setTimeout(()=>{sp.textContent=t;b.classList.remove('ok');},1400);}});
+  b.classList.remove('added');void b.offsetWidth;b.classList.add('added');});
 $$('.cgo').forEach(a=>a.addEventListener('click',async e=>{if(!CHECKOUT||!cart.length)return;e.preventDefault();a.textContent='a abrir o pagamento…';
   try{const r=await fetch(CHECKOUT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({zona:($('.czona select')||{}).value||'pt',items:cart.map(i=>({slug:i.slug,q:i.q}))})});const d=await r.json();
     if(d.url){location.href=d.url;return;}throw new Error(d.error);}catch(err){a.textContent='finalizar encomenda';alert('Não foi possível abrir o pagamento. Tenta de novo ou escreve para '+EMAIL+'.');}}));
