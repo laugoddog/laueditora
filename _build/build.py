@@ -99,9 +99,9 @@ def menu():
 def socials(items):
     return '<div class="socials">' + "".join(f'<a href="{u}" aria-label="{n}" title="{n}" target="_blank" rel="noopener">{ICON[k]}</a>' for k, n, u in items) + '</div>'
 
-def contacts(site_label, site_url):
+def contacts(site_label, site_url, email=EMAIL):
     return f"""<ul class="contacts">
-  <li>{ICON['mail-line']}<div><b>Email</b><a href="mailto:{EMAIL}">{EMAIL}</a></div></li>
+  <li>{ICON['mail-line']}<div><b>Email</b><a href="mailto:{email}">{email}</a></div></li>
   <li>{ICON['phone']}<div><b>Phone</b><a href="{WA}">{TEL}</a></div></li>
   <li>{ICON['web']}<div><b>Website</b><a href="{site_url}">{site_label}</a></div></li>
 </ul>"""
@@ -316,7 +316,7 @@ def page_rafael():
     <a class="wide" href="{WA}">book a free session | enquire</a>
   </section>
 
-  {contacts("rafaelaugusto.com", WEB)}
+  {contacts("rafaelaugusto.com", WEB, "rafael.augusto@laueditora.pt")}
 </main>
 """
     write("rafaelaugusto/index.html", head("Rafael Augusto | Philosophy, Books & Music",
