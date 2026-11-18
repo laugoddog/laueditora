@@ -334,3 +334,7 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .bk h4,.bk .who,.bk .pr{min-width:0}
 .grid2 img{max-width:none;object-fit:fill}
 .grid2 a{width:min-content;margin:0 auto}
+.bk .cv img{height:170px}
+.row{gap:12px}
+.buyrow .addc{font-size:11px;letter-spacing:.03em;gap:5px}
+.buyrow .addc svg{width:14px;height:14px}
