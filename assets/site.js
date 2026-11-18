@@ -41,7 +41,7 @@ function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub,.person span'
   const ps=$$('.person span');if(ps.length){const m=Math.min(...ps.map(s=>parseFloat(getComputedStyle(s).fontSize)));ps.forEach(s=>s.style.fontSize=m+'px');}}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);addEventListener('resize',fit);
 // carrinho (guardado neste browser)
-const EMAIL='geral@laueditora.pt',CHECKOUT='';// endereço do Worker da Cloudflare (…workers.dev); vazio = encomenda por email
+const EMAIL='geral@laueditora.pt',CHECKOUT='https://lau-checkout.rafael-coelho-nascimento.workers.dev/';// endereço do Worker da Cloudflare (…workers.dev); vazio = encomenda por email
 let cart=[];try{cart=JSON.parse(localStorage.getItem('lau-cart')||'[]')}catch(e){}
 const eur=c=>(c/100).toFixed(2).replace('.',',').replace(',00','')+'€';
 function saveCart(){try{localStorage.setItem('lau-cart',JSON.stringify(cart))}catch(e){}renderCart();}
