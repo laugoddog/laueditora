@@ -85,7 +85,6 @@ def menu():
     <a href="/#livros">compra os nossos livros</a>
     <a href="/#autores">os nossos autores</a>
     {''.join(f'<a class="sub" href="/autores/{k}/">{esc(a["nome"])}</a>' for k, a in AUTORES.items())}
-    <a href="/#pre-lancamentos">pré-lançamentos</a>
     <a href="/#patrono">torna-te patrono e editor</a>
     <a href="/#reviews">deixa uma review</a>
     <a href="/#sobre">sobre nós</a>
@@ -213,8 +212,7 @@ def page_lau():
   {feat("destaque","em <b class='k'>destaque</b>","destaque.mp4","poster-destaque.jpg",LIVROS[0])}
   {acc("livros","compra os nossos <b class='k'>livros</b>",books_row(lau,"lv"),icon="icone-l.png")}
   {acc("reviews","deixa uma <b class='k'>review</b>",rv,icon="icone-a.png")}
-  {acc("pre-lancamentos","pré-<b class='k'>lançamentos</b>",pre,icon="icone-u.png")}
-  {acc("patrono","torna-te <b class='k'>patrono</b> e editor",patrono,icon="icone-aparo.png")}
+  {acc("patrono","torna-te <b class='k'>patrono</b> e editor",patrono,icon="icone-u.png")}
 
   <section class="block authors" id="autores">
     <h2>os nossos <b class='k'>autores</b></h2><div class="h2s">clica na imagem para saber mais</div>
