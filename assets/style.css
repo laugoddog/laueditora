@@ -378,3 +378,6 @@ body.rafael::before{background:linear-gradient(rgba(34,39,32,.8),rgba(34,39,32,.
   html::before{content:"";position:fixed;inset:0;z-index:-1;background:url(/img/fundo-marmore.jpg) center/cover;pointer-events:none}
   body.lau::before,body.rafael::before{left:50%;right:auto;width:var(--col);transform:translateX(-50%);height:100vh;clip-path:inset(var(--off,0px) 0 0 0 round 20px 20px 0 0)}
 }
+.plats{display:flex;justify-content:center;gap:18px;margin-top:10px;color:var(--ink)}
+.plats a{display:inline-flex;color:var(--ink)}
+.plats svg{width:24px;height:24px}

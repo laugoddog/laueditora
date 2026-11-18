@@ -182,3 +182,12 @@ PRATICA_EN = """<h4>What is Philosophical Practice?</h4>
 <p>Trained in Philosophical Practice by Lydia Amir, one of the founders of the field as we know it, I have developed my own method, grounded in my understanding of the human mind and nature.</p>
 <h4>Try Now</h4>
 <p>The first session is free: For us to meet, to discuss the process, and to assess together whether Philosophical Practice is suitable for what you wish to explore. I work with individuals and couples, in portuguese and english. Book your first session now (button bellow).</p>"""
+
+# onde ouvir cada música (links das plataformas; vídeo no YouTube vem de VIDEOS)
+PLATAFORMAS = {
+    "5fww9y11w_s": {"spotify": "https://open.spotify.com/track/0IvgF40Tx8qyT0j4VfGX4R", "amazon": "https://music.amazon.com/albums/B07VJJTLS5?trackAsin=B07VJJYM77", "tidal": "https://listen.tidal.com/track/113790478"},
+    "0EjCzOBsfco": {"spotify": "https://open.spotify.com/track/2x8MrLufYoVLZJxNmGRjY7", "amazon": "https://music.amazon.com/albums/B089SFH8GK?trackAsin=B089SF173C", "tidal": "https://listen.tidal.com/track/142125440"},
+    "ToFFGT4hk5g": {"spotify": "https://open.spotify.com/track/4EfAcMzhpUQtKD0slKJrOY", "tidal": "https://listen.tidal.com/track/168589872"},
+    "w8x3c3pRW7I": {"spotify": "https://open.spotify.com/track/6ygtVH2yLfW5lJAn5TuQLU", "amazon": "https://music.amazon.com/albums/B0BG9DTNQ9?trackAsin=B0BG9F81NH", "tidal": "https://listen.tidal.com/track/250201430"},
+    "L3mGj0VE8Uk": {"spotify": "https://open.spotify.com/track/1yqQIjVDqUvRjR4FwNm4Wf", "amazon": "https://music.amazon.com/albums/B07M6LZM7H?trackAsin=B07MRZF9K5", "tidal": "https://listen.tidal.com/track/101806648"},
+}

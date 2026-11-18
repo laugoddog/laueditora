@@ -2,7 +2,7 @@
 """Gera o site estático de laueditora.pt a partir de data.py.  Uso: python3 _build/build.py
 Estrutura e aspeto replicam os sites do Hopp; fontes da app 42 (Bodoni Moda, Cormorant Garamond, Niagara) + Arbotek."""
 import os, re, html
-from data import AUTORES, LIVROS, REVIEWS, VIDEOS, PUBLICACOES, PRATICA_PT, PRATICA_EN
+from data import PLATAFORMAS, AUTORES, LIVROS, REVIEWS, VIDEOS, PUBLICACOES, PRATICA_PT, PRATICA_EN
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://laueditora.pt"
@@ -255,9 +255,20 @@ def page_lau():
         "/", "og-lau.jpg", "pt", "lau") + body + FOOT)
 
 # ---------- página pessoal ----------
+
+ICON["amazon"] = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 15.6c4.9 3 11.6 3.3 17.2.9.5-.2.9.4.4.7-5.6 3.5-13.3 3.4-17.9-.8-.3-.3 0-.9.3-.8zm16.4-.6c.5-.6 3-.6 3.3-.2.3.5-.3 2.9-1.4 3.8-.2.1-.4 0-.3-.2.3-.8 1-2.3.7-2.8-.4-.4-2 0-2.2-.6zM9 4.5c2.6-.3 5.2.3 5.2 3.2v5.1c0 .9.5 1.4.9 1.8.1.1.1.3 0 .4l-1.4 1.2c-.1.1-.3.1-.4 0-.6-.5-.8-.9-1.1-1.3-1.1 1.1-2 1.5-3.4 1.5-1.8 0-3.2-1.1-3.2-3.3 0-1.7.9-2.9 2.3-3.5 1.2-.5 2.9-.6 4.2-.8v-.3c0-.5 0-1.1-.3-1.5-.3-.4-.8-.6-1.3-.6-.9 0-1.6.4-1.8 1.4 0 .2-.2.4-.4.4l-1.8-.2c-.2 0-.3-.2-.3-.4.5-2.5 2.8-3.2 4.8-3.2zm2.1 6.2c-1.6.1-3.3.4-3.3 2.1 0 .9.5 1.5 1.3 1.5.6 0 1.1-.4 1.5-1 .5-.8.5-1.5.5-2.6z"/></svg>'
+ICON["tidal"] = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.5 15.3 8.8 12 12.1 8.7 8.8zM5.4 5.5 8.7 8.8 5.4 12.1 2.1 8.8zM18.6 5.5l3.3 3.3-3.3 3.3-3.3-3.3zM12 12.1l3.3 3.3L12 18.7l-3.3-3.3z"/></svg>'
+
+def plats(u):
+    vid = u.rsplit("/", 1)[1]
+    p = dict(PLATAFORMAS.get(vid, {}))
+    p["youtube"] = f"https://music.youtube.com/watch?v={vid}"
+    ordem = [("spotify","Spotify"),("youtube","YouTube"),("amazon","Amazon Music"),("tidal","TIDAL")]
+    return '<div class="plats">' + "".join(f'<a href="{p[k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in p) + '</div>'
+
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = '<div class="car"><div class="slides">' + "".join(f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4></div>' for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
+    vids = '<div class="car"><div class="slides">' + "".join(f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>' for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     pubs = '<div class="car"><div class="slides">' + "".join(f'<div class="sl vd" lang="en"><a class="pubimg" href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><div id="pub-{k}" class="clamp"><p>{esc(ab)}</p></div></div><button class="more" data-more="pub-{k}">Mostrar mais</button><a class="buy pubgo" href="{u}" target="_blank" rel="noopener">Read</a></div>' for k, (t, au, u, img, ab) in enumerate(PUBLICACOES)) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     wip = f"""<div class="row">
 <div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>
