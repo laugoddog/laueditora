@@ -91,7 +91,7 @@ def menu():
     <a href="/#sobre">sobre nós</a>
     <a href="/rafaelaugusto/">Rafael Augusto</a>
   </nav>
-  <div class="dsoc">{socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn",LI)])}</div>
+  <div class="dsoc">{socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA)])}</div>
 </aside>
 <header class="topbar"><a href="/" aria-label="LAU Edições — página inicial"><img src="/img/logo-lau-longo.png" alt="LAU Edições"></a></header>
 """
@@ -230,7 +230,7 @@ def page_lau():
   <video autoplay muted loop playsinline poster="/img/poster-hero-lau.jpg"><source src="/media/hero-lau.mp4" type="video/mp4"></video>
   <img class="logo" src="/img/logo-lau-branco.png" alt="LAU Edições">
   <p class="tagline">os nossos livros são resumos dos nossos silêncios.</p>
-  {socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA),("linkedin","LinkedIn",LI)])}
+  {socials([("instagram","Instagram",IG),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA)])}
   <a class="down" href="#conteudo" aria-label="descer"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
 </header>
 <main class="wrap" id="conteudo">
@@ -298,7 +298,7 @@ def page_rafael():
     <img class="sig" src="/img/assinatura-branca.png" alt="">
     <h1><span class='fit'>Rafael <b class='k'>Augusto</b></span>{TICK}</h1>
     <div class="sub">Unravelling The Mind | Philosophy, Books &amp; Music</div>
-    {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("web","Website",WEB),("email","Email","mailto:"+EMAIL),("linkedin","LinkedIn",LI),("whatsapp","WhatsApp",WA)])}
+    {socials([("instagram","Instagram",IG),("youtube","YouTube",YT),("spotify","Spotify",SP),("email","Email","mailto:"+EMAIL),("whatsapp","WhatsApp",WA)])}
   </div>
 </header>
 <main class="wrap">
