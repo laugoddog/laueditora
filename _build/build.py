@@ -264,12 +264,14 @@ def plats(u):
     vid = u.rsplit("/", 1)[1]
     p = dict(PLATAFORMAS.get(vid, {}))
     p["youtube"] = f"https://music.youtube.com/watch?v={vid}"
-    ordem = [("spotify","Spotify"),("apple","Apple Music"),("youtube","YouTube"),("amazon","Amazon Music"),("tidal","TIDAL")]
+    ordem = [("youtube","YouTube"),("spotify","Spotify"),("apple","Apple Music"),("amazon","Amazon Music"),("tidal","TIDAL")]
     return '<div class="plats">' + "".join(f'<a href="{p[k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in p) + '</div>'
+
+ALBUM_DEPOIS = "https://youtu.be/L3mGj0VE8Uk"  # o álbum aparece a seguir a Assim Fala Zaratustra
 
 def album_slide():
     a = ALBUM
-    ordem = [("spotify","Spotify"),("apple","Apple Music"),("youtube","YouTube"),("amazon","Amazon Music"),("tidal","TIDAL")]
+    ordem = [("youtube","YouTube"),("spotify","Spotify"),("apple","Apple Music"),("amazon","Amazon Music"),("tidal","TIDAL")]
     icons = "".join(f'<a href="{a["links"][k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in a["links"])
     return (f'<div class="sl album"><button class="yt" data-list="{a["yt_lista"]}" aria-label="Ouvir {esc(a["titulo"])}">'
             f'<img src="{a["capa"]}" alt="Capa do álbum {esc(a["titulo"])}" loading="lazy"><span class="play"></span></button>'
@@ -277,7 +279,7 @@ def album_slide():
 
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = '<div class="car"><div class="slides">' + album_slide() + "".join(f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>' for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
+    vids = '<div class="car"><div class="slides">' + "".join((f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>') + (album_slide() if u == ALBUM_DEPOIS else '') for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     pubs = '<div class="car"><div class="slides">' + "".join(f'<div class="sl vd" lang="en"><a class="pubimg" href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><div id="pub-{k}" class="clamp"><p>{esc(ab)}</p></div></div><button class="more" data-more="pub-{k}">Mostrar mais</button><a class="buy pubgo" href="{u}" target="_blank" rel="noopener">Read</a></div>' for k, (t, au, u, img, ab) in enumerate(PUBLICACOES)) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     wip = f"""<div class="row">
 <div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>
@@ -295,7 +297,7 @@ def page_rafael():
 <main class="wrap">
   {feat("now","Now <b class='k'>Available</b>","now-available.mp4","poster-now-available.jpg",next(x for x in LIVROS if x["slug"]=="thinking-animal"))}
   {acc("books","<b class='k'>Books</b>",books_row(livros,"bk"),"livros",caps=True)}
-  {acc("music","Music <b class='k'>Videos</b>",vids,"videoclips",caps=True)}
+  {acc("music","Music &amp; <b class='k'>Videos</b>",vids,"videoclips",caps=True)}
   {acc("academic","Academic <b class='k'>Publications</b>",pubs,"publicações académicas",caps=True)}
 
   <section class="block" id="practice" lang="en">
