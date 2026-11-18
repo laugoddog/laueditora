@@ -2,7 +2,7 @@
 """Gera o site estático de laueditora.pt a partir de data.py.  Uso: python3 _build/build.py
 Estrutura e aspeto replicam os sites do Hopp; fontes da app 42 (Bodoni Moda, Cormorant Garamond, Niagara) + Arbotek."""
 import os, re, html
-from data import PLATAFORMAS, AUTORES, LIVROS, REVIEWS, VIDEOS, PUBLICACOES, PRATICA_PT, PRATICA_EN
+from data import ALBUM, PLATAFORMAS, AUTORES, LIVROS, REVIEWS, VIDEOS, PUBLICACOES, PRATICA_PT, PRATICA_EN
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://laueditora.pt"
@@ -267,9 +267,17 @@ def plats(u):
     ordem = [("spotify","Spotify"),("apple","Apple Music"),("youtube","YouTube"),("amazon","Amazon Music"),("tidal","TIDAL")]
     return '<div class="plats">' + "".join(f'<a href="{p[k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in p) + '</div>'
 
+def album_slide():
+    a = ALBUM
+    ordem = [("spotify","Spotify"),("apple","Apple Music"),("youtube","YouTube"),("amazon","Amazon Music"),("tidal","TIDAL")]
+    icons = "".join(f'<a href="{a["links"][k]}" target="_blank" rel="noopener" aria-label="{n}">{ICON[k]}</a>' for k, n in ordem if k in a["links"])
+    return (f'<div class="sl album"><button class="yt" data-list="{a["yt_lista"]}" aria-label="Ouvir {esc(a["titulo"])}">'
+            f'<img src="{a["capa"]}" alt="Capa do álbum {esc(a["titulo"])}" loading="lazy"><span class="play"></span></button>'
+            f'<div class="cat" style="text-align:center;margin-top:12px">álbum</div><h4 style="margin-top:2px">{esc(a["titulo"])}</h4><div class="plats">{icons}</div></div>')
+
 def page_rafael():
     livros = [l for l in LIVROS if l.get("pessoal")]
-    vids = '<div class="car"><div class="slides">' + "".join(f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>' for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
+    vids = '<div class="car"><div class="slides">' + album_slide() + "".join(f'<div class="sl"><button class="yt" data-yt="{u.rsplit("/",1)[1]}" aria-label="Ver {esc(t)}"><img src="/img/{img}" alt="" loading="lazy"><span class="play"></span></button><h4>{esc(t)}</h4>{plats(u)}</div>' for t, u, img in VIDEOS) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     pubs = '<div class="car"><div class="slides">' + "".join(f'<div class="sl vd" lang="en"><a class="pubimg" href="{u}" target="_blank" rel="noopener"><img src="/img/{img}" alt="" loading="lazy"></a><h4>{esc(t)}</h4><div class="who">{esc(au)}</div><div class="lit"><div id="pub-{k}" class="clamp"><p>{esc(ab)}</p></div></div><button class="more" data-more="pub-{k}">Mostrar mais</button><a class="buy pubgo" href="{u}" target="_blank" rel="noopener">Read</a></div>' for k, (t, au, u, img, ab) in enumerate(PUBLICACOES)) + '</div><button class="cb l" aria-label="anterior"></button><button class="cb r" aria-label="seguinte"></button><div class="dots"></div></div>'
     wip = f"""<div class="row">
 <div class="bk"><img src="/img/wip-luz-do-luto.webp" alt="" loading="lazy" style="aspect-ratio:2/3;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,.25)"><h4>Luz do Luto</h4><div class="who">álbum + livro</div><a class="buy" style="margin-top:8px" href="https://buy.stripe.com/8x27sL2278BF25o3ck4gg07" target="_blank" rel="noopener">pré-reserva</a></div>

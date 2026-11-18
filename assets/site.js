@@ -32,8 +32,8 @@ $$('.car').forEach(car=>{const s=$('.slides',car),n=s.children.length,d=$('.dots
   const go=k=>{cur=(k+n)%n;s.scrollTo({left:cur*s.clientWidth});dots();};
   $('.cb.l',car).onclick=()=>go(cur-1);$('.cb.r',car).onclick=()=>go(cur+1);
   s.addEventListener('scroll',()=>{clearTimeout(t);t=setTimeout(()=>{cur=Math.round(s.scrollLeft/s.clientWidth);dots();},120);},{passive:true});dots();});
-$$('.yt').forEach(b=>b.onclick=()=>{if($('iframe',b))return;const f=document.createElement('iframe');
-  f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;b.appendChild(f);$('.play',b).remove();});
+$$('.yt').forEach(b=>b.onclick=()=>{if(b.closest('.album')){b.style.aspectRatio='16/9';b.style.width='100%';}if($('iframe',b))return;const f=document.createElement('iframe');
+  f.src=b.dataset.list?'https://www.youtube-nocookie.com/embed/videoseries?list='+b.dataset.list+'&autoplay=1&rel=0':'https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;b.appendChild(f);$('.play',b).remove();});
 // títulos sempre numa linha: reduz a letra até caber
 function fit(){$$('.acc-h .tt,.phero h1,.hero .tagline,.phero .sub,.person span').forEach(el=>{if(!el.parentElement.clientWidth)return;el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize),box=el.parentElement;
   const avail=()=>el.matches('.person span')?box.clientWidth:!el.matches('.tt')?box.clientWidth-(el.matches('h1')?50:16):box.clientWidth-parseFloat(getComputedStyle(box).paddingLeft)-parseFloat(getComputedStyle(box).paddingRight);

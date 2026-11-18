@@ -191,3 +191,14 @@ PLATAFORMAS = {
     "w8x3c3pRW7I": {"apple": "https://music.apple.com/pt/album/nha-m%C3%A3e/1647224534?i=1647224535", "spotify": "https://open.spotify.com/track/6ygtVH2yLfW5lJAn5TuQLU", "amazon": "https://music.amazon.com/albums/B0BG9DTNQ9?trackAsin=B0BG9F81NH", "tidal": "https://listen.tidal.com/track/250201430"},
     "L3mGj0VE8Uk": {"apple": "https://music.apple.com/pt/album/assim-fala-zaratustra/1448304664?i=1448304665", "spotify": "https://open.spotify.com/track/1yqQIjVDqUvRjR4FwNm4Wf", "amazon": "https://music.amazon.com/albums/B07M6LZM7H?trackAsin=B07MRZF9K5", "tidal": "https://listen.tidal.com/track/101806648"},
 }
+
+# álbum (aparece primeiro no carrossel das músicas)
+ALBUM = {
+    "titulo": "Meio Cão Meio Deus", "capa": "https://i.scdn.co/image/ab67616d0000b273055fba901d3e7b9b5325a4f2",
+    "yt_lista": "PLbP0Zp_H-19V9-Y7IlF0y_NgOob1zxiFi",
+    "links": {"spotify": "https://open.spotify.com/album/7JuyXtRv71C4PhyHw3yoVB",
+              "apple": "https://music.apple.com/pt/album/meio-c%C3%A3o-meio-deus/1377582040",
+              "youtube": "https://music.youtube.com/playlist?list=PLbP0Zp_H-19V9-Y7IlF0y_NgOob1zxiFi",
+              "amazon": "https://music.amazon.com/albums/B07CPL347H",
+              "tidal": "https://listen.tidal.com/album/88059604"},
+}
