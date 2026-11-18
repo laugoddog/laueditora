@@ -346,3 +346,21 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 .sl.vd .lit{color:var(--ink);font-size:16px;margin-top:8px}
 .sl.vd .more{color:var(--ink)}
 .sl .pubgo{display:block;text-align:center;background:#111;color:#fff;text-decoration:none;font:300 14px var(--fd);text-transform:uppercase;letter-spacing:.06em;padding:10px;border-radius:3px;margin-top:10px}
+/* computador: o site numa coluna ao centro, sobre mármore branco (como no Hopp) */
+@media (min-width:700px){
+  html{background:#eee url(/img/fundo-marmore.jpg) center/cover fixed}
+  body{max-width:560px;margin:0 auto;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.25);position:relative}
+  body.rafael{background-color:#363c33}
+  .topbar{left:50%;right:auto;width:560px;transform:translateX(-50%)}
+  .burger{left:calc(50% - 266px)}
+  .cartbtn{right:calc(50% - 266px)}
+  .drawer{left:calc(50% - 280px)}
+  .cart{right:calc(50% - 280px)}
+  .scrim{left:calc(50% - 280px);right:auto;width:560px}
+  .hero{min-height:100vh}
+  .phero .info{margin-top:-218px}
+}
+@media (min-width:700px){
+  .drawer,.cart{transform:none;opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+  body.menu-open .drawer,body.cart-open .cart{opacity:1;visibility:visible;transition:opacity .25s}
+}
