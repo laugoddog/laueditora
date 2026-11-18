@@ -307,3 +307,7 @@ body.has-hero .topbar{opacity:0;pointer-events:none}
 #conteudo,main [id],.acc{scroll-margin-top:72px}
 .czona{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:15px}
 .czona select{font:inherit;padding:4px 6px;border:1px solid #111;border-radius:3px;background:#fff}
+.addc{display:flex!important;align-items:center;justify-content:center;gap:8px;width:100%;border:0;cursor:pointer}
+.addc svg{width:17px;height:17px;flex:0 0 auto}
+.buyrow .addc{font-size:13px;padding:9px 4px}
+.addc.ok{background:#3c3c3c!important}

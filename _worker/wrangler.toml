@@ -1,0 +1,8 @@
+# Configuração do Worker de pagamento (publicado automaticamente pelo GitHub)
+name = "lau-checkout"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+account_id = "0eff3613e32b38d5c679721c1ca500a4"
+workers_dev = true
+# mantém as variáveis criadas no painel da Cloudflare (portes e chave da Stripe)
+keep_vars = true

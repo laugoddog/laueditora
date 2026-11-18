@@ -135,24 +135,18 @@ def cents(l):
     return round(float(l["preco"].replace("€","").replace(",",".").strip())*100)
 
 def can_cart(l):
-    return not l.get("esgotado") and "buy.stripe.com" in l.get("compra","")
-
-def cart_btn(l, round_=False):
-    if not can_cart(l): return ""
-    d = f'data-add-cart data-slug="{l["slug"]}" data-title="{esc(l["titulo"])}" data-price="{cents(l)}" data-cover="/img/{l["capa"]}"'
-    if round_:
-        return f'<button class="cart-round" {d} aria-label="Adicionar ao carrinho">{CART_SVG}</button>'
-    return f'<button class="btn alt cart-full" {d}>{CART_SVG}<span>adicionar ao carrinho</span></button>'
+    """vendido pela LAU (passa pelo carrinho); livros vendidos fora (ex.: Amazon) têm só o link"""
+    c = l.get("compra", "")
+    return not l.get("esgotado") and "mybook.to" not in c and "amazon." not in c and "amzn." not in c
 
 def buttons(l, round_=False):
-    """comprar + carrinho; em espaço curto o carrinho é só um círculo"""
+    """tudo passa pelo carrinho; livros vendidos fora levam ao sítio onde se compram"""
     if l.get("esgotado"): return ""
-    label = l.get("botao","comprar")
-    if label == "comprar": label = "comprar já" if not round_ else "comprar"
-    main = f'<a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">{label}</a>'
-    if round_:
-        return f'<div class="buyrow">{main}{cart_btn(l, True)}</div>'
-    return f'<div class="buycol">{main}{cart_btn(l)}</div>'
+    if not can_cart(l):
+        return f'<div class="{"buyrow" if round_ else "buycol"}"><a class="buy" href="{l["compra"]}" target="_blank" rel="noopener">comprar</a></div>'
+    d = f'data-add-cart data-slug="{l["slug"]}" data-title="{esc(l["titulo"])}" data-price="{cents(l)}" data-cover="/img/{l["capa"]}"'
+    txt = "adicionar" if round_ else "adicionar ao carrinho"
+    return f'<div class="{"buyrow" if round_ else "buycol"}"><button class="buy addc" {d}>{CART_SVG}<span>{txt}</span></button></div>'
 
 def clamped(l, uid):
     return f'<div class="txt lit"><div id="{uid}" class="clamp">{texto(l)}</div></div><button class="more" data-more="{uid}">Mostrar mais</button>'
