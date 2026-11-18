@@ -7,10 +7,14 @@ $$('.drawer .close,.scrim,.drawer a').forEach(e=>e.addEventListener('click',()=>
 function setOpen(acc,on,instant){const h=$('.acc-h',acc);h.setAttribute('aria-expanded',on);
   if(instant)acc.classList.add('noanim');
   if(acc.classList.contains('fp')&&!on){const f=$('[data-feat="'+acc.id+'"]');
-    const done=()=>{acc.classList.remove('open','shown');acc.style.height=acc.style.overflow=acc.style.transition='';if(f){f.classList.remove('hide');f.classList.add('fadein');setTimeout(()=>f.classList.remove('fadein'),300);}};
+    const done=()=>{const o=$('.fov',acc);if(o)o.remove();acc.classList.remove('open','shown');acc.style.height=acc.style.overflow=acc.style.transition='';if(f){const pv=$('.panel video',acc),fv=$('video',f);try{fv.currentTime=pv.currentTime}catch(e){}f.classList.remove('hide');}};
     if(instant||!f){done();}
     else{// encolhe até ao tamanho do cartão e só então troca, sem passar pela versão pequena
-      const target=acc.offsetWidth*9/16;acc.style.height=acc.offsetHeight+'px';acc.style.overflow='hidden';void acc.offsetHeight;
+      const target=acc.offsetWidth*9/16;acc.style.height=acc.offsetHeight+'px';acc.style.overflow='hidden';
+      // o vídeo do cartão vai aparecendo por cima enquanto o painel encolhe
+      const ov=document.createElement('div');ov.className='fov';const sv=$('video',f),pv=$('.panel video',acc),v=sv.cloneNode(true);
+      v.muted=true;v.autoplay=true;v.playsInline=true;try{v.currentTime=(pv||sv).currentTime}catch(e){}ov.appendChild(v);acc.appendChild(ov);v.play().catch(()=>{});
+      void acc.offsetHeight;ov.style.opacity=1;
       acc.style.transition='height .45s cubic-bezier(.2,.7,.2,1)';acc.style.height=target+'px';
       let ok=false;const fin=()=>{if(ok)return;ok=true;done();};acc.addEventListener('transitionend',e=>{if(e.target===acc)fin();},{once:true});setTimeout(fin,520);}}
   else acc.classList.toggle('open',on);
