@@ -342,13 +342,13 @@ def page_livro(l):
 
 def page_autor(k, a):
     livros = [l for l in LIVROS if l["autor"] == k]
-    grid = "".join(f'<a href="/livros/{l["slug"]}/" style="text-decoration:none"><img src="/img/{l["capa"]}" alt=""><div>{esc(l["titulo"])}</div></a>' for l in livros)
+    grid = "".join(f'<a href="/livros/{l["slug"]}/" aria-label="{esc(l["titulo"])}"><img src="/img/{l["capa"]}" alt="Capa de {esc(l["titulo"])}" loading="lazy"></a>' for l in livros)
     body = f"""{menu()}
 <main class="wrap page">
   <img class="cover" src="/img/{a['foto']}" alt="{esc(a['nome'])}" style="filter:grayscale(1)">
   <h1>{esc(a['nome'])}</h1>
   <div class="txt lit" style="margin-top:14px">{''.join(f'<p>{p}</p>' for p in a['bio'])}</div>
-  <section class="block"><h2>livros</h2><div class="grid2">{grid}</div></section>
+  <section class="block"><h2>livros</h2><div class="covers">{grid}</div></section>
   {contacts("laueditora.pt/", "/")}
 </main>
 """
