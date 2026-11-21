@@ -210,8 +210,8 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .card:nth-child(4){background:#F4EEE3;color:var(--ink)}
 .card .no{position:absolute;right:36px;top:34px;font-family:var(--fh);letter-spacing:.2em;font-size:15px;opacity:.55}
 .card .bg{font-size:clamp(70px,13vh,190px);color:var(--co)}
-.card .ic{height:clamp(80px,15vh,150px);display:flex;align-items:flex-end;color:var(--co)}
-.card .ic svg{width:120px;height:120px}
+.card .ic{display:flex;align-items:flex-start;color:var(--co);margin-top:.6vh}
+.card .ic svg{width:clamp(64px,10.5vh,140px);height:clamp(64px,10.5vh,140px)}
 .card h3{font-family:var(--fh);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(28px,5vh,46px);font-weight:500;line-height:1;margin-top:auto}
 .card p{font-size:clamp(17px,2.5vh,23px);max-width:24em}
 .ladder{display:flex;flex-wrap:nowrap;white-space:nowrap;gap:0;font-size:19px;font-style:italic;width:max-content;max-width:none}
@@ -272,7 +272,7 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .letter p:first-child::first-letter{font-family:var(--fh);font-weight:500;float:left;font-size:4.2em;line-height:.8;padding:.06em .12em 0 0;color:var(--co)}
 .letter .end{margin-top:36px!important;font-style:italic}
 .letter .end+.end{margin-top:6px!important}
-.sign canvas{width:330px;height:178px;color:var(--cr);margin-top:6px}
+.sign canvas{width:300px;height:154px;color:var(--cr);margin-top:6px;margin-left:0}
 .sign .nm{font-family:var(--fh);font-weight:500;text-transform:uppercase;font-size:34px;letter-spacing:.04em;margin-top:-6px}
 .sign .nm span{font-size:.62em;color:var(--mut)}
 .sign .cv{font-family:var(--fh);letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--mut);margin-top:10px;line-height:1.8}
@@ -402,7 +402,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .deck{height:min(430px,52vh)}
   .card{padding:30px 28px}
   .card .bg{font-size:clamp(90px,12vh,130px)}
-  .card .ic{height:100px}.card .ic svg{width:84px;height:84px}
+  .card .ic svg{width:72px;height:72px}
   .ladder span:not(:last-child)::after{margin:0 5px}
   .ladder{flex-wrap:wrap;white-space:normal;width:auto;font-size:16px!important;row-gap:2px}
   .card h3{font-size:34px}
@@ -452,7 +452,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .m .t{font-size:16px}
   .plan .v{font-size:84px}
   .plan{padding:40px 28px 36px}
-  .sign canvas{width:260px;height:140px}
+  .sign canvas{width:240px;height:123px}
 }
 @media (prefers-reduced-motion:reduce){
   .rv,.w>span{opacity:1!important;transform:none!important;transition:none!important}
@@ -581,7 +581,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       </div>
       <div class="deck" id="deck">
         <div class="card"><span class="no">01</span><div class="big bg">75%</div><h3 data-t="r1_t"></h3><p data-t="r1"></p></div>
-        <div class="card"><span class="no">02</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M12 2.5v19M3.8 7.25l16.4 9.5M3.8 16.75l16.4-9.5M9 3.8L12 6.8l3-3M9 20.2l3-3 3 3M4 11l2.6 1.4L5.2 15M20 13l-2.6-1.4L18.8 9M4.2 9l2.4-.1M19.8 15l-2.4.1"/></svg></div><h3 data-t="r2_t"></h3><p data-t="r2"></p></div>
+        <div class="card"><span class="no">02</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/></svg></div><h3 data-t="r2_t"></h3><p data-t="r2"></p></div>
         <div class="card"><span class="no">03</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"><path d="M12 20.5s-8-4.9-8-10.6A4.4 4.4 0 0 1 12 7.2a4.4 4.4 0 0 1 8 2.7c0 5.7-8 10.6-8 10.6z"/></svg></div><h3 data-t="r3_t"></h3><p data-t="r3"></p></div>
         <div class="card"><span class="no">04</span><div class="big bg">XP</div><h3 data-t="r4_t"></h3><p data-t="r4"></p><div class="ladder" id="ladder"></div></div>
       </div>
@@ -1061,6 +1061,7 @@ function measure(){
   if(vw<=980){ var top=96,capH=vw<=620?170:190,w=Math.max(140,Math.min(vw*.72,(vh-top-capH-24)/2.09));
     TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?w*1.2:w)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   else { var wd=Math.max(150,Math.min(300,(vh-64-24-200)/2.09)); TRACK.style.top=(64+24)+'px'; TRACK.style.transform='none'; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?wd*1.35:wd)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
+  var ph=TRACK.querySelector('figure:not(.wg) .ph'),wgs=TRACK.querySelector('.wgs'); if(ph&&wgs){ wgs.style.height=ph.offsetHeight+'px'; wgs.style.justifyContent='center'; }
   TRACK.querySelectorAll('figcaption b').forEach(function(b){ b.style.fontSize=''; var fs=parseFloat(getComputedStyle(b).fontSize); while(b.scrollWidth>b.clientWidth+1&&fs>14){ fs-=1; b.style.fontSize=fs+'px'; } });
   tourOff=hd.parentNode===TOUR?hd.offsetHeight:0;
   TOUR.style.height=(tourOff+vh+trackSpan*1.15)+'px';
@@ -1077,7 +1078,7 @@ function drawTour(p){
   var x=-trackSpan*ease(p); TRACK.style.transform='translate3d('+x+'px,0,0)';
   var mid=innerWidth/2;
   TRACK.querySelectorAll('figure').forEach(function(fg){ var r=fg.getBoundingClientRect(),d=clamp(((r.left+r.width/2)-mid)/mid,-1.4,1.4);
-    fg.style.transform='perspective(1200px) rotateY('+(-d*(innerWidth<=620?5:12))+'deg) scale('+(1-Math.min(Math.abs(d),1)*.06)+')'; });
+    var ph=fg.querySelector('.ph,.wgs'); if(ph) ph.style.transform='perspective(1200px) rotateY('+(-d*(innerWidth<=620?5:12))+'deg)'; fg.style.transform=''; });
   document.getElementById('tourBar').style.transform='scaleX('+p+')';
 }
 
@@ -1101,7 +1102,8 @@ function nibW(st,P){
 function sign(canvas,instant){
   if(!window.SIGP) return;
   var dpr=Math.min(3,window.devicePixelRatio||1),r=canvas.getBoundingClientRect(); canvas.width=Math.round(r.width*dpr); canvas.height=Math.round(r.height*dpr);
-  var g=canvas.getContext('2d'),k=canvas.width/1000,W=SIGP.s.map(function(st){ return nibW(st,SIGP.nib); });
+  var g=canvas.getContext('2d'),k=Math.min(canvas.width/(824-163),canvas.height/(497-154)),W=SIGP.s.map(function(st){ return nibW(st,SIGP.nib); });
+  g.setTransform(1,0,0,1,-163*k,-154*k);
   g.fillStyle=getComputedStyle(canvas).color;
   function seg(si,i){ var st=SIGP.s[si],w=W[si],x=st[i][0]*k,y=st[i][1]*k,rr=w[i]*k/2;
     g.beginPath(); g.arc(x,y,rr,0,7); g.fill();
