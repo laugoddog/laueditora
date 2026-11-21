@@ -411,7 +411,8 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .card p{font-size:20px}
   .plans{grid-template-columns:minmax(0,1fr);max-width:480px;margin:0 auto}
   .tour{background:var(--cr2)}
-  .tour>.hd{position:relative;left:auto;top:auto;transform:none;width:var(--wrap);margin:0 auto;padding:110px 0 0}
+  .tour .hd{position:absolute;left:0;right:0;top:0;transform:none;width:var(--wrap);margin:0 auto;padding:86px 0 0}
+  .tour .hd h2{margin-top:8px}
   .tour .mask{display:none}
   .tour .bar{display:none}
   .tour .sub{font-size:19px;margin-top:12px}
@@ -1059,8 +1060,8 @@ function measure(){
   trackSpan=Math.max(0,TRACK.scrollWidth-vw);
   fitVis();
   var hd=TOUR.querySelector('.hd'),stk=TOUR.querySelector('.stick');
-  if(vw<=980){ if(hd.parentNode!==TOUR) TOUR.insertBefore(hd,stk); } else if(hd.parentNode!==stk) stk.insertBefore(hd,stk.firstChild);
-  if(vw<=980){ var top=96,capH=vw<=620?170:190,w=Math.max(140,Math.min(vw*.72,(vh-top-capH-24)/2.09));
+  if(hd.parentNode!==stk) stk.insertBefore(hd,stk.firstChild);
+  if(vw<=980){ var top=hd.offsetTop+hd.offsetHeight+18,capH=vw<=620?170:190,w=Math.max(140,Math.min(vw*.72,(vh-top-capH-24)/2.09));
     TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?w*1.2:w)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   else { var wd=Math.max(150,Math.min(300,(vh-64-24-200)/2.09)); TRACK.style.top=(64+24)+'px'; TRACK.style.transform='none'; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?wd*1.35:wd)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   var ph=TRACK.querySelector('figure:not(.wg) .ph'),wgs=TRACK.querySelector('.wgs'); if(ph&&wgs){ wgs.style.height=ph.offsetHeight+'px'; wgs.style.justifyContent='center'; }
