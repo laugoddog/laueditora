@@ -127,6 +127,8 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .cal i.on{background:var(--ink)}
 .cal i.on.c{background:var(--co);border-color:var(--co)}
 .cal i.off{transform:scale(.82);border-color:#BDB3A4}
+.pat .cap{display:none;margin-top:18px;font-size:20px;line-height:1.35;max-width:24em}
+.pat .cap b{font-family:var(--fh);font-weight:500;font-size:1.25em;margin-right:6px}
 .pat .src{position:absolute;left:0;right:0;bottom:28px;width:var(--wrap);margin:0 auto;font-size:16px;color:#7A7266;font-style:italic}
 .why{background:var(--cr2);color:var(--ink);padding:40px 0 170px}
 .why .wrap{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
@@ -141,6 +143,7 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .met{padding:170px 0 150px;position:relative;overflow:hidden}
 .met .wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .met h2{font-size:clamp(72px,8.4vw,140px);margin:20px 0 34px}
+.met .by{display:inline-block;font-family:var(--fh);text-transform:uppercase;letter-spacing:.18em;font-size:16px;color:var(--dk);background:var(--co);padding:9px 14px;margin:-12px 0 30px}
 .met p{font-size:23px;color:#DCD5C9;max-width:27em}
 .sci{margin-top:40px;padding-top:26px;border-top:1px solid var(--ln);font-size:19px!important;color:var(--mut)!important}
 .sci i{color:var(--cr)}
@@ -196,6 +199,8 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .vis{padding:170px 0 150px;overflow:hidden}
 .vis .head{width:var(--wrap);margin:0 auto 80px;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:end}
 .vis h2{font-size:clamp(70px,8vw,136px);margin-top:18px}
+.vis h2 .l1{white-space:nowrap;display:inline-block}
+.vis .head>*{min-width:0}
 .vis h2 .rot{display:inline-block;color:var(--co);transition:opacity .22s,transform .22s}
 .vis h2 .rot.out{opacity:0;transform:translateY(-.25em)}
 .vis .head p{font-size:23px;color:#DCD5C9}
@@ -207,8 +212,7 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .m .fr svg{position:absolute;left:4%;top:2%;width:92%;height:auto}
 .m .fr .dd{position:absolute;left:14px;bottom:12px;font-family:var(--fh);letter-spacing:.2em;font-size:12px;color:var(--mut)}
 .m .t{font-style:italic;font-size:18px;line-height:1.25;margin-top:12px}
-.mnote{width:var(--wrap);margin:60px auto 0;display:flex;align-items:center;gap:18px;color:var(--mut);font-style:italic;font-size:20px}
-.mnote canvas{width:140px;height:76px;color:var(--cr);flex:0 0 auto}
+.mnote{width:var(--wrap);margin:34px auto 0;color:var(--mut);font-style:italic;font-size:17px}
 
 /* ---------- 6. percurso pela app: na horizontal ---------- */
 .tour{color:var(--ink)}
@@ -351,12 +355,14 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .pat .grid,.rules .grid{grid-template-columns:1fr;gap:28px;align-content:center;padding:90px 0 70px}
   .pat h2{font-size:clamp(52px,12vw,84px)}
   .steps{display:none}
+  .pat .cap{display:block}
   .meter .big{font-size:clamp(150px,24vh,230px)}
   .cal{grid-template-columns:repeat(14,1fr);gap:4px;margin-top:20px}
   .why .wrap,.met .wrap,.crt .wrap,.faq .wrap,.vis .head{grid-template-columns:1fr;gap:44px}
   .crt .side{position:static}
   .rules h2{font-size:clamp(56px,13vw,96px)}
   .rules .count{margin-top:14px}
+  .deck{margin-top:34px}
   .deck{height:min(430px,52vh)}
   .card{padding:30px 28px}
   .card .bg{font-size:clamp(90px,12vh,130px)}
@@ -382,8 +388,9 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .lang button{padding:8px 9px;font-size:12px}
   .hero .shade{background:linear-gradient(180deg,rgba(42,39,36,.92) 0%,rgba(42,39,36,.75) 48%,rgba(42,39,36,0) 78%)}
   .hero .txt{align-items:flex-start;padding-top:96px}
-  .hero h1{font-size:clamp(64px,20vw,96px);margin:14px 0 18px}
-  .hero .lead{font-size:19px}
+  .hero h1{font-size:clamp(46px,13.5vw,70px);margin:12px 0 16px}
+  .hero .lead{font-size:17px;line-height:1.4}
+  .hero .k{font-size:12px}
   .stores img{height:46px}
   .stores{gap:10px;margin-top:24px}
   .fine{font-size:15px}
@@ -467,6 +474,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <div class="meter">
         <div class="big" id="patN"><span class="lt" id="patLt" hidden>&lt;</span><span id="patV">77</span><small>%</small></div>
         <div class="cal" id="cal"></div>
+        <p class="cap" id="patCap"></p>
       </div>
     </div>
     <p class="src" data-t="pat_src"></p>
@@ -488,6 +496,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     <div>
       <div class="k" data-t="met_k"></div>
       <h2 class="h sp" data-h="met_h"></h2>
+      <div class="by rv" data-t="met_by"></div>
       <p class="rv" data-h="met_p"></p>
       <p class="rv sci" data-h="met_sci"></p>
     </div>
@@ -530,12 +539,12 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 <!-- 5. visão e mestres -->
 <section class="vis" id="vis">
   <div class="head">
-    <div><div class="k" data-t="vis_k"></div><h2 class="h"><span data-t="vis_h1"></span><br><span class="rot" id="rot">Beethoven</span><span data-t="vis_h2"></span></h2></div>
+    <div><div class="k" data-t="vis_k"></div><h2 class="h" id="visH"><span class="l1" data-t="vis_h1"></span><br><span class="rot" id="rot">Beethoven</span><span data-t="vis_h2"></span></h2></div>
     <p class="rv" data-h="vis_p"></p>
   </div>
   <div class="river" id="rv1"></div>
   <div class="river" id="rv2"></div>
-  <div class="mnote rv" id="mnote"><canvas id="miniSig" aria-hidden="true"></canvas><span data-h="vis_note"></span></div>
+  <p class="mnote rv" id="mnote" data-h="vis_note"></p>
 </section>
 
 <!-- 6. percurso pela app, na horizontal -->
@@ -639,7 +648,7 @@ pt:{
  why_p:'As resoluções falham porque dependem da motivação de janeiro, e a motivação acaba. O que fica são os mecanismos de recompensa do cérebro — os mesmos de que as redes sociais se aproveitam todos os dias. A 42 põe-nos a trabalhar a teu favor.',
  quote:'Os nossos comportamentos não se regem pela “força de vontade”, mas pelas regras que a evolução implantou nos mecanismos de recompensa do nosso cérebro.',
  quote_c:'Rafael Augusto, Ph.D. — criador da 42',
- met_k:'O método',
+ met_k:'O método', met_by:'Desenvolvido por um cientista cognitivo',
  met_h:'42 dias <em>de cada vez.</em>',
  met_p:'Na 42, o caminho divide-se em voltas de 42 dias. Cada dia cumprido preenche um bloco. Uma volta completa fica guardada para sempre: se falhares, voltas apenas ao início da volta em curso — nunca ao zero.',
  met_sci:'Um hábito leva, em média, 66 dias a tornar-se automático — entre 18 e 254, consoante a pessoa e o hábito. E falhar um dia, de vez em quando, não estraga o processo. Por isso a 42 não te castiga por seres humano: tem <i>congelamentos</i> e <i>perdões</i>. <br><small>Lally et al. (2010), European Journal of Social Psychology.</small>',
@@ -656,13 +665,13 @@ pt:{
  vis_k:'Visão · Mestres',
  vis_h1:'Vive 42 dias como', vis_h2:'.',
  vis_p:'Na Visão escolhes desafios de 42 dias para o corpo, a mente, o trabalho e a casa — entre eles, as rotinas reais de grandes figuras da história, com benefícios apoiados em estudos. Também podes criar as tuas visões, com o horizonte que quiseres, até dez anos.',
- vis_note:'Todos os retratos foram desenhados à mão pelo autor. E a rotina dele também lá está, em <i>Rafael’s Choices</i>.',
+ vis_note:'Todos os retratos foram desenhados à mão por Rafael Augusto. E a rotina dele também lá está, em <i>Rafael’s Choices</i>.',
  rot:['Beethoven','Frida Kahlo','Séneca','Virginia Woolf','Darwin','Muhammad Ali','Clarice Lispector','Miles Davis','Simone de Beauvoir','Einstein'],
  d42:'42 DIAS',
  tour_k:'Tudo num só sítio',
  tour_h:'O teu dia inteiro, <em>numa só app.</em>',
  tour_p:'Hábitos, tarefas, foco e objetivos, desenhados com o mesmo cuidado. Sem bonequinhos, sem ruído.',
- tour:[['jornada','Início do dia','Cada dia cumprido faz crescer a árvore no centro da tua volta.'],['hoje','Hoje','Hábitos, tarefas e agenda ligados ao teu calendário, com uma frase do dia de filósofos e escritores.'],['visao','Visão','Desafios de 42 dias para o corpo, a mente, o trabalho e a casa.'],['mestres','Mestres','As rotinas de quem chegou longe, em retratos desenhados à mão.'],['foco','Foco','Sessões Pomodoro com sons próprios, criados para a app.'],['progresso','Progresso','Ofensiva, recorde, congelamentos, perdões e níveis.'],['criador','Mensagem do criador','Porque é que a 42 existe, assinada à mão.']],
+ tour:[['jornada','Início do dia','Cada dia cumprido faz crescer a árvore no centro da tua volta.'],['hoje','Hoje','Hábitos, tarefas e agenda ligados ao teu calendário, com uma frase do dia de filósofos e escritores.'],['visao','Visão','Desafios de 42 dias para o corpo, a mente, o trabalho e a casa.'],['mestres','Mestres','As rotinas de quem chegou longe, em retratos desenhados à mão.'],['foco','Foco','Sessões Pomodoro com sons próprios, criados para a app.'],['progresso','Progresso','Ofensiva, recorde, congelamentos, perdões e níveis.']],
  tour_f:'E com os <i>Amigos</i>: ofensivas em conjunto, empurrões e desafios partilhados.',
  crt_k:'Porquê a 42',
  crt_h:'Feita por quem <em>precisava dela.</em>',
@@ -706,7 +715,7 @@ en:{
  why_p:'Resolutions fail because they run on January’s motivation, and motivation runs out. What stays are the brain’s reward mechanisms — the same ones social media exploits every day. 42 puts them to work for you.',
  quote:'Our behaviour is not governed by “willpower”, but by the rules that evolution built into the reward mechanisms of our brain.',
  quote_c:'Rafael Augusto, Ph.D. — creator of 42',
- met_k:'The method',
+ met_k:'The method', met_by:'Developed by a cognitive scientist',
  met_h:'42 days <em>at a time.</em>',
  met_p:'In 42, the road is split into laps of 42 days. Every day you keep fills a block. A completed lap is saved forever: if you slip, you only go back to the start of the current lap — never to zero.',
  met_sci:'On average, a habit takes 66 days to become automatic — anywhere from 18 to 254, depending on the person and the habit. And missing a day now and then doesn’t spoil the process. That’s why 42 doesn’t punish you for being human: it has <i>freezes</i> and <i>pardons</i>. <br><small>Lally et al. (2010), European Journal of Social Psychology.</small>',
@@ -723,13 +732,13 @@ en:{
  vis_k:'Vision · Masters',
  vis_h1:'Live 42 days like', vis_h2:'.',
  vis_p:'In Vision you pick 42-day challenges for body, mind, work and home — among them, the real routines of great figures in history, with benefits backed by studies. You can also create your own visions, on any horizon you like, up to ten years.',
- vis_note:'Every portrait was drawn by hand by the author. And his own routine is there too, in <i>Rafael’s Choices</i>.',
+ vis_note:'Every portrait was drawn by hand by Rafael Augusto. And his own routine is there too, in <i>Rafael’s Choices</i>.',
  rot:['Beethoven','Frida Kahlo','Seneca','Virginia Woolf','Darwin','Muhammad Ali','Clarice Lispector','Miles Davis','Simone de Beauvoir','Einstein'],
  d42:'42 DAYS',
  tour_k:'Everything in one place',
  tour_h:'Your whole day, <em>in one app.</em>',
  tour_p:'Habits, tasks, focus and goals, designed with the same care. No cartoons, no noise.',
- tour:[['jornada','Start of the day','Every day you keep grows the tree at the centre of your lap.'],['hoje','Today','Habits, tasks and agenda linked to your calendar, with a quote of the day from philosophers and writers.'],['visao','Vision','42-day challenges for body, mind, work and home.'],['mestres','Masters','The routines of those who went far, in hand-drawn portraits.'],['foco','Focus','Pomodoro sessions with original sounds, made for the app.'],['progresso','Progress','Streak, record, freezes, pardons and levels.'],['criador','A message from the creator','Why 42 exists, signed by hand.']],
+ tour:[['jornada','Start of the day','Every day you keep grows the tree at the centre of your lap.'],['hoje','Today','Habits, tasks and agenda linked to your calendar, with a quote of the day from philosophers and writers.'],['visao','Vision','42-day challenges for body, mind, work and home.'],['mestres','Masters','The routines of those who went far, in hand-drawn portraits.'],['foco','Focus','Pomodoro sessions with original sounds, made for the app.'],['progresso','Progress','Streak, record, freezes, pardons and levels.']],
  tour_f:'And with <i>Friends</i>: shared streaks, nudges and joint challenges.',
  crt_k:'Why 42',
  crt_h:'Built by someone <em>who needed it.</em>',
@@ -819,8 +828,8 @@ function ring(svg,r,w,h){
   var g=document.createElementNS(NS,'g'),out=[];
   for(var i=0;i<42;i++){ var a=i*360/42,rc=document.createElementNS(NS,'rect');
     rc.setAttribute('x',-w/2); rc.setAttribute('y',-r-h/2); rc.setAttribute('width',w); rc.setAttribute('height',h);
-    rc.setAttribute('transform','rotate('+a.toFixed(3)+')'); rc.setAttribute('fill','none'); rc.setAttribute('stroke','#5A554E'); rc.setAttribute('stroke-width','1.5');
-    g.appendChild(rc); out.push(rc); }
+    var gr=document.createElementNS(NS,'g'); gr.setAttribute('transform','rotate('+a.toFixed(3)+')'); rc.setAttribute('fill','none'); rc.setAttribute('stroke','#5A554E'); rc.setAttribute('stroke-width','1.5');
+    gr.appendChild(rc); g.appendChild(gr); out.push(rc); }
   svg.appendChild(g); return {g:g,b:out};
 }
 function fill(rc,c){ rc.setAttribute('fill',c); rc.setAttribute('stroke',c); }
@@ -894,7 +903,8 @@ function drawPat(p){
   var V=[77,55,40,19],x=clamp(p*1.12-.04,0,1)*3,k=Math.floor(x),fr=x-k,v=k>=3?19:V[k]+(V[k+1]-V[k])*ease(clamp((fr-.55)/.45,0,1));
   var lt=v<=19.5; document.getElementById('patV').textContent=lt?'20':Math.round(v); document.getElementById('patLt').hidden=!lt;
   var n=Math.round(v/100*42); calI.forEach(function(el,i){ el.classList.toggle('on',i<n); el.classList.toggle('c',i===n-1); el.classList.toggle('off',i>=n); });
-  var sk=clamp(Math.round(x),0,3); STEPS.forEach(function(el,i){ el.classList.toggle('on',i<=sk); });
+  var sk=clamp(k+(fr>=.78?1:0),0,3); STEPS.forEach(function(el,i){ el.classList.toggle('on',i<=sk); });
+  var cap=document.getElementById('patCap'),ck=['77%','55%','40%','<20%'][sk]+'|'+LANG; if(cap.dataset.k!==ck){ cap.dataset.k=ck; cap.innerHTML='<b>'+['77%','55%','40%','&lt;20%'][sk]+'</b>'+T[LANG]['pat_'+(sk+1)]; }
 }
 
 /* ---------- 3. simulador ---------- */
@@ -932,7 +942,7 @@ document.getElementById('bMiss').addEventListener('click',function(){
 });
 /* o anel do simulador monta-se ao entrar */
 var simBuilt=false;
-function simBuild(){ if(simBuilt) return; simBuilt=true; if(reduce) return; SR.b.forEach(function(b,i){ b.style.transformBox='fill-box'; b.style.transformOrigin='center'; b.animate([{opacity:0,transform:'translateY(-60px) scale(.3)'},{opacity:1,transform:'none'}],{duration:700,delay:i*22,easing:'cubic-bezier(.16,.84,.24,1)',fill:'backwards'}); }); }
+function simBuild(){ if(simBuilt) return; simBuilt=true; if(reduce) return; SR.b.forEach(function(b,i){ b.style.transformBox='fill-box'; b.style.transformOrigin='center'; b.animate([{opacity:0,transform:'translateY(-40px) scale(.4)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:650,delay:i*24,easing:'cubic-bezier(.16,.84,.24,1)',fill:'backwards'}); }); }
 
 /* ---------- 4. regras: cartões empilhados ---------- */
 var CARDS=document.querySelectorAll('#deck .card');
@@ -968,9 +978,15 @@ var TOUR=document.getElementById('tour'),TRACK=document.getElementById('track'),
 function measure(){
   var vw=innerWidth,vh=innerHeight;
   trackSpan=Math.max(0,TRACK.scrollWidth-vw);
+  fitVis();
+  if(vw<=980){ var hd=TOUR.querySelector('.hd'),top=hd.offsetTop+hd.offsetHeight+22,capH=vw<=620?150:170,w=Math.max(120,Math.min(vw*.42,(vh-top-capH-40)/2.17));
+    TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=w+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
+  else { TRACK.style.top=''; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=''; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   TOUR.style.height=(vh+trackSpan*1.15)+'px';
   sizeCv();
 }
+function fitVis(){ var h=document.getElementById('visH'),l=h.querySelector('.l1'); h.style.fontSize=''; var fs=parseFloat(getComputedStyle(h).fontSize),W=h.parentNode.clientWidth;
+  for(var i=0;i<40&&l.getBoundingClientRect().width>W&&fs>30;i++){ fs-=3; h.style.fontSize=fs+'px'; } }
 function drawTour(p){
   var x=-trackSpan*ease(p); TRACK.style.transform='translate3d('+x+'px,'+(innerWidth<=980?0:-50)+'%,0)';
   var mid=innerWidth/2;
@@ -1035,7 +1051,7 @@ PROG.innerHTML=new Array(43).join('<i></i>'); progI=PROG.querySelectorAll('i');
 var lastY=scrollY,vel=0,lastProgN=-1,topEl=document.getElementById('top'),invEl=document.getElementById('inv');
 function tick(force){
   var y=scrollY; vel=vel*.85+(y-lastY)*.15; lastY=y;
-  if(force||vis(HERO)){ heroP=prog(HERO); var q=clamp(heroP/.42,0,1); HT.style.opacity=1-ease(q); HT.style.transform='translateY('+(-q*80)+'px)'; HUD.style.opacity=innerWidth<=620?ease(q):1; document.getElementById('cue').style.opacity=1-clamp(heroP*6,0,1); }
+  if(force||vis(HERO)){ heroP=prog(HERO); var q=clamp(heroP/.42,0,1); HT.style.opacity=1-ease(q); HT.style.transform='translateY('+(-q*80)+'px)'; HUD.style.opacity=innerWidth<=620?clamp((q-.6)/.3,0,1):1; document.getElementById('cue').style.opacity=1-clamp(heroP*6,0,1); }
   if(force||vis(PAT)) drawPat(prog(PAT));
   if(force||vis(RUL)) drawRules(prog(RUL));
   if(force||vis(TOUR)) drawTour(prog(TOUR));
@@ -1044,7 +1060,7 @@ function tick(force){
   WIPES.forEach(function(w){ var r=w.getBoundingClientRect(),q=reduce?1:clamp((innerHeight-r.top)/(innerHeight*.9),0,1); var e=ease(q); w.style.clipPath=q>=1?'none':'inset(0 '+((1-e)*7).toFixed(2)+'% 0 '+((1-e)*7).toFixed(2)+'% round '+((1-e)*64).toFixed(1)+'px '+((1-e)*64).toFixed(1)+'px 0 0)'; });
   var total=document.documentElement.scrollHeight-innerHeight,n=Math.round(clamp(y/total,0,1)*42);
   if(n!==lastProgN){ lastProgN=n; progI.forEach(function(el,i){ el.classList.toggle('on',i<n); }); }
-  topEl.classList.toggle('hide',y>innerHeight*.6&&vel>2); topEl.classList.toggle('solid',y>40);
+  topEl.classList.toggle('solid',y>40);
   var bh=invEl.classList.contains('on')?invEl.offsetHeight:0; topEl.style.top=Math.max(0,bh-y)+'px';
 }
 var rvT=performance.now();
@@ -1062,7 +1078,6 @@ var seen=new Set();
 var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; var el=e.target; el.classList.add('on'); seen.add(el);
   if(el.id==='sim') simBuild();
   if(el.id==='sign') sign(document.getElementById('sigCv'));
-  if(el.id==='mnote') sign(document.getElementById('miniSig'),true);
   io.unobserve(el); }); },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.rv,.sp,#sign').forEach(function(el){ io.observe(el); });
 new IntersectionObserver(function(es){ if(es[0].isIntersecting) loadMasters(); },{rootMargin:'1200px'}).observe(document.getElementById('vis'));
@@ -1074,7 +1089,7 @@ setTimeout(function(){ document.querySelectorAll('#hero .sp').forEach(function(e
   addEventListener('pointermove',function(e){ x=e.clientX; y=e.clientY; var t=e.target; c.classList.toggle('big',!!(t.closest&&t.closest('a,button,summary,.m'))); },{passive:true});
   (function lp(){ X+=(x-X)*.22; Y+=(y-Y)*.22; c.style.transform='translate3d('+X+'px,'+Y+'px,0)'; requestAnimationFrame(lp); })(); })();
 
-addEventListener('resize',function(){ measure(); tick(true); });
+var lastW=innerWidth; addEventListener('resize',function(){ if(innerWidth===lastW) return; lastW=innerWidth; measure(); tick(true); });
 apply(); measure(); tick(true); requestAnimationFrame(frame);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ measure(); tick(true); });
 })();
