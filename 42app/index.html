@@ -204,17 +204,17 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .rules .count{margin-top:40px;font-family:var(--fh);font-size:22px;letter-spacing:.2em;color:#FCE2DC}
 .rules .count b{color:#FFF8F0;font-weight:500}
 .deck{position:relative;height:min(560px,66vh);perspective:1600px}
-.card{position:absolute;inset:0;background:#2A2724;color:var(--cr);padding:44px 44px 40px;display:flex;flex-direction:column;gap:16px;box-shadow:0 40px 80px rgba(60,20,18,.35),0 8px 18px rgba(60,20,18,.25);will-change:transform;transform-origin:50% 0}
+.card{position:absolute;inset:0;background:#2A2724;color:var(--cr);padding:clamp(24px,4.5vh,44px) 44px clamp(24px,4vh,40px);display:flex;flex-direction:column;gap:16px;box-shadow:0 40px 80px rgba(60,20,18,.35),0 8px 18px rgba(60,20,18,.25);will-change:transform;transform-origin:50% 0}
 .card:nth-child(2){background:#F4EEE3;color:var(--ink)}
 .card:nth-child(3){background:#2A2724}
 .card:nth-child(4){background:#F4EEE3;color:var(--ink)}
 .card .no{position:absolute;right:36px;top:34px;font-family:var(--fh);letter-spacing:.2em;font-size:15px;opacity:.55}
-.card .bg{font-size:clamp(130px,15vh,190px);color:var(--co)}
-.card .ic{height:150px;display:flex;align-items:flex-end;color:var(--co)}
+.card .bg{font-size:clamp(70px,13vh,190px);color:var(--co)}
+.card .ic{height:clamp(80px,15vh,150px);display:flex;align-items:flex-end;color:var(--co)}
 .card .ic svg{width:120px;height:120px}
-.card h3{font-family:var(--fh);text-transform:uppercase;letter-spacing:.06em;font-size:46px;font-weight:500;line-height:1;margin-top:auto}
-.card p{font-size:23px;max-width:24em}
-.ladder{display:flex;flex-wrap:wrap;gap:4px 0;font-size:19px;font-style:italic}
+.card h3{font-family:var(--fh);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(28px,5vh,46px);font-weight:500;line-height:1;margin-top:auto}
+.card p{font-size:clamp(17px,2.5vh,23px);max-width:24em}
+.ladder{display:flex;flex-wrap:nowrap;white-space:nowrap;gap:0;font-size:19px;font-style:italic;width:max-content;max-width:none}
 .ladder span{white-space:nowrap}
 .ladder span:not(:last-child)::after{content:"·";margin:0 8px;opacity:.6;font-style:normal}
 
@@ -403,6 +403,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .card{padding:30px 28px}
   .card .bg{font-size:clamp(90px,12vh,130px)}
   .card .ic{height:100px}.card .ic svg{width:84px;height:84px}
+  .ladder span:not(:last-child)::after{margin:0 5px}
   .card h3{font-size:34px}
   .card p{font-size:20px}
   .plans{grid-template-columns:minmax(0,1fr);max-width:480px;margin:0 auto}
@@ -1068,7 +1069,8 @@ function fitLine(h,els,W){ h.style.fontSize=''; var fs=parseFloat(getComputedSty
 function fitVis(){ var h=document.getElementById('visH'),l=h.querySelector('.l1'),rot=document.getElementById('rot'),t=T[LANG],keep=rot.textContent,
     longest=t.rot.reduce(function(a,b){ return b.length>a.length?b:a; },'');
   rot.textContent=longest; fitLine(h,[l,rot],h.parentNode.clientWidth); rot.textContent=keep;
-  var h1=document.querySelector('.hero h1'),em=h1.querySelector('em'); if(em) fitLine(h1,[em],h1.parentNode.clientWidth); }
+  var h1=document.querySelector('.hero h1'),em=h1.querySelector('em'); if(em) fitLine(h1,[em],h1.parentNode.clientWidth);
+  var ld=document.getElementById('ladder'),cd=ld.closest('.card'); ld.style.fontSize=''; var fs=19,cw=cd.clientWidth-parseFloat(getComputedStyle(cd).paddingLeft)*2; while(ld.scrollWidth>cw&&fs>9){ fs-=.5; ld.style.fontSize=fs+'px'; } }
 function drawTour(p){
   var x=-trackSpan*ease(p); TRACK.style.transform='translate3d('+x+'px,'+(innerWidth<=980?0:-50)+'%,0)';
   var mid=innerWidth/2;
