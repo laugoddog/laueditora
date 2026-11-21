@@ -132,6 +132,17 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .pat .src{position:absolute;left:0;right:0;bottom:28px;width:var(--wrap);margin:0 auto;font-size:16px;color:#7A7266;font-style:italic}
 .why{background:var(--cr2);color:var(--ink);padding:40px 0 170px}
 .why .wrap{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
+.why .long{margin-top:150px;align-items:center;grid-template-columns:1.1fr .9fr}
+.long .lr{font-size:clamp(28px,2.6vw,40px);line-height:1.3}
+.long .lr em{color:var(--co2)}
+.long h3{font-size:clamp(56px,6vw,104px);margin-top:44px}
+.lfig{justify-self:center;width:min(340px,80%)}
+.lfig img{width:100%;height:auto;display:block;box-shadow:0 40px 80px rgba(31,27,22,.25),0 10px 24px rgba(31,27,22,.16)}
+.two{padding:170px 0 150px;overflow:hidden}
+.two .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}
+.two h2{font-size:clamp(70px,8vw,136px);margin:18px 0 30px}
+.two p{font-size:24px;color:#DCD5C9;max-width:22em}
+.two svg{width:100%;height:auto;overflow:visible}
 .why .lead2{font-family:var(--fh);font-weight:500;text-transform:uppercase;font-size:clamp(48px,4.8vw,82px);line-height:.94}
 .why .lead2 em{font-style:normal;color:var(--co2)}
 .why p{font-size:23px}
@@ -223,14 +234,14 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .tour h2{font-size:clamp(64px,7vw,118px);margin-top:16px}
 .tour .sub{font-size:21px;color:#4A4741;margin-top:24px}
 .track{position:absolute;left:0;top:calc(50% + 40px);display:flex;gap:64px;padding:0 max(32px,calc((100vw - 1240px)/2)) 0 calc(max(32px,(100vw - 1240px)/2) + min(360px,28vw) + 90px);will-change:transform;align-items:flex-start;z-index:1}
-.track figure{flex:0 0 auto;width:clamp(190px,min(17vw,27vh),260px);will-change:transform}
-.track .ph{border-radius:34px;padding:9px;background:#141210;box-shadow:0 0 0 1px #4a453f,0 40px 70px rgba(31,27,22,.3),0 10px 20px rgba(31,27,22,.2)}
-.track .ph .sc{border-radius:26px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black);transform:translateZ(0)}
+.track figure{flex:0 0 auto;width:clamp(220px,min(20vw,33vh),330px);will-change:transform}
+.track .ph{box-shadow:0 0 0 1px rgba(31,27,22,.12),0 40px 70px rgba(31,27,22,.28),0 10px 20px rgba(31,27,22,.18)}
+.track .ph .sc{overflow:hidden}
 .track .ph img{width:100%;height:auto;display:block}
 .track figcaption{margin-top:26px}
-.track figure.wg{width:clamp(260px,min(24vw,33vh),380px)}
+.track figure.wg{width:clamp(300px,min(27vw,40vh),440px)}
 .wgs{display:flex;flex-direction:column;gap:14px}
-.wgs img{width:100%;height:auto;border-radius:26px;box-shadow:0 30px 60px rgba(31,27,22,.28),0 8px 18px rgba(31,27,22,.18)}
+.wgs img{width:100%;height:auto;border-radius:18px;box-shadow:0 30px 60px rgba(31,27,22,.28),0 8px 18px rgba(31,27,22,.18)}
 .track figcaption b{display:block;font-family:var(--fh);font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:34px;line-height:1;margin-bottom:8px}
 .track figcaption span{font-size:19px;line-height:1.35;display:block;color:#4A4741}
 .track .endnote{width:clamp(260px,24vw,360px);align-self:center;font-size:24px;font-style:italic;color:#4A4741}
@@ -365,6 +376,10 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .pat .src{position:static;width:var(--wrap);margin:14px auto 0;font-size:14px}
   .pat h2{margin-top:10px}
   .cal{grid-template-columns:repeat(14,1fr);gap:4px;margin-top:20px}
+  .why .long{margin-top:90px}
+  .two .wrap{grid-template-columns:1fr}
+  .two{padding:110px 0}
+  .two h2{font-size:clamp(56px,15vw,84px)}
   .why .wrap,.met .wrap,.crt .wrap,.faq .wrap,.vis .head{grid-template-columns:1fr;gap:44px}
   .crt .side{position:static}
   .rules h2{font-size:clamp(56px,13vw,96px)}
@@ -377,7 +392,8 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   .card h3{font-size:34px}
   .card p{font-size:20px}
   .plans{grid-template-columns:minmax(0,1fr);max-width:480px;margin:0 auto}
-  .tour .hd{top:96px;transform:none;width:auto;right:24px}
+  .tour{background:var(--cr2)}
+  .tour>.hd{position:relative;left:auto;top:auto;transform:none;width:var(--wrap);margin:0 auto;padding:110px 0 0}
   .tour .mask{display:none}
   .tour .bar{display:none}
   .tour .sub{font-size:19px;margin-top:12px}
@@ -497,6 +513,24 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <p data-h="why_p"></p>
       <blockquote><p data-h="quote"></p><cite data-t="quote_c"></cite></blockquote>
     </div>
+  </div>
+  <div class="wrap long">
+    <div class="lt">
+      <p class="lr rv" data-h="long_p"></p>
+      <h3 class="h sp" data-h="long_2"></h3>
+    </div>
+    <div class="lfig rv"><img src="img/app-percurso.webp" alt="" width="603" height="1259" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="two" id="two">
+  <div class="wrap">
+    <div>
+      <div class="k" data-t="two_k"></div>
+      <h2 class="h sp" data-h="two_h"></h2>
+      <p class="rv" data-h="two_p"></p>
+    </div>
+    <svg id="twoSvg" viewBox="0 0 1000 760" aria-hidden="true"></svg>
   </div>
 </section>
 
@@ -658,6 +692,8 @@ pt:{
  why_p:'As resoluções falham porque dependem da motivação de janeiro, e a motivação acaba. O que fica são os mecanismos de recompensa do cérebro — os mesmos de que as redes sociais se aproveitam todos os dias. A 42 põe-nos a trabalhar a teu favor.',
  quote:'Os nossos comportamentos não se regem pela “força de vontade”, mas pelas regras que a evolução implantou nos mecanismos de recompensa do nosso cérebro.',
  quote_c:'Rafael Augusto, Ph.D. — criador da 42',
+ long_p:'A 42 foi feita para o longo prazo. Em poucas semanas, vais sentir mais domínio sobre a tua vida e sobre a tua atenção. Imagina daqui a um ou dois anos. <em>Imagina daqui a 10.</em>', long_2:'E vais poder visualizar o teu percurso inteiro.',
+ two_k:'Oriente · Ocidente', two_h:'Há duas visões.', two_p:'O Oriente tende a ver a vida como cíclica; o Ocidente, como um caminho. A 42 permite-te visualizar a tua vida como as duas coisas.',
  met_k:'O método', met_by:'Desenvolvido por um cientista cognitivo',
  met_h:'42 dias <em>de cada vez.</em>',
  met_p:'Na 42, o caminho divide-se em voltas de 42 dias. Cada dia cumprido preenche um bloco. Uma volta completa fica guardada para sempre: se falhares, voltas apenas ao início da volta em curso — nunca ao zero.',
@@ -725,6 +761,8 @@ en:{
  why_p:'Resolutions fail because they run on January’s motivation, and motivation runs out. What stays are the brain’s reward mechanisms — the same ones social media exploits every day. 42 puts them to work for you.',
  quote:'Our behaviour is not governed by “willpower”, but by the rules that evolution built into the reward mechanisms of our brain.',
  quote_c:'Rafael Augusto, Ph.D. — creator of 42',
+ long_p:'42 is built for the long run. In a few weeks, you will feel increased agency over your life and over your attention. Imagine after one or two years. <em>Imagine after 10.</em>', long_2:'And you will be able to visualise your whole path.',
+ two_k:'East · West', two_h:'There are two visions.', two_p:'The East tends to see life as cyclical, the West as a path. 42 allows you to visualise your life as both.',
  met_k:'The method', met_by:'Developed by a cognitive scientist',
  met_h:'42 days <em>at a time.</em>',
  met_p:'In 42, the road is split into laps of 42 days. Every day you keep fills a block. A completed lap is saved forever: if you slip, you only go back to the start of the current lap — never to zero.',
@@ -859,12 +897,13 @@ var RINGS=[],TREES=[],SEEDS=[];
 })();
 function sizeCv(){ DPR=Math.min(2,window.devicePixelRatio||1); var r=cv.getBoundingClientRect(); CW=r.width; CH=r.height; cv.width=Math.round(CW*DPR); cv.height=Math.round(CH*DPR); }
 var heroP=0,hudLap=2;
+function heroHz(p){ return .94-.46*ease(clamp(p/.5,0,1)); }
 function drawWorld(now){
   if(!CW) return;
   var c=cx; c.setTransform(DPR,0,0,DPR,0,0); c.clearRect(0,0,CW,CH);
-  var mob=CW<700,p=reduce?0:heroP,t=now/1000,early=mob?clamp(1-p/.35,0,1):0;
+  var mob=CW<700,p=reduce?0:heroP,t=now/1000;
   /* câmara: avança pelo percurso; parada, respira um pouco */
-  var camZ=-7+ease(p)*36,f=CH*(mob?1.05:1.22),hz=CH*(mob?.56+.24*early:.46),camY=1.7-p*.25;
+  var camZ=-7+ease(p)*36,f=CH*(mob?1.05:1.22),hz=mob?heroHz(p)*CH:CH*.46,camY=1.7-p*.25;
   var ri=clamp((camZ+9)/11.5,0,RINGS.length-1.001),i0=Math.floor(ri),fr=ri-i0,px=RINGS[i0].x*(1-fr)+RINGS[i0+1].x*fr;
   var camX=px*.7+Math.sin(t*.25)*.35+(mob?0:-1.6*(1-p));
   function P(x,z,y){ var dz=z-camZ; if(dz<.35) return null; var s=f/dz; return [CW/2+(x-camX)*s,hz+(camY-(y||0))*s,s,dz]; }
@@ -918,6 +957,23 @@ function drawPat(p){
   var sk=clamp(k+(fr>=.78?1:0),0,3); STEPS.forEach(function(el,i){ el.classList.toggle('on',i<=sk); });
   var cap=document.getElementById('patCap'),ck=['77%','55%','40%','<20%'][sk]+'|'+LANG; if(cap.dataset.k!==ck){ cap.dataset.k=ck; cap.innerHTML='<b>'+['77%','55%','40%','&lt;20%'][sk]+'</b>'+T[LANG]['pat_'+(sk+1)]; }
 }
+
+/* ---------- duas visões: um caminho feito de ciclos ---------- */
+var TWO=document.getElementById('two'),TWOS=document.getElementById('twoSvg'),TWOR=[];
+(function(){
+  var P=function(t){ return [110+800*t,640-520*t+110*Math.sin(t*Math.PI*2.2)]; },R=function(t){ return 92*(1-.62*t); },t=0,cs=[];
+  while(t<=1&&cs.length<12){ cs.push(t); var r=R(t),p0=P(t),tt=t; while(tt<1.2){ tt+=.002; var p1=P(tt); if(Math.hypot(p1[0]-p0[0],p1[1]-p0[1])>=r+R(tt)+4) break; } t=tt; }
+  cs.forEach(function(ti){ var c=P(ti),r=R(ti),g=document.createElementNS(NS,'g'),bs=[]; g.setAttribute('transform','translate('+c[0].toFixed(1)+' '+c[1].toFixed(1)+')');
+    var w=Math.max(3,r*.13),h=Math.max(6,r*.27);
+    for(var i=0;i<42;i++){ var gr=document.createElementNS(NS,'g'),rc=document.createElementNS(NS,'rect'); gr.setAttribute('transform','rotate('+(i*360/42).toFixed(2)+')');
+      rc.setAttribute('x',-w/2); rc.setAttribute('y',-r-h/2); rc.setAttribute('width',w); rc.setAttribute('height',h); rc.setAttribute('fill','none'); rc.setAttribute('stroke','#5A554E'); rc.setAttribute('stroke-width','1');
+      gr.appendChild(rc); g.appendChild(gr); bs.push(rc); }
+    TWOS.appendChild(g); TWOR.push(bs); });
+})();
+var twoLit=-1;
+function drawTwo(){ var r=TWO.getBoundingClientRect(),p=clamp((innerHeight*.85-r.top)/(r.height*.95),0,1),tot=TWOR.length*42,n=Math.round(ease(p)*tot);
+  if(n===twoLit) return; twoLit=n; var k=0;
+  TWOR.forEach(function(bs){ bs.forEach(function(b,i){ if(k<n) fill(b,i===41?'#D9736F':'#F1ECE3'); else empty(b); k++; }); }); }
 
 /* ---------- 3. simulador ---------- */
 var SR=ring(document.getElementById('simRing'),262,26,56);
@@ -986,15 +1042,19 @@ setInterval(function(){ if(document.hidden) return; var el=document.getElementBy
   setTimeout(function(){ rotIx=(rotIx+1)%t.rot.length; el.textContent=t.rot[rotIx]; el.classList.remove('out'); },240); },2400);
 
 /* ---------- 6. percurso horizontal ---------- */
-var TOUR=document.getElementById('tour'),TRACK=document.getElementById('track'),trackSpan=0;
+var TOUR=document.getElementById('tour'),TRACK=document.getElementById('track'),trackSpan=0,tourOff=0;
+function progTour(){ var r=TOUR.getBoundingClientRect(),span=r.height-tourOff-innerHeight; return span>0?clamp(-(r.top+tourOff)/span,0,1):0; }
 function measure(){
   var vw=innerWidth,vh=innerHeight;
   trackSpan=Math.max(0,TRACK.scrollWidth-vw);
   fitVis();
-  if(vw<=980){ var hd=TOUR.querySelector('.hd'),top=hd.offsetTop+hd.offsetHeight+22,capH=vw<=620?210:220,w=Math.max(110,Math.min(vw*.4,(vh-top-capH-30)/2.12));
-    TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?w*1.15:w)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
+  var hd=TOUR.querySelector('.hd'),stk=TOUR.querySelector('.stick');
+  if(vw<=980){ if(hd.parentNode!==TOUR) TOUR.insertBefore(hd,stk); } else if(hd.parentNode!==stk) stk.insertBefore(hd,stk.firstChild);
+  if(vw<=980){ var top=96,capH=vw<=620?170:190,w=Math.max(140,Math.min(vw*.72,(vh-top-capH-24)/2.09));
+    TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?w*1.2:w)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   else { TRACK.style.top=''; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=''; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
-  TOUR.style.height=(vh+trackSpan*1.15)+'px';
+  tourOff=hd.parentNode===TOUR?hd.offsetHeight:0;
+  TOUR.style.height=(tourOff+vh+trackSpan*1.15)+'px';
   sizeCv();
 }
 function fitVis(){ var h=document.getElementById('visH'),l=h.querySelector('.l1'); h.style.fontSize=''; var fs=parseFloat(getComputedStyle(h).fontSize),W=h.parentNode.clientWidth;
@@ -1003,7 +1063,7 @@ function drawTour(p){
   var x=-trackSpan*ease(p); TRACK.style.transform='translate3d('+x+'px,'+(innerWidth<=980?0:-50)+'%,0)';
   var mid=innerWidth/2;
   TRACK.querySelectorAll('figure').forEach(function(fg){ var r=fg.getBoundingClientRect(),d=clamp(((r.left+r.width/2)-mid)/mid,-1.4,1.4);
-    fg.style.transform='perspective(1200px) rotateY('+(-d*14)+'deg) scale('+(1-Math.min(Math.abs(d),1)*.06)+')'; });
+    fg.style.transform='perspective(1200px) rotateY('+(-d*(innerWidth<=620?5:12))+'deg) scale('+(1-Math.min(Math.abs(d),1)*.06)+')'; });
   document.getElementById('tourBar').style.transform='scaleX('+p+')';
 }
 
@@ -1057,16 +1117,22 @@ function drawFin(p){
 /* ---------- motor: um só ciclo para tudo o que mexe com o scroll ---------- */
 function prog(el){ var r=el.getBoundingClientRect(),span=r.height-innerHeight; return span>0?clamp(-r.top/span,0,1):(r.top<0?1:0); }
 function vis(el){ var r=el.getBoundingClientRect(); return r.bottom>-200&&r.top<innerHeight+200; }
-var HUD=document.querySelector('.hud'),HERO=document.getElementById('hero'),PAT=document.getElementById('pat'),RUL=document.getElementById('rules'),FIN=document.getElementById('fin'),HT=document.getElementById('heroTxt');
+var SHADE=document.querySelector('.hero .shade'),HUD=document.querySelector('.hud'),HERO=document.getElementById('hero'),PAT=document.getElementById('pat'),RUL=document.getElementById('rules'),FIN=document.getElementById('fin'),HT=document.getElementById('heroTxt');
 var WIPES=document.querySelectorAll('.wipe'),PROG=document.getElementById('prog'),progI;
 PROG.innerHTML=new Array(43).join('<i></i>'); progI=PROG.querySelectorAll('i');
 var lastY=scrollY,vel=0,lastProgN=-1,topEl=document.getElementById('top'),invEl=document.getElementById('inv');
 function tick(force){
   var y=scrollY; vel=vel*.85+(y-lastY)*.15; lastY=y;
-  if(force||vis(HERO)){ heroP=prog(HERO); var q=clamp(heroP/.42,0,1); HT.style.opacity=1-ease(q); HT.style.transform='translateY('+(-q*80)+'px)'; HUD.style.opacity=innerWidth<=620?clamp((q-.6)/.3,0,1):1; document.getElementById('cue').style.opacity=1-clamp(heroP*6,0,1); }
+  if(force||vis(HERO)){ heroP=prog(HERO); var q=clamp(heroP/.42,0,1);
+    if(innerWidth<=620){ var H=HERO.querySelector('.stick').offsetHeight,d=(heroHz(reduce?0:heroP)-.94)*H,hzpx=heroHz(reduce?0:heroP)*H,fade=clamp((heroP-.32)/.16,0,1);
+      HT.style.opacity=1-fade; HT.style.transform='translateY('+(d*1.6)+'px)';
+      SHADE.style.background='linear-gradient(180deg,#2A2724 0,#2A2724 '+Math.max(0,hzpx+d*.6-170)+'px,rgba(42,39,36,0) '+Math.max(0,hzpx+d*.6-20)+'px)'; SHADE.style.opacity=1-fade;
+      HUD.style.opacity=clamp((heroP-.42)/.12,0,1); }
+    else { HT.style.opacity=1-ease(q); HT.style.transform='translateY('+(-q*80)+'px)'; SHADE.style.background=''; SHADE.style.opacity=1; HUD.style.opacity=1; } document.getElementById('cue').style.opacity=1-clamp(heroP*6,0,1); }
   if(force||vis(PAT)) drawPat(prog(PAT));
   if(force||vis(RUL)) drawRules(prog(RUL));
-  if(force||vis(TOUR)) drawTour(prog(TOUR));
+  if(force||vis(TOUR)) drawTour(progTour());
+  if(force||vis(TWO)) drawTwo();
   if(force||vis(LETTER)) drawLetter();
   if(force||vis(FIN)) drawFin(prog(FIN));
   WIPES.forEach(function(w){ var r=w.getBoundingClientRect(),q=reduce?1:clamp((innerHeight-r.top)/(innerHeight*.9),0,1); var e=ease(q); w.style.clipPath=q>=1?'none':'inset(0 '+((1-e)*7).toFixed(2)+'% 0 '+((1-e)*7).toFixed(2)+'% round '+((1-e)*64).toFixed(1)+'px '+((1-e)*64).toFixed(1)+'px 0 0)'; });
