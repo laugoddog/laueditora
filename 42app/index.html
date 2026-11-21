@@ -149,12 +149,12 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .two .k{color:#7A7266}
 .two h2{font-size:clamp(64px,7vw,124px);margin:18px 0 28px}
 .two p{font-size:23px;max-width:21em}
-.two .tw{position:absolute;inset:0}
+.two .tw{position:absolute;top:84px;bottom:0;left:calc(max(32px,(100vw - 1240px)/2) + 520px);right:0}
 .two .grid>div:first-child{position:relative;z-index:2}
 .two .stick::before{content:"";position:absolute;left:0;top:0;bottom:0;width:calc(max(32px,(100vw - 1240px)/2) + 560px);background:linear-gradient(90deg,var(--cr2) 80%,rgba(244,238,227,0));z-index:1;pointer-events:none}
 @media (max-width:980px){ .two .stick::before{display:none} }
 @media (max-width:980px){ .two .tw{position:relative;inset:auto;height:100%;min-height:0} .two .grid>div:first-child{background:none;padding:0} }
-.two canvas{position:absolute;inset:0;width:100%;height:100%}
+.two .tw img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
 .why .lead2{font-family:var(--fh);font-weight:500;text-transform:uppercase;font-size:clamp(48px,4.8vw,82px);line-height:.94}
 .why .lead2 em{font-style:normal;color:var(--co2)}
 .why p{font-size:23px}
@@ -563,7 +563,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   <div class="stick">
     <div class="grid">
       <div><div class="k" data-t="two_k"></div><h2 class="h sp" data-h="two_h"></h2><p class="rv" data-h="two_p"></p></div>
-      <div class="tw"><canvas id="pathCv" aria-hidden="true"></canvas></div>
+      <div class="tw"><img id="pathImg" src="img/path/00.webp" alt="" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -976,65 +976,11 @@ function drawPat(p){
 }
 
 /* ---------- duas visões numa só: um ano de voltas visto de cima, como no «Explorar percurso» ---------- */
-var TWO=document.getElementById('two'),PCV=document.getElementById('pathCv'),pcx=PCV.getContext('2d'),PW=0,PH=0,PD=1;
-var PATH=(function(){
-  var rnd=(function(s){ return function(){ s=(s*16807)%2147483647; return (s-1)/2147483646; }; })(1942),rings=[],N=5;
-  for(var k=0;k<N;k++) rings.push({x:Math.sin(k*1.25+.5)*1.15,z:-k*2.55,days:[],plants:[]});
-  var total=4*42+24;
-  rings.forEach(function(r,k){ for(var j=0;j<42;j++){ var d=k*42+j,s;
-      if(d>=total) s='todo'; else { var u=rnd(); s=u<.62?'done':u<.82?'perf':u<.9?'froz':u<.96?'paus':'miss'; }
-      r.days.push(s); if(d<total&&rnd()<.06&&Math.sin(-Math.PI/2+j*Math.PI*2/42)>.1) r.plants.push(j); }
-    /* árvore como a da app: tronco grosso, ramos que se abrem, folhas em amêndoa */
-    var segs=[],tips=[]; (function br(x,y,a,l,w,d){ var x2=x+Math.cos(a)*l,y2=y+Math.sin(a)*l; segs.push([x,y,x2,y2,w]);
-      if(d<3){ var n=d===0?3:2; for(var q=0;q<n;q++) br(x2,y2,a+(q-(n-1)/2)*(d===0?.62:.5)+(rnd()-.5)*.25,l*(d===0?.62:.68),w*.62,d+1); }
-      else tips.push([x2,y2,a]);
-      if(d>=1) tips.push([(x+x2)/2,(y+y2)/2,a+(rnd()<.5?.9:-.9)]); })(0,0,-Math.PI/2,1.05,.13,0);
-    r.segs=segs; r.tips=tips; });
-  rings[4].flag=36;
-  return {rings:rings,total:total};
-})();
-function sizePath(){ PD=Math.min(2,window.devicePixelRatio||1); var r=PCV.getBoundingClientRect(); PW=r.width; PH=r.height; PCV.width=Math.round(PW*PD); PCV.height=Math.round(PH*PD); }
-var DCOL={done:'#1F1B16',perf:'#D9736F',froz:'#3D8FC4'};
-function drawPath(p){
-  if(!PW) return; var c=pcx; c.setTransform(PD,0,0,PD,0,0); c.clearRect(0,0,PW,PH);
-  var R=PATH.rings,TILT=.42,lit=Math.round(ease(clamp(p/.62,0,1))*PATH.total);
-  var zf=clamp((p-.64)/.26,0,1),ze=ease(zf),land=PW>PH*1.05;
-  /* enquadramento final: o percurso todo, com as árvores */
-  var spanZ=(R[0].z-R[R.length-1].z)+2.4,fitH=(spanZ*TILT+3.4),fitW=4.6,fit=Math.min((land?PW*.5:PW)/fitW,(PH*.9)/fitH);
-  var close=Math.min(PW,PH)/(land?4.4:3.6),s=close+(fit-close)*ze;
-  var fi=clamp(Math.max(0,lit-1)/42,0,R.length-1),f0=Math.floor(fi),ff=fi-f0,f1=Math.min(R.length-1,f0+1);
-  var fx=R[f0].x+(R[f1].x-R[f0].x)*ff,fz=R[f0].z+(R[f1].z-R[f0].z)*ff,midZ=(R[0].z+R[R.length-1].z)/2;
-  var camX=fx*(1-ze),camZ=fz+(midZ-fz)*ze,ox=land?PW*.71:PW/2,oy=PH*(.62-.02*ze);
-  function SX(x){ return ox+(x-camX)*s; } function SY(z,h){ return oy+(z-camZ)*s*TILT-(h||0)*s; }
-  var da=Math.PI*2/42*.36;
-  function block(r,j,front){ var a=-Math.PI/2+j*Math.PI*2/42; if((Math.sin(a)>0)!==front) return;
-    var k=R.indexOf(r)*42+j,st=r.days[j],on=k<lit;
-    c.beginPath(); [[.84,a-da],[1.16,a-da],[1.16,a+da],[.84,a+da]].forEach(function(u,q){ var px=SX(r.x+Math.cos(u[1])*u[0]),py=SY(r.z+Math.sin(u[1])*u[0]); if(q) c.lineTo(px,py); else c.moveTo(px,py); }); c.closePath();
-    if(on&&DCOL[st]){ c.fillStyle=DCOL[st]; c.fill(); }
-    else { c.lineWidth=1; c.strokeStyle=on&&st==='paus'?'#7A6AB0':on&&st==='miss'?'#C9BFB0':k===lit?'#1F1B16':'#CFC6B8'; c.stroke(); } }
-  for(var ri=R.length-1;ri>=0;ri--){ var r=R[ri];
-    for(var j=0;j<42;j++) block(r,j,false);
-    /* árvore no centro da volta: cresce com os dias, uma folha por dia cumprido */
-    var inRing=clamp(lit-ri*42,0,42),g=inRing/42;
-    if(g>0){ var bx=SX(r.x),by=SY(r.z),sc=s*(.3+.42*g);
-      c.strokeStyle='#1F1B16'; c.lineCap='round';
-      r.segs.forEach(function(sg){ c.lineWidth=Math.max(1,sg[4]*sc); c.beginPath(); c.moveTo(bx+sg[0]*sc,by+sg[1]*sc); c.lineTo(bx+sg[2]*sc,by+sg[3]*sc); c.stroke(); });
-      var nl=Math.min(r.tips.length,Math.round(inRing*.9)),di=0;
-      for(var q=0;q<nl;q++){ var tp=r.tips[q]; while(di<41&&r.days[di]==='miss') di++; var st=r.days[di%42]; di++;
-        var lx=bx+tp[0]*sc,ly=by+tp[1]*sc,L=Math.max(2.5,sc*.13),W2=L*.5;
-        if(st==='paus'){ c.strokeStyle='#7A6AB0'; c.lineWidth=1.2; c.beginPath(); c.arc(lx,ly,W2,0,7); c.stroke(); continue; }
-        c.fillStyle=DCOL[st]||'#1F1B16'; c.beginPath(); c.ellipse(lx,ly,L,W2,tp[2],0,7); c.fill(); } }
-    for(var j2=0;j2<42;j2++) block(r,j2,true);
-    /* rebentos: o dia em que um hábito foi plantado */
-    r.plants.forEach(function(j){ if(ri*42+j>=lit) return; var a=-Math.PI/2+j*Math.PI*2/42,px=SX(r.x+Math.cos(a)*1.0),py=SY(r.z+Math.sin(a)*1.0),h=Math.max(6,s*.22);
-      c.strokeStyle='#1F1B16'; c.lineWidth=Math.max(1,s*.02); c.beginPath(); c.moveTo(px,py); c.lineTo(px,py-h); c.stroke(); c.fillStyle='#1F1B16';
-      [-1,1].forEach(function(sd){ c.beginPath(); c.ellipse(px+sd*h*.28,py-h*.85,h*.3,h*.17,sd*-.5,0,7); c.fill(); }); });
-    /* bandeira: o dia em que a meta vai ser alcançada */
-    if(r.flag!=null&&lit>=ri*42){ var a2=-Math.PI/2+r.flag*Math.PI*2/42,fx2=SX(r.x+Math.cos(a2)),fy2=SY(r.z+Math.sin(a2)),h2=Math.max(10,s*.34);
-      c.strokeStyle='#1F1B16'; c.lineWidth=1.4; c.beginPath(); c.moveTo(fx2,fy2); c.lineTo(fx2,fy2-h2); c.stroke(); c.fillStyle='#D9736F'; c.beginPath(); c.moveTo(fx2,fy2-h2); c.lineTo(fx2+h2*.6,fy2-h2*.8); c.lineTo(fx2,fy2-h2*.6); c.closePath(); c.fill(); }
-  }
-}
-
+var TWO=document.getElementById('two'),PIMG=document.getElementById('pathImg'),PFR=[],pathF=-1;
+/* sequência gravada no «Explorar percurso» da própria app, com um ano de voltas: a câmara sobe e afasta-se */
+function loadPathSeq(){ if(PFR.length) return; for(var i=0;i<36;i++){ var im=new Image(); im.src='img/path/'+(i<10?'0':'')+i+'.webp'; PFR.push(im); } }
+function drawPathSeq(p){ loadPathSeq(); var f=Math.round(clamp((p-.04)/.8,0,1)*35); if(f!==pathF){ pathF=f; PIMG.src=PFR[f].src; } }
+var PW=0,PH=0,PD=1,PCV={getBoundingClientRect:function(){ return {width:0,height:0}; }};
 /* ---------- 3. simulador ---------- */
 var SR=ring(document.getElementById('simRing'),262,26,56);
 var S={day:30,lap:2,laps:1,streak:71,fz:2,marks:[]};
@@ -1115,7 +1061,7 @@ function measure(){
   else { TRACK.style.top=''; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=''; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   tourOff=hd.parentNode===TOUR?hd.offsetHeight:0;
   TOUR.style.height=(tourOff+vh+trackSpan*1.15)+'px';
-  sizeCv(); sizePath();
+  sizeCv();
 }
 function fitLine(h,els,W){ h.style.fontSize=''; var fs=parseFloat(getComputedStyle(h).fontSize),wide=function(){ return els.some(function(e){ return Math.max(e.getBoundingClientRect().width,e.scrollWidth)>W+1; }); };
   for(var i=0;i<60&&wide()&&fs>24;i++){ fs-=2; h.style.fontSize=fs+'px'; } }
@@ -1196,7 +1142,7 @@ function tick(force){
   if(force||vis(PAT)) drawPat(prog(PAT));
   if(force||vis(RUL)) drawRules(prog(RUL));
   if(force||vis(TOUR)) drawTour(progTour());
-  if(force||vis(TWO)) drawPath(prog(TWO));
+  if(force||vis(TWO)) drawPathSeq(prog(TWO));
   if(force||vis(LETTER)) drawLetter();
   if(force||vis(FIN)) drawFin(prog(FIN));
   WIPES.forEach(function(w){ var r=w.getBoundingClientRect(),q=reduce?1:clamp((innerHeight-r.top)/(innerHeight*.9),0,1); var e=ease(q); w.style.clipPath=q>=1?'none':'inset(0 '+((1-e)*7).toFixed(2)+'% 0 '+((1-e)*7).toFixed(2)+'% round '+((1-e)*64).toFixed(1)+'px '+((1-e)*64).toFixed(1)+'px 0 0)'; });
