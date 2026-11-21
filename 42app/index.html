@@ -222,11 +222,14 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .tour .k{color:#7A7266}
 .tour h2{font-size:clamp(64px,7vw,118px);margin-top:16px}
 .tour .sub{font-size:21px;color:#4A4741;margin-top:24px}
-.track{position:absolute;left:0;top:50%;display:flex;gap:64px;padding:0 max(32px,calc((100vw - 1240px)/2)) 0 calc(max(32px,(100vw - 1240px)/2) + min(360px,28vw) + 90px);will-change:transform;align-items:flex-start;z-index:1}
-.track figure{flex:0 0 auto;width:clamp(200px,min(17vw,30vh),270px);will-change:transform;transform-style:preserve-3d}
+.track{position:absolute;left:0;top:calc(50% + 40px);display:flex;gap:64px;padding:0 max(32px,calc((100vw - 1240px)/2)) 0 calc(max(32px,(100vw - 1240px)/2) + min(360px,28vw) + 90px);will-change:transform;align-items:flex-start;z-index:1}
+.track figure{flex:0 0 auto;width:clamp(190px,min(17vw,27vh),260px);will-change:transform;transform-style:preserve-3d}
 .track .ph{border-radius:34px;padding:9px;background:#141210;box-shadow:0 0 0 1px #4a453f,0 40px 70px rgba(31,27,22,.3),0 10px 20px rgba(31,27,22,.2)}
 .track .ph img{width:100%;height:auto;border-radius:26px}
 .track figcaption{margin-top:26px}
+.track figure.wg{width:clamp(260px,min(24vw,33vh),380px)}
+.wgs{display:flex;flex-direction:column;gap:14px}
+.wgs img{width:100%;height:auto;border-radius:26px;box-shadow:0 30px 60px rgba(31,27,22,.28),0 8px 18px rgba(31,27,22,.18)}
 .track figcaption b{display:block;font-family:var(--fh);font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:34px;line-height:1;margin-bottom:8px}
 .track figcaption span{font-size:19px;line-height:1.35;display:block;color:#4A4741}
 .track .endnote{width:clamp(260px,24vw,360px);align-self:center;font-size:24px;font-style:italic;color:#4A4741}
@@ -671,7 +674,7 @@ pt:{
  tour_k:'Tudo num só sítio',
  tour_h:'O teu dia inteiro, <em>numa só app.</em>',
  tour_p:'Hábitos, tarefas, foco e objetivos, desenhados com o mesmo cuidado. Sem bonequinhos, sem ruído.',
- tour:[['jornada','Início do dia','Cada dia cumprido faz crescer a árvore no centro da tua volta.'],['hoje','Hoje','Hábitos, tarefas e agenda ligados ao teu calendário, com uma frase do dia de filósofos e escritores.'],['visao','Visão','Desafios de 42 dias para o corpo, a mente, o trabalho e a casa.'],['mestres','Mestres','As rotinas de quem chegou longe, em retratos desenhados à mão.'],['foco','Foco','Sessões Pomodoro com sons próprios, criados para a app.'],['progresso','Progresso','Ofensiva, recorde, congelamentos, perdões e níveis.']],
+ tour:[['jornada','Início do dia','Cada dia cumprido faz crescer a árvore no centro da tua volta.'],['hoje','Hoje','Hábitos, tarefas e agenda ligados ao teu calendário, com uma frase do dia de filósofos e escritores.'],['visao','Visão','Desafios de 42 dias para o corpo, a mente, o trabalho e a casa.'],['mestres','Mestres','As rotinas de quem chegou longe, em retratos desenhados à mão.'],['foco','Foco','Sessões Pomodoro com sons próprios, criados para a app.'],['progresso','Progresso','Ofensiva, recorde, congelamentos, perdões e níveis.'],['percurso','Percurso','O teu percurso inteiro, volta a volta, com tudo o que plantaste pelo caminho.'],['widgets','Widgets','O mês, a semana e os hábitos de hoje no ecrã inicial do Android.']],
  tour_f:'E com os <i>Amigos</i>: ofensivas em conjunto, empurrões e desafios partilhados.',
  crt_k:'Porquê a 42',
  crt_h:'Feita por quem <em>precisava dela.</em>',
@@ -738,7 +741,7 @@ en:{
  tour_k:'Everything in one place',
  tour_h:'Your whole day, <em>in one app.</em>',
  tour_p:'Habits, tasks, focus and goals, designed with the same care. No cartoons, no noise.',
- tour:[['jornada','Start of the day','Every day you keep grows the tree at the centre of your lap.'],['hoje','Today','Habits, tasks and agenda linked to your calendar, with a quote of the day from philosophers and writers.'],['visao','Vision','42-day challenges for body, mind, work and home.'],['mestres','Masters','The routines of those who went far, in hand-drawn portraits.'],['foco','Focus','Pomodoro sessions with original sounds, made for the app.'],['progresso','Progress','Streak, record, freezes, pardons and levels.']],
+ tour:[['jornada','Start of the day','Every day you keep grows the tree at the centre of your lap.'],['hoje','Today','Habits, tasks and agenda linked to your calendar, with a quote of the day from philosophers and writers.'],['visao','Vision','42-day challenges for body, mind, work and home.'],['mestres','Masters','The routines of those who went far, in hand-drawn portraits.'],['foco','Focus','Pomodoro sessions with original sounds, made for the app.'],['progresso','Progress','Streak, record, freezes, pardons and levels.'],['percurso','Your path','Your whole path, lap by lap, with everything you planted along the way.'],['widgets','Widgets','The month, the week and today’s habits on your Android home screen.']],
  tour_f:'And with <i>Friends</i>: shared streaks, nudges and joint challenges.',
  crt_k:'Why 42',
  crt_h:'Built by someone <em>who needed it.</em>',
@@ -794,7 +797,9 @@ function apply(){
   document.querySelectorAll('.lang button').forEach(function(b){ b.classList.toggle('on',b.dataset.l===LANG); b.setAttribute('aria-pressed',b.dataset.l===LANG); });
   document.getElementById('ladder').innerHTML=t.levels.map(function(x){ return '<span>'+x+'</span>'; }).join('');
   document.getElementById('faqs').innerHTML=t.faqs.map(function(f,i){ return '<details'+(i?'':' open')+'><summary>'+f[0]+'<i></i></summary><p>'+f[1]+'</p></details>'; }).join('');
-  document.getElementById('track').innerHTML=t.tour.map(function(x){ return '<figure><div class="ph"><img src="img/'+x[0]+'-'+LANG+'.webp" alt="'+x[1]+'" width="603" height="1311"'+(x[0]==='jornada'?'':' loading="lazy"')+'></div><figcaption><b>'+x[1]+'</b><span>'+x[2]+'</span></figcaption></figure>'; }).join('')+'<div class="endnote">'+t.tour_f+'</div>';
+  document.getElementById('track').innerHTML=t.tour.map(function(x){
+    if(x[0]==='widgets') return '<figure class="wg"><div class="wgs">'+[1,2,3].map(function(n){ return '<img src="img/widget-'+n+'.webp" alt="" loading="lazy">'; }).join('')+'</div><figcaption><b>'+x[1]+'</b><span>'+x[2]+'</span></figcaption></figure>';
+    return '<figure><div class="ph"><img src="img/app-'+x[0]+'.webp" alt="'+x[1]+'" width="603" height="1259" loading="lazy"></div><figcaption><b>'+x[1]+'</b><span>'+x[2]+'</span></figcaption></figure>'; }).join('')+'<div class="endnote">'+t.tour_f+'</div>';
   rotIx=0; document.getElementById('rot').textContent=t.rot[0];
   splitHeads();
   wrapWords(document.getElementById('letter'),'lw',false);
@@ -980,7 +985,7 @@ function measure(){
   trackSpan=Math.max(0,TRACK.scrollWidth-vw);
   fitVis();
   if(vw<=980){ var hd=TOUR.querySelector('.hd'),top=hd.offsetTop+hd.offsetHeight+22,capH=vw<=620?150:170,w=Math.max(120,Math.min(vw*.42,(vh-top-capH-40)/2.17));
-    TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=w+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
+    TRACK.style.top=top+'px'; TRACK.style.bottom='auto'; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=(f.classList.contains('wg')?w*1.45:w)+'px'; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   else { TRACK.style.top=''; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=''; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   TOUR.style.height=(vh+trackSpan*1.15)+'px';
   sizeCv();
