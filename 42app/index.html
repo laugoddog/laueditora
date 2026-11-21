@@ -107,28 +107,30 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .cue i{width:1px;height:44px;background:linear-gradient(var(--cr),transparent);animation:drip 2.2s infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ---------- 2. o padrão: contagem que cai ---------- */
+/* ---------- 2. o padrão: um anel de 100 que se desfaz ---------- */
 .pat{height:430vh;color:var(--ink)}
 .pat .stick{background:var(--cr2)}
-.pat .grid{width:var(--wrap);margin:0 auto;height:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:60px;align-items:center;padding:100px 0 60px}
+.pat .grid{width:var(--wrap);margin:0 auto;height:100%;display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;padding:100px 0 60px}
 .pat .k{color:#7A7266}
 .pat h2{font-size:clamp(64px,7.4vw,124px);margin-top:18px}
-.steps{margin-top:46px;display:grid;gap:0;max-width:440px}
-.steps div{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:baseline;padding:13px 0;border-top:1px solid #D3CABC;opacity:.28;transition:opacity .4s}
-.steps div.on{opacity:1}
-.steps b{font-family:var(--fh);font-weight:500;font-size:30px;line-height:1}
-.steps span{font-size:19px;line-height:1.3}
-.meter{position:relative;display:flex;flex-direction:column;align-items:flex-start}
-.meter .big{font-size:clamp(200px,30vh,330px);letter-spacing:-.01em;display:flex;align-items:flex-start}
-.meter .big small{font-size:.38em;margin-top:.12em;margin-left:.04em}
-.meter .big .lt{font-size:.5em;margin-top:.5em;margin-right:.04em;color:var(--co2)}
-.cal{display:grid;grid-template-columns:repeat(14,1fr);gap:7px;margin-top:34px;width:100%;max-width:620px}
-.cal i{aspect-ratio:1/1.55;border:1.5px solid var(--ink);transition:background .35s,border-color .35s,transform .35s}
-.cal i.on{background:var(--ink)}
-.cal i.on.c{background:var(--co);border-color:var(--co)}
-.cal i.off{transform:scale(.82);border-color:#BDB3A4}
-.pat .cap{display:none;margin-top:16px;font-size:19px;line-height:1.35;max-width:24em}
-.pat .cap b{font-family:var(--fh);font-weight:500;font-size:1.25em;margin-right:6px}
+.tl{margin-top:56px;max-width:460px}
+.tlbar{height:2px;background:#D3CABC;position:relative}
+.tlbar i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)}
+.tlst{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px}
+.tlst span{font-family:var(--fh);text-transform:uppercase;letter-spacing:.12em;font-size:13px;color:#A39B8E;transition:color .3s;position:relative;padding-top:6px}
+.tlst span::before{content:"";position:absolute;left:0;top:-22px;width:2px;height:12px;background:#D3CABC;transition:background .3s}
+.tlst span.on{color:var(--ink)}
+.tlst span.on::before{background:var(--ink)}
+.pring{position:relative;width:min(600px,100%,68vh);aspect-ratio:1/1;justify-self:center}
+.pring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#patRing rect{transition:transform .9s cubic-bezier(.16,.84,.24,1),opacity .9s,fill .4s;transform-box:fill-box;transform-origin:center}
+#patRing rect.gone{opacity:0;transform:translateY(-90px) rotate(40deg) scale(.6)}
+.pmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
+.pmid .pt{font-family:var(--fh);text-transform:uppercase;letter-spacing:.2em;font-size:15px;color:#7A7266}
+.pmid .big{font-size:clamp(120px,15vw,210px);display:flex;align-items:flex-start;margin:6px 0 4px}
+.pmid .big small{font-size:.36em;margin-top:.14em;margin-left:.03em}
+.pmid .big .lt{font-size:.46em;margin-top:.5em;margin-right:.04em;color:var(--co2)}
+.pmid .pc{font-size:20px;font-style:italic;max-width:13em;line-height:1.3}
 .pat .src{position:absolute;left:0;right:0;bottom:28px;width:var(--wrap);margin:0 auto;font-size:16px;color:#7A7266;font-style:italic}
 .why{background:var(--cr2);color:var(--ink);padding:40px 0 170px}
 .why .wrap{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
@@ -136,13 +138,23 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .long .lr{font-size:clamp(28px,2.6vw,40px);line-height:1.3}
 .long .lr em{color:var(--co2)}
 .long h3{font-size:clamp(56px,6vw,104px);margin-top:44px}
-.lfig{justify-self:center;width:min(340px,80%)}
-.lfig img{width:100%;height:auto;display:block;box-shadow:0 40px 80px rgba(31,27,22,.25),0 10px 24px rgba(31,27,22,.16)}
-.two{padding:170px 0 150px;overflow:hidden}
-.two .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}
-.two h2{font-size:clamp(70px,8vw,136px);margin:18px 0 30px}
-.two p{font-size:24px;color:#DCD5C9;max-width:22em}
-.two svg{width:100%;height:auto;overflow:visible}
+.lfig{justify-self:center;width:min(330px,80%)}
+.phone2{background:#141210;border-radius:42px;padding:11px;box-shadow:0 0 0 1px #4a453f,0 40px 80px rgba(31,27,22,.28),0 10px 24px rgba(31,27,22,.18)}
+.phone2 .sc{border-radius:18px;overflow:hidden}
+.phone2 img{width:100%;height:auto;display:block}
+.lcap{margin-top:26px;font-size:21px;font-style:italic;line-height:1.4;color:#4A4741;text-align:center}
+.two{height:380vh;color:var(--ink)}
+.two .stick{background:var(--cr2)}
+.two .grid{width:var(--wrap);margin:0 auto;height:100%;display:grid;grid-template-columns:minmax(0,480px) 1fr;gap:50px;align-items:center;padding:90px 0 40px}
+.two .k{color:#7A7266}
+.two h2{font-size:clamp(64px,7vw,124px);margin:18px 0 28px}
+.two p{font-size:23px;max-width:21em}
+.two .tw{position:absolute;inset:0}
+.two .grid>div:first-child{position:relative;z-index:2}
+.two .stick::before{content:"";position:absolute;left:0;top:0;bottom:0;width:calc(max(32px,(100vw - 1240px)/2) + 560px);background:linear-gradient(90deg,var(--cr2) 80%,rgba(244,238,227,0));z-index:1;pointer-events:none}
+@media (max-width:980px){ .two .stick::before{display:none} }
+@media (max-width:980px){ .two .tw{position:relative;inset:auto;height:100%;min-height:0} .two .grid>div:first-child{background:none;padding:0} }
+.two canvas{position:absolute;inset:0;width:100%;height:100%}
 .why .lead2{font-family:var(--fh);font-weight:500;text-transform:uppercase;font-size:clamp(48px,4.8vw,82px);line-height:.94}
 .why .lead2 em{font-style:normal;color:var(--co2)}
 .why p{font-size:23px}
@@ -235,8 +247,8 @@ blockquote cite{display:block;font-style:normal;margin-top:16px;font-family:var(
 .tour .sub{font-size:21px;color:#4A4741;margin-top:24px}
 .track{position:absolute;left:0;top:calc(50% + 40px);display:flex;gap:64px;padding:0 max(32px,calc((100vw - 1240px)/2)) 0 calc(max(32px,(100vw - 1240px)/2) + min(360px,28vw) + 90px);will-change:transform;align-items:flex-start;z-index:1}
 .track figure{flex:0 0 auto;width:clamp(220px,min(20vw,33vh),330px);will-change:transform}
-.track .ph{box-shadow:0 0 0 1px rgba(31,27,22,.12),0 40px 70px rgba(31,27,22,.28),0 10px 20px rgba(31,27,22,.18)}
-.track .ph .sc{overflow:hidden}
+.track .ph{background:#141210;border-radius:40px;padding:10px;box-shadow:0 0 0 1px #4a453f,0 40px 70px rgba(31,27,22,.3),0 10px 20px rgba(31,27,22,.2)}
+.track .ph .sc{border-radius:16px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black)}
 .track .ph img{width:100%;height:auto;display:block}
 .track figcaption{margin-top:26px}
 .track figure.wg{width:clamp(300px,min(27vw,40vh),440px)}
@@ -369,17 +381,19 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   :root{--wrap:calc(100vw - 48px)}
   .pat .grid,.rules .grid{grid-template-columns:1fr;gap:28px;align-content:center;padding:90px 0 70px}
   .pat h2{font-size:clamp(52px,12vw,84px)}
-  .steps{display:none}
-  .pat .cap{display:block}
-  .meter .big{font-size:clamp(120px,19vh,200px)}
-  .pat .grid{height:auto;padding:96px 0 0;gap:18px}
-  .pat .src{position:static;width:var(--wrap);margin:14px auto 0;font-size:14px}
+  .pat .grid{height:auto;padding:94px 0 0;gap:6px}
   .pat h2{margin-top:10px}
-  .cal{grid-template-columns:repeat(14,1fr);gap:4px;margin-top:20px}
-  .why .long{margin-top:90px}
-  .two .wrap{grid-template-columns:1fr}
-  .two{padding:110px 0}
-  .two h2{font-size:clamp(56px,15vw,84px)}
+  .tl{margin-top:22px}
+  .tlst span{font-size:11px;letter-spacing:.06em}
+  .pring{width:min(86vw,46vh);margin-top:8px}
+  .pmid .big{font-size:clamp(84px,24vw,130px)}
+  .pmid .pc{font-size:17px}
+  .pmid .pt{font-size:12px}
+  .pat .src{position:static;width:var(--wrap);margin:10px auto 0;font-size:13px}
+  .why .long{margin-top:44px;gap:40px}
+  .two .grid{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:0;padding:92px 0 20px}
+  .two h2{font-size:clamp(52px,14vw,80px);margin:10px 0 14px}
+  .two p{font-size:18px}
   .why .wrap,.met .wrap,.crt .wrap,.faq .wrap,.vis .head{grid-template-columns:1fr;gap:44px}
   .crt .side{position:static}
   .rules h2{font-size:clamp(56px,13vw,96px)}
@@ -490,17 +504,11 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <div>
         <div class="k" data-t="pat_k"></div>
         <h2 class="h sp" data-h="pat_h"></h2>
-        <div class="steps" id="steps">
-          <div><b>77%</b><span data-t="pat_1"></span></div>
-          <div><b>55%</b><span data-t="pat_2"></span></div>
-          <div><b>40%</b><span data-t="pat_3"></span></div>
-          <div><b>&lt;20%</b><span data-t="pat_4"></span></div>
-        </div>
+        <div class="tl"><div class="tlbar"><i id="tlFill"></i></div><div class="tlst" id="tlst"></div></div>
       </div>
-      <div class="meter">
-        <div class="big" id="patN"><span class="lt" id="patLt" hidden>&lt;</span><span id="patV">77</span><small>%</small></div>
-        <div class="cal" id="cal"></div>
-        <p class="cap" id="patCap"></p>
+      <div class="pring">
+        <svg id="patRing" viewBox="-300 -300 600 600" aria-hidden="true"></svg>
+        <div class="pmid"><div class="pt" id="patT"></div><div class="big"><span class="lt" id="patLt" hidden>&lt;</span><span id="patV">77</span><small>%</small></div><div class="pc" data-t="pat_c"></div></div>
       </div>
     </div>
     <p class="src" data-t="pat_src"></p>
@@ -519,18 +527,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <p class="lr rv" data-h="long_p"></p>
       <h3 class="h sp" data-h="long_2"></h3>
     </div>
-    <div class="lfig rv"><img src="img/app-percurso.webp" alt="" width="603" height="1259" loading="lazy"></div>
-  </div>
-</section>
-
-<section class="two" id="two">
-  <div class="wrap">
-    <div>
-      <div class="k" data-t="two_k"></div>
-      <h2 class="h sp" data-h="two_h"></h2>
-      <p class="rv" data-h="two_p"></p>
-    </div>
-    <svg id="twoSvg" viewBox="0 0 1000 760" aria-hidden="true"></svg>
+    <div class="lfig rv"><div class="phone2"><div class="sc"><img src="img/app-percurso.webp" alt="" width="603" height="1259" loading="lazy"></div></div><p class="lcap" data-t="long_cap"></p></div>
   </div>
 </section>
 
@@ -557,6 +554,16 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
         <button id="bMiss"><svg viewBox="0 0 24 24" fill="none" stroke="#D9736F" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg><span data-t="sim_miss"></span></button>
       </div>
       <div class="stats"><div><b id="sStreak">0</b><span data-t="sim_st"></span></div><div><b id="sLaps">0</b><span data-t="sim_laps"></span></div><div><b id="sFz">2</b><span data-t="sim_fzs"></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. duas visões numa só: o percurso visto de cima -->
+<section class="pin two wipe" id="two">
+  <div class="stick">
+    <div class="grid">
+      <div><div class="k" data-t="two_k"></div><h2 class="h sp" data-h="two_h"></h2><p class="rv" data-h="two_p"></p></div>
+      <div class="tw"><canvas id="pathCv" aria-hidden="true"></canvas></div>
     </div>
   </div>
 </section>
@@ -692,8 +699,9 @@ pt:{
  why_p:'As resoluções falham porque dependem da motivação de janeiro, e a motivação acaba. O que fica são os mecanismos de recompensa do cérebro — os mesmos de que as redes sociais se aproveitam todos os dias. A 42 põe-nos a trabalhar a teu favor.',
  quote:'Os nossos comportamentos não se regem pela “força de vontade”, mas pelas regras que a evolução implantou nos mecanismos de recompensa do nosso cérebro.',
  quote_c:'Rafael Augusto, Ph.D. — criador da 42',
- long_p:'A 42 foi feita para o longo prazo. Em poucas semanas, vais sentir mais domínio sobre a tua vida e sobre a tua atenção. Imagina daqui a um ou dois anos. <em>Imagina daqui a 10.</em>', long_2:'E vais poder visualizar o teu percurso inteiro.',
- two_k:'Oriente · Ocidente', two_h:'Há duas visões.', two_p:'O Oriente tende a ver a vida como cíclica; o Ocidente, como um caminho. A 42 permite-te visualizar a tua vida como as duas coisas.',
+ long_p:'A 42 foi feita para o longo prazo. Em poucas semanas, vais sentir mais domínio sobre a tua vida e sobre a tua atenção. Imagina daqui a um ou dois anos. <em>Imagina daqui a 10.</em>', long_2:'E vais poder visualizar o teu percurso inteiro.', long_cap:'Quando plantaste cada hábito, quando aceitaste cada desafio, quando vais alcançar cada meta. Consegues ver tudo.',
+ pat_c:'ainda cumpre a resolução de Ano Novo', pat_times:['1 semana depois','1 mês depois','6 meses depois','2 anos depois'],
+ two_k:'Oriente · Ocidente', two_h:'Duas visões numa só.', two_p:'O Oriente tende a ver a vida como cíclica; o Ocidente, como um caminho. A 42 permite-te visualizar a tua vida como as duas coisas.',
  met_k:'O método', met_by:'Desenvolvido por um cientista cognitivo',
  met_h:'42 dias <em>de cada vez.</em>',
  met_p:'Na 42, o caminho divide-se em voltas de 42 dias. Cada dia cumprido preenche um bloco. Uma volta completa fica guardada para sempre: se falhares, voltas apenas ao início da volta em curso — nunca ao zero.',
@@ -761,8 +769,9 @@ en:{
  why_p:'Resolutions fail because they run on January’s motivation, and motivation runs out. What stays are the brain’s reward mechanisms — the same ones social media exploits every day. 42 puts them to work for you.',
  quote:'Our behaviour is not governed by “willpower”, but by the rules that evolution built into the reward mechanisms of our brain.',
  quote_c:'Rafael Augusto, Ph.D. — creator of 42',
- long_p:'42 is built for the long run. In a few weeks, you will feel increased agency over your life and over your attention. Imagine after one or two years. <em>Imagine after 10.</em>', long_2:'And you will be able to visualise your whole path.',
- two_k:'East · West', two_h:'There are two visions.', two_p:'The East tends to see life as cyclical, the West as a path. 42 allows you to visualise your life as both.',
+ long_p:'42 is built for the long run. In a few weeks, you will feel increased agency over your life and over your attention. Imagine after one or two years. <em>Imagine after 10.</em>', long_2:'And you will be able to visualise your whole path.', long_cap:'When each habit was planted, when a challenge was taken, when a goal will be achieved. You can see it all.',
+ pat_c:'are still keeping their New Year’s resolution', pat_times:['After 1 week','After 1 month','After 6 months','After 2 years'],
+ two_k:'East · West', two_h:'Two visions in one.', two_p:'The East tends to see life as cyclical, the West as a path. 42 allows you to visualise your life as both.',
  met_k:'The method', met_by:'Developed by a cognitive scientist',
  met_h:'42 days <em>at a time.</em>',
  met_p:'In 42, the road is split into laps of 42 days. Every day you keep fills a block. A completed lap is saved forever: if you slip, you only go back to the start of the current lap — never to zero.',
@@ -846,6 +855,7 @@ function apply(){
     if(x[0]==='widgets') return '<figure class="wg"><div class="wgs">'+[1,2,3].map(function(n){ return '<img src="img/widget-'+n+'.webp" alt="" loading="lazy">'; }).join('')+'</div><figcaption><b>'+x[1]+'</b><span>'+x[2]+'</span></figcaption></figure>';
     return '<figure><div class="ph"><div class="sc"><img src="img/app-'+x[0]+'.webp" alt="'+x[1]+'" width="603" height="1259" loading="lazy"></div></div><figcaption><b>'+x[1]+'</b><span>'+x[2]+'</span></figcaption></figure>'; }).join('')+'<div class="endnote">'+t.tour_f+'</div>';
   rotIx=0; document.getElementById('rot').textContent=t.rot[0];
+  document.getElementById('tlst').innerHTML=t.pat_times.map(function(x){ return '<span>'+x+'</span>'; }).join(''); patSk=-1; patN=-1;
   splitHeads();
   wrapWords(document.getElementById('letter'),'lw',false);
   document.querySelectorAll('.sp').forEach(function(el){ if(seen.has(el)) el.classList.add('on'); });
@@ -925,7 +935,7 @@ function drawWorld(now){
   objs.forEach(function(o){
     if(o.k==='r'){ var r=RINGS[o.i],dz=r.z-camZ; if(dz<.6) return; var fog=clamp(1-(dz-14)/80,0,1); if(fog<=0) return;
       var lit=o.i<lapNow?42:o.i===lapNow?dayNow-1:0;
-      var qs=[]; for(var j=0;j<42;j++){ var an=-Math.PI/2+j*Math.PI*2/42; qs.push({j:j,z:r.z+Math.sin(an)*R,an:an}); }
+      var qs=[]; for(var j=0;j<42;j++){ var an=-Math.PI/2-j*Math.PI*2/42; qs.push({j:j,z:r.z+Math.sin(an)*R,an:an}); }
       qs.sort(function(A,B){ return B.z-A.z; });
       qs.forEach(function(q){ var an=q.an,r1=R-.3,r2=R+.3,pts=[[r1,an-da],[r2,an-da],[r2,an+da],[r1,an+da]].map(function(u){ return P(r.x+Math.cos(u[1])*u[0],r.z+Math.sin(u[1])*u[0]); });
         if(pts.some(function(v){ return !v; })) return;
@@ -947,33 +957,73 @@ function drawWorld(now){
   document.getElementById('hudN').innerHTML=dayNow+'<span>/42</span>';
 }
 
-/* ---------- 2. o padrão ---------- */
-var CAL=document.getElementById('cal'); CAL.innerHTML=new Array(43).join('<i></i>');
-var calI=CAL.querySelectorAll('i'),STEPS=document.querySelectorAll('#steps div');
+/* ---------- 2. o padrão: 100 blocos, cada um uma pessoa; caem à medida que o tempo passa ---------- */
+var PR=[],PORD=[];
+(function(){ var svg=document.getElementById('patRing'),rnd=(function(s){ return function(){ s=(s*16807)%2147483647; return (s-1)/2147483646; }; })(7);
+  for(var i=0;i<100;i++){ var gr=document.createElementNS(NS,'g'),rc=document.createElementNS(NS,'rect'); gr.setAttribute('transform','rotate('+(i*3.6).toFixed(2)+')');
+    rc.setAttribute('x',-5); rc.setAttribute('y',-282); rc.setAttribute('width',10); rc.setAttribute('height',42); rc.setAttribute('fill','#1F1B16');
+    gr.appendChild(rc); svg.appendChild(gr); PR.push(rc); PORD.push(i); }
+  for(var k=99;k>0;k--){ var r=Math.floor(rnd()*(k+1)),tmp=PORD[k]; PORD[k]=PORD[r]; PORD[r]=tmp; }
+})();
+var patN=-1,patSk=-1;
 function drawPat(p){
   var V=[77,55,40,19],x=clamp(p*1.12-.04,0,1)*3,k=Math.floor(x),fr=x-k,v=k>=3?19:V[k]+(V[k+1]-V[k])*ease(clamp((fr-.55)/.45,0,1));
   var lt=v<=19.5; document.getElementById('patV').textContent=lt?'20':Math.round(v); document.getElementById('patLt').hidden=!lt;
-  var n=Math.round(v/100*42); calI.forEach(function(el,i){ el.classList.toggle('on',i<n); el.classList.toggle('c',i===n-1); el.classList.toggle('off',i>=n); });
-  var sk=clamp(k+(fr>=.78?1:0),0,3); STEPS.forEach(function(el,i){ el.classList.toggle('on',i<=sk); });
-  var cap=document.getElementById('patCap'),ck=['77%','55%','40%','<20%'][sk]+'|'+LANG; if(cap.dataset.k!==ck){ cap.dataset.k=ck; cap.innerHTML='<b>'+['77%','55%','40%','&lt;20%'][sk]+'</b>'+T[LANG]['pat_'+(sk+1)]; }
+  var n=Math.round(v),sk=clamp(k+(fr>=.78?1:0),0,3);
+  if(n!==patN||sk!==patSk){ patN=n; PORD.forEach(function(idx,r){ var b=PR[idx]; b.classList.toggle('gone',r>=n); b.setAttribute('fill',sk===3&&r<n?'#D9736F':'#1F1B16'); }); }
+  if(sk!==patSk){ patSk=sk; document.getElementById('patT').textContent=T[LANG].pat_times[sk]; document.querySelectorAll('#tlst span').forEach(function(s,i){ s.classList.toggle('on',i<=sk); }); }
+  document.getElementById('tlFill').style.transform='scaleX('+(x/3).toFixed(3)+')';
 }
 
-/* ---------- duas visões: um caminho feito de ciclos ---------- */
-var TWO=document.getElementById('two'),TWOS=document.getElementById('twoSvg'),TWOR=[];
-(function(){
-  var P=function(t){ return [110+800*t,640-520*t+110*Math.sin(t*Math.PI*2.2)]; },R=function(t){ return 92*(1-.62*t); },t=0,cs=[];
-  while(t<=1&&cs.length<12){ cs.push(t); var r=R(t),p0=P(t),tt=t; while(tt<1.2){ tt+=.002; var p1=P(tt); if(Math.hypot(p1[0]-p0[0],p1[1]-p0[1])>=r+R(tt)+4) break; } t=tt; }
-  cs.forEach(function(ti){ var c=P(ti),r=R(ti),g=document.createElementNS(NS,'g'),bs=[]; g.setAttribute('transform','translate('+c[0].toFixed(1)+' '+c[1].toFixed(1)+')');
-    var w=Math.max(3,r*.13),h=Math.max(6,r*.27);
-    for(var i=0;i<42;i++){ var gr=document.createElementNS(NS,'g'),rc=document.createElementNS(NS,'rect'); gr.setAttribute('transform','rotate('+(i*360/42).toFixed(2)+')');
-      rc.setAttribute('x',-w/2); rc.setAttribute('y',-r-h/2); rc.setAttribute('width',w); rc.setAttribute('height',h); rc.setAttribute('fill','none'); rc.setAttribute('stroke','#5A554E'); rc.setAttribute('stroke-width','1');
-      gr.appendChild(rc); g.appendChild(gr); bs.push(rc); }
-    TWOS.appendChild(g); TWOR.push(bs); });
+/* ---------- duas visões numa só: um ano de voltas visto de cima, como no «Explorar percurso» ---------- */
+var TWO=document.getElementById('two'),PCV=document.getElementById('pathCv'),pcx=PCV.getContext('2d'),PW=0,PH=0,PD=1;
+var PATH=(function(){
+  var rnd=(function(s){ return function(){ s=(s*16807)%2147483647; return (s-1)/2147483646; }; })(1942),rings=[],N=10;
+  for(var k=0;k<N;k++) rings.push({x:Math.sin(k*.95+.3)*1.75,y:-k*2.75,days:[],tree:[],plants:[]});
+  var total=9*42+19;
+  rings.forEach(function(r,k){ for(var j=0;j<42;j++){ var d=k*42+j,s;
+      if(d>=total) s='todo'; else { var u=rnd(); s=u<.66?'done':u<.84?'perf':u<.9?'froz':u<.95?'paus':'miss'; }
+      r.days.push(s); if(d<total&&rnd()<.05) r.plants.push(j); }
+    var nb=7+Math.floor(rnd()*3),br=[]; for(var b=0;b<nb;b++){ var a=b/nb*6.283+rnd()*.5,l=.42+rnd()*.25; br.push([a,l,a+(rnd()-.5)*.9,l*.55]); } r.tree=br; });
+  rings[9].flag=33;
+  return {rings:rings,total:total};
 })();
-var twoLit=-1;
-function drawTwo(){ var r=TWO.getBoundingClientRect(),p=clamp((innerHeight*.85-r.top)/(r.height*.95),0,1),tot=TWOR.length*42,n=Math.round(ease(p)*tot);
-  if(n===twoLit) return; twoLit=n; var k=0;
-  TWOR.forEach(function(bs){ bs.forEach(function(b,i){ if(k<n) fill(b,i===41?'#D9736F':'#F1ECE3'); else empty(b); k++; }); }); }
+function sizePath(){ PD=Math.min(2,window.devicePixelRatio||1); var r=PCV.getBoundingClientRect(); PW=r.width; PH=r.height; PCV.width=Math.round(PW*PD); PCV.height=Math.round(PH*PD); }
+var COL={done:'#1F1B16',perf:'#D9736F',froz:'#3D8FC4'};
+function drawPath(p){
+  if(!PW) return; var c=pcx; c.setTransform(PD,0,0,PD,0,0); c.clearRect(0,0,PW,PH);
+  var R=PATH.rings,lit=Math.round(ease(clamp(p/.72,0,1))*PATH.total),cur=Math.min(R.length-1,Math.floor(Math.max(0,lit-1)/42));
+  /* câmara: segue a volta que se está a preencher; no fim afasta-se e mostra tudo */
+  var zf=clamp((p-.7)/.25,0,1),ze=ease(zf);
+  var land=PW>PH*1.05,VW=land?PH:PW,VH=land?PW*.5:PH,minY=R[R.length-1].y-1.6,maxY=1.6,minX=-3.4,maxX=3.4,fit=Math.min(VW/(maxX-minX),VH/(maxY-minY))*.94;
+  var close=Math.min(PW,PH)/5.2,s=close+(fit-close)*ze;
+  var fi=clamp(Math.max(0,lit-1)/42,0,R.length-1),f0=Math.floor(fi),ff=fi-f0,f1=Math.min(R.length-1,f0+1);
+  var fx=R[f0].x+(R[f1].x-R[f0].x)*ff,fy=R[f0].y+(R[f1].y-R[f0].y)*ff,cxw=fx*(1-ze),cyw=fy+(((minY+maxY)/2)-fy)*ze;
+  /* ao alto no telemóvel; deitado (da esquerda para a direita) num ecrã largo */
+  function X(x,y){ return land?PW*.71-(y-cyw)*s:PW/2+(x-cxw)*s; } function Y(y,x){ return land?PH/2+(x-cxw)*s:PH/2+(y-cyw)*s; }
+  var da=Math.PI*2/42*.36,k=0;
+  R.forEach(function(r,ri){ var cx0=X(r.x,r.y),cy0=Y(r.y,r.x); if(cy0<-3*s||cy0>PH+3*s||cx0<-3*s||cx0>PW+3*s) { k+=42; return; }
+    /* árvore vista de cima: cresce com os dias da volta */
+    var grown=clamp((lit-ri*42)/42,0,1);
+    if(grown>0){ c.strokeStyle='#1F1B16'; c.lineCap='round';
+      r.tree.forEach(function(b,bi){ var L=b[1]*grown,x1=cx0+Math.cos(b[0])*L*s,y1=cy0+Math.sin(b[0])*L*s; c.lineWidth=Math.max(1,s*.05); c.beginPath(); c.moveTo(cx0,cy0); c.lineTo(x1,y1); c.stroke();
+        var x2=x1+Math.cos(b[2])*b[3]*grown*s,y2=y1+Math.sin(b[2])*b[3]*grown*s; c.lineWidth=Math.max(.8,s*.03); c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke();
+        var st=r.days[(bi*5)%42],lc=st==='perf'?'#D9736F':st==='froz'?'#3D8FC4':'#1F1B16'; c.fillStyle=lc; c.beginPath(); c.ellipse(x2,y2,Math.max(1.5,s*.075),Math.max(1,s*.045),b[2],0,7); c.fill();
+        c.beginPath(); c.ellipse((x1+x2)/2,(y1+y2)/2,Math.max(1.2,s*.06),Math.max(.8,s*.035),b[2]+.8,0,7); c.fillStyle=bi%3?'#1F1B16':'#D9736F'; c.fill(); });
+      c.fillStyle='#1F1B16'; c.beginPath(); c.arc(cx0,cy0,Math.max(1.5,s*.06),0,7); c.fill(); }
+    r.days.forEach(function(st,j){ var a=-Math.PI/2+j*Math.PI*2/42,r1=.86,r2=1.14,on=k<lit;
+      c.beginPath(); [[r1,a-da],[r2,a-da],[r2,a+da],[r1,a+da]].forEach(function(u,q){ var px=cx0+Math.cos(u[1])*u[0]*s,py=cy0+Math.sin(u[1])*u[0]*s; if(q) c.lineTo(px,py); else c.moveTo(px,py); }); c.closePath();
+      if(on&&COL[st]){ c.fillStyle=COL[st]; c.fill(); }
+      else { c.lineWidth=1; c.strokeStyle=on&&st==='paus'?'#7A6AB0':on&&st==='miss'?'#C9BFB0':(ri===cur&&k===lit)?'#1F1B16':'#CFC6B8'; c.stroke(); }
+      k++; });
+    /* plantas: o dia em que um hábito foi plantado */
+    r.plants.forEach(function(j){ if(ri*42+j>=lit) return; var a=-Math.PI/2+j*Math.PI*2/42,px=cx0+Math.cos(a)*1.32*s,py=cy0+Math.sin(a)*1.32*s,z=Math.max(2,s*.07);
+      c.fillStyle='#1F1B16'; for(var q=0;q<3;q++){ var aa=a+(q-1)*.9; c.beginPath(); c.ellipse(px+Math.cos(aa)*z,py+Math.sin(aa)*z,z*.9,z*.5,aa,0,7); c.fill(); } });
+    /* bandeira: o dia em que uma meta vai ser alcançada */
+    if(r.flag!=null&&lit>=(ri*42)){ var a=-Math.PI/2+r.flag*Math.PI*2/42,px=cx0+Math.cos(a)*1.32*s,py=cy0+Math.sin(a)*1.32*s,h=Math.max(8,s*.3);
+      c.strokeStyle='#1F1B16'; c.lineWidth=1.4; c.beginPath(); c.moveTo(px,py); c.lineTo(px,py-h); c.stroke(); c.fillStyle='#D9736F'; c.beginPath(); c.moveTo(px,py-h); c.lineTo(px+h*.6,py-h*.78); c.lineTo(px,py-h*.56); c.closePath(); c.fill(); }
+  });
+}
 
 /* ---------- 3. simulador ---------- */
 var SR=ring(document.getElementById('simRing'),262,26,56);
@@ -1055,7 +1105,7 @@ function measure(){
   else { TRACK.style.top=''; TRACK.style.bottom=''; TRACK.querySelectorAll('figure').forEach(function(f){ f.style.width=''; }); trackSpan=Math.max(0,TRACK.scrollWidth-vw); }
   tourOff=hd.parentNode===TOUR?hd.offsetHeight:0;
   TOUR.style.height=(tourOff+vh+trackSpan*1.15)+'px';
-  sizeCv();
+  sizeCv(); sizePath();
 }
 function fitVis(){ var h=document.getElementById('visH'),l=h.querySelector('.l1'); h.style.fontSize=''; var fs=parseFloat(getComputedStyle(h).fontSize),W=h.parentNode.clientWidth;
   for(var i=0;i<40&&l.getBoundingClientRect().width>W&&fs>30;i++){ fs-=3; h.style.fontSize=fs+'px'; } }
@@ -1132,7 +1182,7 @@ function tick(force){
   if(force||vis(PAT)) drawPat(prog(PAT));
   if(force||vis(RUL)) drawRules(prog(RUL));
   if(force||vis(TOUR)) drawTour(progTour());
-  if(force||vis(TWO)) drawTwo();
+  if(force||vis(TWO)) drawPath(prog(TWO));
   if(force||vis(LETTER)) drawLetter();
   if(force||vis(FIN)) drawFin(prog(FIN));
   WIPES.forEach(function(w){ var r=w.getBoundingClientRect(),q=reduce?1:clamp((innerHeight-r.top)/(innerHeight*.9),0,1); var e=ease(q); w.style.clipPath=q>=1?'none':'inset(0 '+((1-e)*7).toFixed(2)+'% 0 '+((1-e)*7).toFixed(2)+'% round '+((1-e)*64).toFixed(1)+'px '+((1-e)*64).toFixed(1)+'px 0 0)'; });
